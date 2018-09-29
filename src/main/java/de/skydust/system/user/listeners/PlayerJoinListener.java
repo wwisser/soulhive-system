@@ -23,7 +23,7 @@ public class PlayerJoinListener implements Listener {
             ((FileUserRepository) userRepository).updateUuid(player);
         }
 
-        this.userService.getOnlineCache().put(player, userRepository.fetchByUuid(player.getUniqueId().toString()));
+        this.userService.loadUser(player);
     }
 
 }

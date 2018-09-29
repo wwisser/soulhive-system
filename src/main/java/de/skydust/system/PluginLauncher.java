@@ -4,6 +4,7 @@ import de.skydust.system.motd.MotdService;
 import de.skydust.system.service.ServiceManager;
 import de.skydust.system.task.impl.TablistUpdateTask;
 import de.skydust.system.task.service.TaskService;
+import de.skydust.system.user.service.UserService;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,7 +27,7 @@ public class PluginLauncher extends JavaPlugin {
         this.taskService.registerTasks(new TablistUpdateTask());
 
         PluginLauncher.serviceManager = new ServiceManager(this);
-        PluginLauncher.serviceManager.registerServices(this.taskService, new MotdService());
+        PluginLauncher.serviceManager.registerServices(this.taskService, new MotdService(), new UserService());
     }
 
     @Override

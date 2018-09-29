@@ -1,9 +1,8 @@
 package de.skydust.system.user.listeners;
 
-import de.skydust.system.user.repository.UserRepository;
-import de.skydust.system.user.repository.impl.FileUserRepository;
 import de.skydust.system.user.service.UserService;
 import lombok.AllArgsConstructor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -15,13 +14,10 @@ public class PlayerQuitListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        UserRepository userRepository = this.userService.getUserRepository();
+        Player player = event.getPlayer();
 
-        if (userRepository instanceof FileUserRepository) {
-            ((FileUserRepository) userRepository).updateUuid(event.getPlayer());
-        }
-
-        this.userService.getOnlineCache().remove(event.getPlayer());
+        this.userService.getUser(player).setLastSeen(System.currentTimeMillis());
+        this.userService.unloadUser(player);
     }
 
 }
