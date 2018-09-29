@@ -1,0 +1,7 @@
+name: SkyDust-System
+version: 2.0-SNAPSHOT
+main: de.skydust.system.PluginLauncher
+description: The official SkyDust system.
+author: dieser1dude
+commands:
+  motd:
