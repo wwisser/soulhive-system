@@ -1,5 +1,6 @@
 package de.skydust.system.task.impl;
 
+import de.skydust.system.PluginLauncher;
 import de.skydust.system.task.ComplexTask;
 import de.skydust.system.util.nms.Tablist;
 import org.bukkit.Bukkit;
@@ -19,6 +20,7 @@ public class TablistUpdateTask extends BukkitRunnable implements ComplexTask {
     );
 
     private static final long PERIOD = 20;
+    private static final int PVP_ZONE_DIFF = 15;
 
     @Override
     public void setup(JavaPlugin plugin) {
@@ -33,14 +35,16 @@ public class TablistUpdateTask extends BukkitRunnable implements ComplexTask {
 
             if (worldName.contains("ASkyBlock")) {
                 footer += "in der §fSkyBlock §7Welt.";
-            } else {
+            } else if (player.getWorld().equals(PluginLauncher.WORLD_MAIN)) {
                 int blockY = player.getLocation().getBlockY();
 
-                if (blockY < 150) {
+                if (blockY < (PluginLauncher.WORLD_MAIN.getSpawnLocation().getBlockY() - PVP_ZONE_DIFF)) {
                     footer += "in der §fPvP Zone§7.";
                 } else {
                     footer += "am §fSpawn§7.";
                 }
+            } else {
+                footer += "in '§f" + worldName + "§7'.";
             }
 
             Tablist.send(

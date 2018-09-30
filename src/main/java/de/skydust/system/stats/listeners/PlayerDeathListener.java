@@ -1,0 +1,62 @@
+package de.skydust.system.stats.listeners;
+
+import de.skydust.system.PluginLauncher;
+import de.skydust.system.stats.service.StatsService;
+import de.skydust.system.stats.tasks.PlayerRespawnTask;
+import de.skydust.system.user.User;
+import de.skydust.system.user.service.UserService;
+import lombok.AllArgsConstructor;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
+
+@AllArgsConstructor
+public class PlayerDeathListener implements Listener {
+
+    private StatsService statsService;
+
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        UserService userService = this.statsService.getUserService();
+
+        Player victim = event.getEntity();
+        Player killer = victim.getKiller();
+
+        event.setDeathMessage(null);
+        victim.playSound(victim.getLocation(), Sound.BLAZE_DEATH, 1, 1);
+        userService.getUser(victim).addDeath();
+
+        this.statsService.getTaskService().registerTasks(new PlayerRespawnTask(victim));
+
+        if (killer == null) {
+            killer = this.statsService.getLastHits().get(victim);
+        }
+
+        if (killer != null) {
+            User killerUser = userService.getUser(killer);
+
+            killerUser.addKill();
+            killerUser.addJewels(5);
+            killer.sendMessage(PluginLauncher.PREFIX + "Du hast §f" + victim.getName() + " §7getötet! +§f5 Juwelen");
+            killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 100, 100);
+
+            victim.sendMessage(
+                PluginLauncher.PREFIX
+                    + "Du wurdest von §f"
+                    + killer.getName()
+                    + " §7mit §c"
+                    + this.formatHealth(killer.getHealth())
+                    + " ❤ §7getötet."
+            );
+        }
+
+        this.statsService.getLastHits().remove(victim);
+    }
+
+    private String formatHealth(double health) {
+        return String.valueOf(Math.round((health / 2) * 100) / 100);
+    }
+
+}

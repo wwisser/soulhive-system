@@ -9,6 +9,8 @@ import java.util.Set;
 
 public interface Service {
 
+    default void initialize() {}
+
     default Set<Listener> getListeners() {
         return Collections.emptySet();
     }

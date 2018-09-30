@@ -18,6 +18,7 @@ public class TaskService implements Service {
     public void registerTasks(BukkitRunnable... bukkitRunnables) {
         for (BukkitRunnable bukkitRunnable : bukkitRunnables) {
             this.tasks.add(bukkitRunnable);
+
             if (bukkitRunnable instanceof ComplexTask) {
                 ((ComplexTask) bukkitRunnable).setup(this.plugin);
             } else {
