@@ -4,9 +4,9 @@ import de.skydust.system.PluginLauncher;
 import de.skydust.system.stats.context.ToplistContext;
 import de.skydust.system.stats.label.StatsLabel;
 import de.skydust.system.task.ComplexTask;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.Location;
-import org.bukkit.block.BlockState;
+import org.bukkit.Sound;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,15 +15,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ToplistUpdateTask extends BukkitRunnable implements ComplexTask {
 
     private static final long PERIOD = 20L * 60 * 5;
-    private static final int POSITION_Z_START = 355;
+    private static final int POSITION_Z_START = -355;
     private static final int HEAD_AMOUNT = 5;
     private static final Location LABEL_LOCATION = new Location(PluginLauncher.WORLD_MAIN, -51, 186, -353);
 
-    private ToplistContext[] toplistContexts;
+    private final ToplistContext[] toplistContexts;
     private int currentIndex = 0;
 
     @Override
@@ -42,7 +42,7 @@ public class ToplistUpdateTask extends BukkitRunnable implements ComplexTask {
         labelSign.update();
 
         Map<String, ? super Number> topList = this.sort(toplistContext.getData());
-        Location currentHead = new Location(PluginLauncher.WORLD_MAIN, -51, 185, POSITION_Z_START);
+        Location currentHead = new Location(PluginLauncher.WORLD_MAIN, -50, 185, POSITION_Z_START);
         int count = 0;
 
         for (Map.Entry<String, ? super Number> entry : topList.entrySet()) {
@@ -50,23 +50,26 @@ public class ToplistUpdateTask extends BukkitRunnable implements ComplexTask {
 
             skull.setOwner(entry.getKey());
             skull.update();
+            currentHead.getWorld().playSound(currentHead, Sound.CHICKEN_EGG_POP, 3, 5);
 
             Location lowerLoc = currentHead.clone().add(0, -1, 0);
 
             Sign sign = (Sign) lowerLoc.getBlock().getState();
+
             sign.setLine(0, "§l#" + (count + 1));
-            sign.setLine(1, "--- * ---");
+            sign.setLine(1, entry.getKey());
             sign.setLine(2, String.valueOf(entry.getValue()));
             sign.setLine(3, statsLabel.getAdditive());
+            sign.update();
 
-            currentHead.add(0, 0, count);
+            currentHead.add(0, 0, 1);
             count++;
         }
 
-        if (this.currentIndex < this.toplistContexts.length) {
-            this.currentIndex++;
-        } else {
+        if (this.currentIndex >= (this.toplistContexts.length - 1)) {
             this.currentIndex = 0;
+        } else {
+            this.currentIndex++;
         }
     }
 
@@ -78,7 +81,7 @@ public class ToplistUpdateTask extends BukkitRunnable implements ComplexTask {
             String maxValueKey = "";
 
             for (Map.Entry<String, ? super Number> entry : data.entrySet()) {
-                if (((Number) entry).longValue() > maxValue.longValue()) {
+                if (((Number) entry.getValue()).longValue() > maxValue.longValue()) {
                     maxValue = (Number) entry.getValue();
                     maxValueKey = entry.getKey();
                 }

@@ -6,6 +6,9 @@ import de.skydust.system.user.repository.UserRepository;
 import de.skydust.system.util.Config;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FileUserRepository implements UserRepository {
 
     private static final String FILE_NAME_USERS = "users.yml";
@@ -46,6 +49,24 @@ public class FileUserRepository implements UserRepository {
         String uuid = this.uuidDatabase.getString(name);
 
         return this.fetchByUuid(uuid);
+    }
+
+    @Override
+    public Map<String, ? super Number> fetchByColumn(int column) {
+        Map<String, ? super Number> result = new HashMap<>();
+
+        for (String key : this.userDatabase.getKeys(false)) {
+            Number number = Long.valueOf(this.userDatabase.getString(key).split(";")[column]);
+
+            result.put(this.uuidDatabase.getString(key), number);
+        }
+
+        return result;
+    }
+
+    @Override
+    public String fetchNameByUuid(String uuid) {
+        return this.uuidDatabase.getString(uuid);
     }
 
     @Override

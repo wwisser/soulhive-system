@@ -7,13 +7,15 @@ import lombok.Getter;
 @Getter
 public enum StatsLabel {
 
-    PLAYTIME("Spielzeit", "Stunden"),
-    KILLS("Kills", "Kills"),
-    DEATHS("Tode", "Tode"),
-    JEWELS("Juwelen", "Juwelen"),
-    ISLAND_LEVEL("IS-Level", "Level");
+    KILLS("Kills", "Kills", 2),
+    DEATHS("Tode", "Tode", 3),
+    VOTES("Votes", "Votes", 4),
+    PLAYTIME("Spielzeit", "Stunden", 5),
+    JEWELS("Juwelen", "Juwelen", 6),
+    ISLAND_LEVEL("IS-Level", "Level", -1);
 
     private String displayName;
     private String additive;
+    private int databaseColumn;
 
 }
