@@ -1,7 +1,10 @@
 package de.soulhive.system.service;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import de.soulhive.system.command.CommandService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -28,6 +31,20 @@ public class ServiceManager {
         service.getCommands().forEach((name, commandExecutor) ->
             this.plugin.getCommand(name).setExecutor(commandExecutor)
         );
+
+        service.getPacketAdapters().forEach(ProtocolLibrary.getProtocolManager()::addPacketListener);
+    }
+
+    public void unregisterService(Service service) {
+        this.services.remove(service);
+
+        service.getListeners().forEach(HandlerList::unregisterAll);
+
+        service.getCommands().forEach((name, commandExecutor) ->
+            this.plugin.getCommand(name).setExecutor(CommandService.NO_COMMAND)
+        );
+
+        service.getPacketAdapters().forEach(ProtocolLibrary.getProtocolManager()::addPacketListener);
     }
 
     public <T> T getService(Class<T> clazz) {

@@ -1,0 +1,29 @@
+package de.soulhive.system.command;
+
+import de.soulhive.system.command.impl.NoCommand;
+import de.soulhive.system.service.Service;
+import de.soulhive.system.util.reflect.ReflectUtils;
+import org.bukkit.command.CommandExecutor;
+
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class CommandService implements Service {
+
+    public static final CommandExecutor NO_COMMAND = new NoCommand();
+    private static final String PACKAGE = CommandService.class.getPackage().getName();
+    private static final int INDEX_SUBSTRING = "Command".length();
+
+    @Override
+    public Map<String, CommandExecutor> getCommands() {
+        return ReflectUtils.getPacketObjects(PACKAGE, CommandExecutor.class)
+            .stream()
+            .collect(
+                Collectors.toMap(
+                    commandExecutor -> commandExecutor.getClass().getSimpleName().substring(INDEX_SUBSTRING),
+                    commandExecutor -> commandExecutor
+                )
+            );
+    }
+
+}

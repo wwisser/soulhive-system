@@ -1,5 +1,6 @@
 package de.soulhive.system;
 
+import de.soulhive.system.command.CommandService;
 import de.soulhive.system.motd.MotdService;
 import de.soulhive.system.service.ServiceManager;
 import de.soulhive.system.stats.service.StatsService;
@@ -42,7 +43,8 @@ public class SoulHive extends JavaPlugin {
             this.taskService,
             new MotdService(),
             this.userService,
-            new StatsService()
+            new StatsService(),
+            new CommandService()
         ).forEach(serviceManager::registerService);
 
         Bukkit.getOnlinePlayers().forEach(this.userService::loadUser);
@@ -53,6 +55,7 @@ public class SoulHive extends JavaPlugin {
         this.taskService.cancelTasks();
 
         Bukkit.getOnlinePlayers().forEach(this.userService::unloadUser);
+        SoulHive.serviceManager.getServices().forEach(SoulHive.serviceManager::unregisterService);
     }
 
 }

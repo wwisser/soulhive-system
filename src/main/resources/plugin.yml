@@ -1,6 +1,7 @@
 name: SoulHive-System
 version: 2.0-SNAPSHOT
 main: de.soulhive.system.SoulHive
+depend: [ProtocolLib, ASkyBlock]
 description: The official SoulHive system.
 author: dieser1dude
 commands:
