@@ -1,6 +1,6 @@
 package de.soulhive.system.motd;
 
-import de.soulhive.system.PluginLauncher;
+import de.soulhive.system.SoulHive;
 import de.soulhive.system.motd.commands.CommandMotd;
 import de.soulhive.system.motd.listeners.ServerListPingListener;
 import de.soulhive.system.service.Service;
@@ -22,7 +22,7 @@ public class MotdService implements Service {
     private Config config;
 
     public MotdService() {
-        this.config = new Config(PluginLauncher.CONFIG_PATH, FILE_NAME);
+        this.config = new Config(SoulHive.CONFIG_PATH, FILE_NAME);
         this.config.setDefault(KEY_HEADER, "§fSoulHive.de");
         this.config.setDefault(KEY_FOOTER, "§fhuh, motd?");
     }

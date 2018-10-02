@@ -1,6 +1,6 @@
 package de.soulhive.system.stats.listeners;
 
-import de.soulhive.system.PluginLauncher;
+import de.soulhive.system.SoulHive;
 import de.soulhive.system.stats.service.StatsService;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Entity;
@@ -17,7 +17,7 @@ public class EntityDamageByEntityListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getEntity().getWorld().equals(PluginLauncher.WORLD_MAIN)) {
+        if (event.getEntity().getWorld().equals(SoulHive.WORLD_MAIN)) {
             if (!(event.getEntity() instanceof Player)) {
                 return;
             }

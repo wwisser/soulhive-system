@@ -1,9 +1,10 @@
 package de.soulhive.system.stats.service;
 
 import com.wasteofplastic.askyblock.ASkyBlockAPI;
-import de.soulhive.system.PluginLauncher;
+import de.soulhive.system.SoulHive;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.service.ServiceManager;
+import de.soulhive.system.stats.commands.CommandStats;
 import de.soulhive.system.stats.context.ToplistContext;
 import de.soulhive.system.stats.context.impl.external.IslandLevelToplistContext;
 import de.soulhive.system.stats.context.impl.internal.*;
@@ -15,6 +16,7 @@ import de.soulhive.system.task.service.TaskService;
 import de.soulhive.system.user.repository.UserRepository;
 import de.soulhive.system.user.service.UserService;
 import lombok.Getter;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
@@ -29,7 +31,7 @@ public class StatsService implements Service {
 
     @Override
     public void initialize() {
-        ServiceManager serviceManager = PluginLauncher.getServiceManager();
+        ServiceManager serviceManager = SoulHive.getServiceManager();
 
         this.userService = serviceManager.getService(UserService.class);
         this.taskService = serviceManager.getService(TaskService.class);
@@ -56,6 +58,11 @@ public class StatsService implements Service {
             super.add(new EntityDamageByEntityListener(StatsService.this));
             super.add(new PlayerDeathListener(StatsService.this));
         }};
+    }
+
+    @Override
+    public Map<String, CommandExecutor> getCommands() {
+        return Collections.singletonMap("stats", new CommandStats(this.userService));
     }
 
 }

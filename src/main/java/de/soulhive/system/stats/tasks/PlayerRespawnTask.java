@@ -20,4 +20,5 @@ public class PlayerRespawnTask extends BukkitRunnable implements ComplexTask {
     public void run() {
         this.player.spigot().respawn();
     }
+
 }

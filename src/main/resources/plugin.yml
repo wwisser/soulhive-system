@@ -1,7 +1,8 @@
 name: SoulHive-System
 version: 2.0-SNAPSHOT
-main: de.soulhive.system.PluginLauncher
-description: The official SkyDust system.
+main: de.soulhive.system.SoulHive
+description: The official SoulHive system.
 author: dieser1dude
 commands:
   motd:
+  stats:

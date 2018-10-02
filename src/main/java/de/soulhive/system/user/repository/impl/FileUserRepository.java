@@ -1,6 +1,6 @@
 package de.soulhive.system.user.repository.impl;
 
-import de.soulhive.system.PluginLauncher;
+import de.soulhive.system.SoulHive;
 import de.soulhive.system.user.User;
 import de.soulhive.system.user.repository.UserRepository;
 import de.soulhive.system.util.Config;
@@ -14,8 +14,8 @@ public class FileUserRepository implements UserRepository {
     private static final String FILE_NAME_USERS = "users.yml";
     private static final String FILE_NAME_UUIDS = "uuids.yml";
 
-    private Config userDatabase = new Config(PluginLauncher.CONFIG_PATH, FILE_NAME_USERS);
-    private Config uuidDatabase = new Config(PluginLauncher.CONFIG_PATH, FILE_NAME_UUIDS);
+    private Config userDatabase = new Config(SoulHive.CONFIG_PATH, FILE_NAME_USERS);
+    private Config uuidDatabase = new Config(SoulHive.CONFIG_PATH, FILE_NAME_UUIDS);
 
     @Override
     public User fetchByUuid(String uuid) {

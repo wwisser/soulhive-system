@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
 
-public class PluginLauncher extends JavaPlugin {
+public class SoulHive extends JavaPlugin {
 
     public static final String PREFIX = "§9§lSoulHive §8➥ §7";
     public static final String NO_PERMISSION = "§cDu hast keinen Zugriff auf diesen Befehl.";
@@ -36,7 +36,7 @@ public class PluginLauncher extends JavaPlugin {
         this.taskService.registerTasks(new TablistUpdateTask());
 
         ServiceManager serviceManager = new ServiceManager(this);
-        PluginLauncher.serviceManager = serviceManager;
+        SoulHive.serviceManager = serviceManager;
 
         Arrays.asList(
             this.taskService,
