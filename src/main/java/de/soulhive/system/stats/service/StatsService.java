@@ -1,0 +1,61 @@
+package de.soulhive.system.stats.service;
+
+import com.wasteofplastic.askyblock.ASkyBlockAPI;
+import de.soulhive.system.PluginLauncher;
+import de.soulhive.system.service.Service;
+import de.soulhive.system.service.ServiceManager;
+import de.soulhive.system.stats.context.ToplistContext;
+import de.soulhive.system.stats.context.impl.external.IslandLevelToplistContext;
+import de.soulhive.system.stats.context.impl.internal.*;
+import de.soulhive.system.stats.listeners.EntityDamageByEntityListener;
+import de.soulhive.system.stats.listeners.PlayerDeathListener;
+import de.soulhive.system.stats.tasks.PlaytimeUpdateTask;
+import de.soulhive.system.stats.tasks.ToplistUpdateTask;
+import de.soulhive.system.task.service.TaskService;
+import de.soulhive.system.user.repository.UserRepository;
+import de.soulhive.system.user.service.UserService;
+import lombok.Getter;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+
+import java.util.*;
+
+@Getter
+public class StatsService implements Service {
+
+    private Map<Player, Player> lastHits = new HashMap<>();
+    private UserService userService;
+    private TaskService taskService;
+
+    @Override
+    public void initialize() {
+        ServiceManager serviceManager = PluginLauncher.getServiceManager();
+
+        this.userService = serviceManager.getService(UserService.class);
+        this.taskService = serviceManager.getService(TaskService.class);
+
+        this.taskService.registerTasks(new PlaytimeUpdateTask(this.userService));
+
+        UserRepository userRepository = this.userService.getUserRepository();
+
+        ToplistContext[] toplistContexts = {
+            new KillToplistContext(userRepository),
+            new DeathToplistContext(userRepository),
+            new PlaytimeToplistContext(userRepository),
+            new JewelToplistContext(userRepository),
+            new VoteToplistContext(userRepository),
+            new IslandLevelToplistContext(userRepository, ASkyBlockAPI.getInstance()),
+        };
+
+        this.taskService.registerTasks(new ToplistUpdateTask(toplistContexts));
+    }
+
+    @Override
+    public Set<Listener> getListeners() {
+        return new HashSet<Listener>() {{
+            super.add(new EntityDamageByEntityListener(StatsService.this));
+            super.add(new PlayerDeathListener(StatsService.this));
+        }};
+    }
+
+}

@@ -1,6 +1,6 @@
-name: SkyDust-System
+name: SoulHive-System
 version: 2.0-SNAPSHOT
-main: de.skydust.system.PluginLauncher
+main: de.soulhive.system.PluginLauncher
 description: The official SkyDust system.
 author: dieser1dude
 commands:
