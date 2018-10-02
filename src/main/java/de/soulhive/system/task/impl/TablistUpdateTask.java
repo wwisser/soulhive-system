@@ -12,9 +12,10 @@ import java.util.List;
 
 public class TablistUpdateTask extends BukkitRunnable implements ComplexTask {
 
+
     private static final List<String> TAB_HEADER = Arrays.asList(
         "",
-        "     §9§lSoulHive §8➥ §7Deine §fSkyPvP §7Community",
+        "      §9§lSoulHive §8➥ §7Deine §fSkyPvP §7Community",
         ""
     );
 
