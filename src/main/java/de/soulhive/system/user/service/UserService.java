@@ -7,6 +7,7 @@ import de.soulhive.system.user.listeners.PlayerQuitListener;
 import de.soulhive.system.user.repository.UserRepository;
 import de.soulhive.system.user.repository.impl.FileUserRepository;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
@@ -19,6 +20,16 @@ public class UserService implements Service {
 
     private Map<Player, User> onlineCache = new HashMap<>();
     private UserRepository userRepository = new FileUserRepository();
+
+    @Override
+    public void initialize() {
+        Bukkit.getOnlinePlayers().forEach(this::loadUser);
+    }
+
+    @Override
+    public void disable() {
+        Bukkit.getOnlinePlayers().forEach(this::unloadUser);
+    }
 
     public User loadUser(Player player) {
         User fetchedUser = this.userRepository.fetchByUuid(player.getUniqueId().toString());

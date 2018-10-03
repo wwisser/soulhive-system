@@ -2,6 +2,7 @@ package de.soulhive.system.motd.commands;
 
 import de.soulhive.system.SoulHive;
 import de.soulhive.system.motd.MotdService;
+import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.nms.ActionBar;
 import lombok.AllArgsConstructor;
 import net.md_5.bungee.api.ChatColor;
@@ -14,14 +15,14 @@ import java.util.Arrays;
 @AllArgsConstructor
 public class CommandMotd implements CommandExecutor {
 
-    private static final String USAGE = SoulHive.COMMAND_USAGE + "/motd <header|footer> <Text>";
+    private static final String USAGE = Settings.COMMAND_USAGE + "/motd <header|footer> <Text>";
 
     private final MotdService motdService;
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         if (!commandSender.hasPermission("soulhive.motd")) {
-            ActionBar.send(SoulHive.NO_PERMISSION, commandSender);
+            ActionBar.send(Settings.COMMAND_NO_PERMISSION, commandSender);
             return false;
         }
 
@@ -50,7 +51,7 @@ public class CommandMotd implements CommandExecutor {
                 return true;
         }
 
-        commandSender.sendMessage(SoulHive.PREFIX + "Du hast die §fMOTD §7erfolgreich geändert");
+        commandSender.sendMessage(Settings.PREFIX + "Du hast die §fMOTD §7erfolgreich geändert");
         commandSender.sendMessage("");
         commandSender.sendMessage("§7" + this.motdService.fetchHeader());
         commandSender.sendMessage("§7" + this.motdService.fetchFooter());

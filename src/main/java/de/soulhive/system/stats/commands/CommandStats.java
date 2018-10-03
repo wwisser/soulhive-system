@@ -1,6 +1,7 @@
 package de.soulhive.system.stats.commands;
 
 import de.soulhive.system.SoulHive;
+import de.soulhive.system.setting.Settings;
 import de.soulhive.system.user.User;
 import de.soulhive.system.user.service.UserService;
 import lombok.AllArgsConstructor;
@@ -31,11 +32,11 @@ public class CommandStats implements CommandExecutor {
         User user = args.length > 0 ?this.userService.getUserByName(args[0]) : this.userService.getUser(player);
 
         if (user == null) {
-            player.sendMessage(SoulHive.PREFIX + "§cDer Spieler '" + args[0] + "' konnte nicht gefunden werden.");
+            player.sendMessage(Settings.PREFIX + "§cDer Spieler '" + args[0] + "' konnte nicht gefunden werden.");
             return true;
         }
 
-        player.sendMessage(SoulHive.PREFIX + "Stats von §f" + user.getName());
+        player.sendMessage(Settings.PREFIX + "Stats von §f" + user.getName());
         player.sendMessage(" §7Kills: §f" + user.getKills());
         player.sendMessage(" §7Tode: §f" + user.getDeaths());
         player.sendMessage(" §7Juwelen: §f" + user.getJewels());

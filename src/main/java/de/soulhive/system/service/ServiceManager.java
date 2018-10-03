@@ -8,13 +8,14 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 public class ServiceManager {
 
-    @Getter private List<Service> services = new ArrayList<>();
+    private List<Service> services = new ArrayList<>();
     private final JavaPlugin plugin;
 
     public void registerService(Service service) {
@@ -36,15 +37,14 @@ public class ServiceManager {
     }
 
     public void unregisterService(Service service) {
-        this.services.remove(service);
-
-        service.getListeners().forEach(HandlerList::unregisterAll);
-
         service.getCommands().forEach((name, commandExecutor) ->
             this.plugin.getCommand(name).setExecutor(CommandService.NO_COMMAND)
         );
 
+        service.getListeners().forEach(HandlerList::unregisterAll);
         service.getPacketAdapters().forEach(ProtocolLibrary.getProtocolManager()::addPacketListener);
+        service.disable();
+        this.services.remove(service);
     }
 
     public <T> T getService(Class<T> clazz) {
@@ -55,6 +55,10 @@ public class ServiceManager {
         }
 
         throw new NoSuchElementException("Could not find Service '" + clazz.getName() + "'");
+    }
+
+    public List<Service> getServices() {
+        return new ArrayList<>(this.services);
     }
 
 }

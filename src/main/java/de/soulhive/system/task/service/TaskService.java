@@ -27,7 +27,8 @@ public class TaskService implements Service {
         }
     }
 
-    public void cancelTasks() {
+    @Override
+    public void disable() {
         this.tasks.forEach(BukkitRunnable::cancel);
     }
 

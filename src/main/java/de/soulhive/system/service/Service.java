@@ -13,6 +13,8 @@ public interface Service {
 
     default void initialize() {}
 
+    default void disable() {}
+
     default Set<Listener> getListeners() {
         return Collections.emptySet();
     }

@@ -4,6 +4,7 @@ import de.soulhive.system.SoulHive;
 import de.soulhive.system.motd.commands.CommandMotd;
 import de.soulhive.system.motd.listeners.ServerListPingListener;
 import de.soulhive.system.service.Service;
+import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.Config;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
@@ -22,8 +23,8 @@ public class MotdService implements Service {
     private Config config;
 
     public MotdService() {
-        this.config = new Config(SoulHive.CONFIG_PATH, FILE_NAME);
-        this.config.setDefault(KEY_HEADER, "§fSoulHive.de");
+        this.config = new Config(Settings.CONFIG_PATH, FILE_NAME);
+        this.config.setDefault(KEY_HEADER, "§fSettings.de");
         this.config.setDefault(KEY_FOOTER, "§fhuh, motd?");
     }
 

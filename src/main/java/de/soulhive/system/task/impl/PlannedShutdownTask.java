@@ -1,6 +1,7 @@
 package de.soulhive.system.task.impl;
 
 import de.soulhive.system.SoulHive;
+import de.soulhive.system.setting.Settings;
 import de.soulhive.system.task.ComplexTask;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -29,10 +30,10 @@ public class PlannedShutdownTask extends BukkitRunnable implements ComplexTask {
 
         switch (time) {
             case TIME_WARNING:
-                Bukkit.broadcastMessage(SoulHive.PREFIX + "§cAutomatischer Serverneustart in 5 Minuten.");
+                Bukkit.broadcastMessage(Settings.PREFIX + "§cAutomatischer Serverneustart in 5 Minuten.");
                 break;
             case TIME_SHUTDOWN:
-                Bukkit.broadcastMessage(SoulHive.PREFIX + "§4Der Server startet jetzt neu.");
+                Bukkit.broadcastMessage(Settings.PREFIX + "§4Der Server startet jetzt neu.");
                 Bukkit.getWorlds().forEach(World::save);
                 Bukkit.getServer().shutdown();
                 break;

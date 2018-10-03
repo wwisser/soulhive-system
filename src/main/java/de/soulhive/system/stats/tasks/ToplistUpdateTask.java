@@ -1,6 +1,7 @@
 package de.soulhive.system.stats.tasks;
 
 import de.soulhive.system.SoulHive;
+import de.soulhive.system.setting.Settings;
 import de.soulhive.system.stats.context.ToplistContext;
 import de.soulhive.system.stats.label.StatsLabel;
 import de.soulhive.system.task.ComplexTask;
@@ -23,7 +24,7 @@ public class ToplistUpdateTask extends BukkitRunnable implements ComplexTask {
 
     private static final int POSITION_Z_START = -355;
     private static final int HEAD_AMOUNT = 5;
-    private static final Location LABEL_LOCATION = new Location(SoulHive.WORLD_MAIN, -51, 186, -353);
+    private static final Location LABEL_LOCATION = new Location(Settings.WORLD_MAIN, -51, 186, -353);
 
     private final ToplistContext[] toplistContexts;
     private int currentIndex = 0;
@@ -44,7 +45,7 @@ public class ToplistUpdateTask extends BukkitRunnable implements ComplexTask {
         labelSign.update();
 
         Map<String, ? super Number> topList = this.sort(toplistContext.getData());
-        Location currentHead = new Location(SoulHive.WORLD_MAIN, -50, 185, POSITION_Z_START);
+        Location currentHead = new Location(Settings.WORLD_MAIN, -50, 185, POSITION_Z_START);
         int count = 0;
 
         for (Map.Entry<String, ? super Number> entry : topList.entrySet()) {

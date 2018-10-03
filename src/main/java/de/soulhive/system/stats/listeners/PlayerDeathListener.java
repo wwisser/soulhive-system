@@ -1,6 +1,7 @@
 package de.soulhive.system.stats.listeners;
 
 import de.soulhive.system.SoulHive;
+import de.soulhive.system.setting.Settings;
 import de.soulhive.system.stats.service.StatsService;
 import de.soulhive.system.stats.tasks.PlayerRespawnTask;
 import de.soulhive.system.user.User;
@@ -39,11 +40,11 @@ public class PlayerDeathListener implements Listener {
 
             killerUser.addKill();
             killerUser.addJewels(5);
-            killer.sendMessage(SoulHive.PREFIX + "Du hast §f" + victim.getName() + " §7getötet! +§f5 Juwelen");
+            killer.sendMessage(Settings.PREFIX + "Du hast §f" + victim.getName() + " §7getötet! +§f5 Juwelen");
             killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 100, 100);
 
             victim.sendMessage(
-                SoulHive.PREFIX
+                Settings.PREFIX
                     + "Du wurdest von §f"
                     + killer.getName()
                     + " §7mit §c"
