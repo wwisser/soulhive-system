@@ -1,6 +1,5 @@
 package de.soulhive.system.motd;
 
-import de.soulhive.system.SoulHive;
 import de.soulhive.system.motd.commands.CommandMotd;
 import de.soulhive.system.motd.listeners.ServerListPingListener;
 import de.soulhive.system.service.Service;
@@ -13,7 +12,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-public class MotdService implements Service {
+public class MotdService extends Service {
 
     private static final String FILE_NAME = "motd.yml";
 
@@ -23,9 +22,13 @@ public class MotdService implements Service {
     private Config config;
 
     public MotdService() {
-        this.config = new Config(Settings.CONFIG_PATH, FILE_NAME);
+        this.reloadConig();
         this.config.setDefault(KEY_HEADER, "§fSettings.de");
         this.config.setDefault(KEY_FOOTER, "§fhuh, motd?");
+    }
+
+    public void reloadConig() {
+        this.config = new Config(Settings.CONFIG_PATH, FILE_NAME);
     }
 
     public void updateHeader(String header) {

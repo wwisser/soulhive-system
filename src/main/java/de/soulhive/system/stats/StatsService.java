@@ -1,4 +1,4 @@
-package de.soulhive.system.stats.service;
+package de.soulhive.system.stats;
 
 import com.wasteofplastic.askyblock.ASkyBlockAPI;
 import de.soulhive.system.SoulHive;
@@ -12,9 +12,9 @@ import de.soulhive.system.stats.listeners.EntityDamageByEntityListener;
 import de.soulhive.system.stats.listeners.PlayerDeathListener;
 import de.soulhive.system.stats.tasks.PlaytimeUpdateTask;
 import de.soulhive.system.stats.tasks.ToplistUpdateTask;
-import de.soulhive.system.task.service.TaskService;
+import de.soulhive.system.task.TaskService;
 import de.soulhive.system.user.repository.UserRepository;
-import de.soulhive.system.user.service.UserService;
+import de.soulhive.system.user.UserService;
 import lombok.Getter;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -23,7 +23,7 @@ import org.bukkit.event.Listener;
 import java.util.*;
 
 @Getter
-public class StatsService implements Service {
+public class StatsService extends Service {
 
     private Map<Player, Player> lastHits = new HashMap<>();
     private UserService userService;

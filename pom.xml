@@ -15,7 +15,6 @@
         </repository>
         <repository>
             <id>bintray-tastybento-maven-repo</id>
-            <name>bintray</name>
             <url>http://dl.bintray.com/tastybento/maven-repo</url>
         </repository>
     </repositories>
@@ -27,6 +26,13 @@
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ru.tehcode</groupId>
+            <artifactId>permissionsex</artifactId>
+            <version>1.2.2-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/PermissionsEx.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>

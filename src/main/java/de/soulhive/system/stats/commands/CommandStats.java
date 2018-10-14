@@ -1,9 +1,8 @@
 package de.soulhive.system.stats.commands;
 
-import de.soulhive.system.SoulHive;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.user.User;
-import de.soulhive.system.user.service.UserService;
+import de.soulhive.system.user.UserService;
 import lombok.AllArgsConstructor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

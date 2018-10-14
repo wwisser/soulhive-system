@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 
 import java.util.Set;
 
-public class ListenerService implements Service {
+public class ListenerService extends Service {
 
     private static final String PACKAGE = ListenerService.class.getPackage().getName();
 

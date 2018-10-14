@@ -2,7 +2,7 @@ package de.soulhive.system.user.listeners;
 
 import de.soulhive.system.user.repository.UserRepository;
 import de.soulhive.system.user.repository.impl.FileUserRepository;
-import de.soulhive.system.user.service.UserService;
+import de.soulhive.system.user.UserService;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

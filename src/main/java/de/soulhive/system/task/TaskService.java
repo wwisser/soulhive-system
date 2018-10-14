@@ -1,4 +1,4 @@
-package de.soulhive.system.task.service;
+package de.soulhive.system.task;
 
 import de.soulhive.system.service.Service;
 import de.soulhive.system.task.ComplexTask;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class TaskService implements Service {
+public class TaskService extends Service {
 
     private final JavaPlugin plugin;
     private List<BukkitRunnable> tasks = new ArrayList<>();

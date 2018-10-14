@@ -2,7 +2,7 @@ package de.soulhive.system.stats.tasks;
 
 import de.soulhive.system.task.ComplexTask;
 import de.soulhive.system.user.User;
-import de.soulhive.system.user.service.UserService;
+import de.soulhive.system.user.UserService;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

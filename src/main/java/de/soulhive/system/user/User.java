@@ -25,6 +25,10 @@ public class User {
         this.deaths++;
     }
 
+    public void addVote() {
+        this.votes++;
+    }
+
     public void addPlaytime() {
         this.playtime++;
     }

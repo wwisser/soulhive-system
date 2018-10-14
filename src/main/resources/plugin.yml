@@ -6,6 +6,8 @@ description: The official SoulHive system.
 author: dieser1dude
 commands:
   none:
+  debug:
   motd:
   stats:
   rawbc:
+  vanish:

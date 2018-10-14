@@ -8,7 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class CommandService implements Service {
+public class CommandService extends Service {
 
     public static final CommandExecutor NO_COMMAND = new CommandNone();
     private static final String PACKAGE = CommandService.class.getPackage().getName();

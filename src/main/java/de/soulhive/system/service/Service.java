@@ -9,21 +9,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public interface Service {
+public class Service {
 
-    default void initialize() {}
+    public void initialize() {}
 
-    default void disable() {}
+    public void disable() {}
 
-    default Set<Listener> getListeners() {
+    public Set<Listener> getListeners() {
         return Collections.emptySet();
     }
 
-    default Map<String, CommandExecutor> getCommands() {
+    public Map<String, CommandExecutor> getCommands() {
         return Collections.emptyMap();
     }
 
-    default Set<PacketAdapter> getPacketAdapters() {
+    public Set<PacketAdapter> getPacketAdapters() {
         return Collections.emptySet();
     }
 

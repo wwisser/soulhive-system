@@ -4,11 +4,12 @@ import de.soulhive.system.command.CommandService;
 import de.soulhive.system.listener.ListenerService;
 import de.soulhive.system.motd.MotdService;
 import de.soulhive.system.service.ServiceManager;
-import de.soulhive.system.stats.service.StatsService;
+import de.soulhive.system.stats.StatsService;
 import de.soulhive.system.task.impl.PlannedShutdownTask;
 import de.soulhive.system.task.impl.TablistUpdateTask;
-import de.soulhive.system.task.service.TaskService;
-import de.soulhive.system.user.service.UserService;
+import de.soulhive.system.task.TaskService;
+import de.soulhive.system.user.UserService;
+import de.soulhive.system.vanish.VanishService;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,7 +37,8 @@ public class SoulHive extends JavaPlugin {
             new UserService(),
             new StatsService(),
             new CommandService(),
-            new ListenerService()
+            new ListenerService(),
+            new VanishService(this)
         ).forEach(serviceManager::registerService);
     }
 

@@ -1,8 +1,7 @@
 package de.soulhive.system.stats.listeners;
 
-import de.soulhive.system.SoulHive;
 import de.soulhive.system.setting.Settings;
-import de.soulhive.system.stats.service.StatsService;
+import de.soulhive.system.stats.StatsService;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

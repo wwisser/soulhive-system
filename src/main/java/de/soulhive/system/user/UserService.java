@@ -1,7 +1,6 @@
-package de.soulhive.system.user.service;
+package de.soulhive.system.user;
 
 import de.soulhive.system.service.Service;
-import de.soulhive.system.user.User;
 import de.soulhive.system.user.listeners.PlayerJoinListener;
 import de.soulhive.system.user.listeners.PlayerQuitListener;
 import de.soulhive.system.user.repository.UserRepository;
@@ -16,7 +15,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Getter
-public class UserService implements Service {
+public class UserService extends Service {
 
     private Map<Player, User> onlineCache = new HashMap<>();
     private UserRepository userRepository = new FileUserRepository();
