@@ -1,6 +1,5 @@
 package de.soulhive.system.listener.impl.guard;
 
-import de.soulhive.system.SoulHive;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.nms.ActionBar;
 import org.bukkit.entity.Player;

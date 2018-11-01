@@ -11,3 +11,5 @@ commands:
   stats:
   rawbc:
   vanish:
+  teamspeak:
+    aliases: [ts]

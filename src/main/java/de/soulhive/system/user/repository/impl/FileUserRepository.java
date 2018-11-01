@@ -1,6 +1,5 @@
 package de.soulhive.system.user.repository.impl;
 
-import de.soulhive.system.SoulHive;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.user.User;
 import de.soulhive.system.user.repository.UserRepository;

@@ -21,6 +21,13 @@ public class VanishService extends Service {
     private final JavaPlugin plugin;
     @Getter private List<Player> vanishedPlayers = new ArrayList<>();
 
+    public int getOnlinePlayersDiff() {
+        return Bukkit.getOnlinePlayers().size() - (int) this.vanishedPlayers
+            .stream()
+            .filter(Player::isOnline)
+            .count();
+    }
+
     @Override
     public void disable() {
         for (Player vanishedPlayer : this.vanishedPlayers) {
@@ -47,7 +54,7 @@ public class VanishService extends Service {
     @Override
     public Set<PacketAdapter> getPacketAdapters() {
         return Collections.singleton(
-            new ServerInfoPacketAdapter(this.plugin, this.vanishedPlayers)
+            new ServerInfoPacketAdapter(this.plugin, this)
         );
     }
 

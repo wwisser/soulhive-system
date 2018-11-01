@@ -1,6 +1,6 @@
 package de.soulhive.system.command;
 
-import de.soulhive.system.command.impl.CommandNone;
+import de.soulhive.system.command.impl.none.CommandNone;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.util.reflect.ReflectUtils;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +16,7 @@ public class CommandService extends Service {
 
     @Override
     public Map<String, CommandExecutor> getCommands() {
-        return ReflectUtils.getPacketObjects(PACKAGE, CommandExecutor.class)
+        return ReflectUtils.getPacketObjects(PACKAGE, CommandExecutorWrapper.class)
             .stream()
             .collect(
                 Collectors.toMap(

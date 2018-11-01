@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Service {
+public abstract class Service {
 
     public void initialize() {}
 

@@ -1,6 +1,5 @@
 package de.soulhive.system.task.impl;
 
-import de.soulhive.system.SoulHive;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.task.ComplexTask;
 import org.bukkit.Bukkit;

@@ -1,6 +1,5 @@
 package de.soulhive.system.stats.tasks;
 
-import de.soulhive.system.SoulHive;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.stats.context.ToplistContext;
 import de.soulhive.system.stats.label.StatsLabel;
