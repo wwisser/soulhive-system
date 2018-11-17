@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.List;
@@ -26,6 +27,8 @@ public final class Settings {
     public static final World WORLD_MAIN = Bukkit.getWorld("SoulHive");
     public static final World WORLD_SKYBLOCK = Bukkit.getWorld("ASkyBlock");
     private static final World WORLD_SKYBLOCK_NETHER = Bukkit.getWorld("ASkyBlock_nether");
+
+    public static final Location LOCATION_SPAWN = new Location(WORLD_MAIN, -56.5, 183, -351.5, 0, 0);
 
     public static final List<World> SKYBLOCK_WORLDS = ImmutableList.of(WORLD_SKYBLOCK, WORLD_SKYBLOCK_NETHER);
 

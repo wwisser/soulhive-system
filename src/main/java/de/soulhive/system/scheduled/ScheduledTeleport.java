@@ -3,7 +3,6 @@ package de.soulhive.system.scheduled;
 import de.soulhive.system.SoulHive;
 import de.soulhive.system.task.ComplexTask;
 import de.soulhive.system.task.TaskService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -35,36 +34,41 @@ public class ScheduledTeleport {
         private final BiConsumer<Player, Boolean> result;
         private int count = 0;
 
+        private int startX;
+        private int startY;
+        private int startZ;
+
         @Override
         public void setup(JavaPlugin plugin) {
             super.runTaskTimer(plugin, 0, 1);
+
+            Location currentLocation = this.player.getLocation();
+            this.startX = currentLocation.getBlockX();
+            this.startY = currentLocation.getBlockY();
+            this.startZ = currentLocation.getBlockZ();
         }
 
         @Override
         public void run() {
-            ScheduledTeleport teleport = ScheduledTeleport.this;
-            int targetX = teleport.targetLocation.getBlockX();
-            int targetY = teleport.targetLocation.getBlockY();
-            int targetZ = teleport.targetLocation.getBlockZ();
-
             Location currentLocation = this.player.getLocation();
             int currentX = currentLocation.getBlockX();
             int currentY = currentLocation.getBlockY();
             int currentZ = currentLocation.getBlockZ();
 
-            if (currentX != targetX || currentY != targetY || currentZ != targetZ) {
+            if (currentX != this.startX || currentY != this.startY || currentZ != this.startZ) {
                 this.result.accept(this.player, false);
                 super.cancel();
                 return;
             }
 
-            if (count == (SECOND_IN_TICKS * teleport.seconds)) {
+            if (this.count == (SECOND_IN_TICKS * ScheduledTeleport.this.seconds)) {
                 this.result.accept(this.player, true);
-                this.player.teleport(teleport.targetLocation);
+                this.player.teleport(ScheduledTeleport.this.targetLocation);
+                super.cancel();
                 return;
             }
 
-            count++;
+            this.count++;
         }
     }
 

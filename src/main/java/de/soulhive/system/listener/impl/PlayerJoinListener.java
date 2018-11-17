@@ -1,5 +1,6 @@
 package de.soulhive.system.listener.impl;
 
+import de.soulhive.system.setting.Settings;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +15,10 @@ public class PlayerJoinListener implements Listener {
 
         player.playSound(player.getLocation(), Sound.LEVEL_UP, Float.MAX_VALUE, Float.MIN_VALUE);
         event.setJoinMessage(null);
+
+        if (!player.hasPlayedBefore()) {
+            player.teleport(Settings.LOCATION_SPAWN);
+        }
     }
 
 }

@@ -31,3 +31,5 @@ commands:
   workbench:
   clearinventory:
     aliases: [ci, clear]
+  spawn:
+    aliases: [hub, lobby, l]
