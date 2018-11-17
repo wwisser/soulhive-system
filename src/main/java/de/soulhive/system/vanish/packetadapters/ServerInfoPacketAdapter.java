@@ -27,7 +27,7 @@ public class ServerInfoPacketAdapter extends PacketAdapter {
     @Override
     public void onPacketSending(PacketEvent event) {
         WrappedServerPing ping = event.getPacket().getServerPings().read(0);
-        StringBuilder stringBuilder = new StringBuilder("§c\n§c\n");
+        StringBuilder stringBuilder = new StringBuilder("§c\n");
         int diff = this.vanishService.getOnlinePlayersDiff();
 
         if (diff < 1) {
@@ -39,10 +39,10 @@ public class ServerInfoPacketAdapter extends PacketAdapter {
             .filter(player -> !this.vanishService.getVanishedPlayers().contains(player))
             .forEach(player -> stringBuilder.append("\n").append("§f").append(player.getName()));
 
-        stringBuilder.append("§c\n§c\n§c\n");
+        stringBuilder.append("§c\n§c\n");
 
         ping.setPlayers(Collections.singletonList(
-            new WrappedGameProfile(UUID.randomUUID(), stringBuilder.toString())
+            new WrappedGameProfile(UUID.randomUUID(), " "+ stringBuilder.toString() + " ")
         ));
         ping.setPlayersOnline(diff);
     }
