@@ -1,52 +1,53 @@
 package de.soulhive.system.command.impl.admin;
 
-import de.skycade.system.setting.Message;
-import de.skycade.system.util.ActionBar;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
+import de.soulhive.system.command.CommandExecutorWrapper;
+import de.soulhive.system.command.exception.CommandException;
+import de.soulhive.system.command.util.ValidateCommand;
+import de.soulhive.system.setting.Settings;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CommandSpeed implements CommandExecutor {
+public class CommandSpeed extends CommandExecutorWrapper {
+
+    private static final String USAGE = "/speed <value>";
+
+    private static final float SPEED_BASE_FLYING = 0.1F;
+    private static final float SPEED_BASE_WALKING = 0.2F;
+
+    private static final float SPEED_MAX = 10.0F;
+    private static final float SPEED_MIN = 1.0E-004F;
+
+    private static final float SPEED_RATIO_MAX = 1.0F;
+    private static final float SPEED_RATIO = 9.0F;
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label,
-                             String[] args) {
-        if (!(commandSender instanceof Player)) {
-            System.out.println(Message.COMMAND_ONLY_PLAYER);
-            return true;
+    public void process(CommandSender sender, String[] args) throws CommandException {
+        ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
+        Player player = ValidateCommand.onlyPlayer(sender);
+
+        ValidateCommand.minArgs(1, args, USAGE);
+        float userSpeed = Float.parseFloat(args[0]);
+
+        if (userSpeed > SPEED_MAX) {
+            userSpeed = SPEED_MAX;
+        } else if (userSpeed < SPEED_MIN) {
+            userSpeed = SPEED_MIN;
         }
 
-        Player player = (Player) commandSender;
+        float base = player.isFlying() ? SPEED_BASE_FLYING : SPEED_BASE_WALKING;
+        float ratio = (userSpeed - SPEED_RATIO_MAX) / SPEED_RATIO * (SPEED_RATIO_MAX - base);
+        float speed = ratio + base;
+        String mode;
 
-        if (args.length < 1) {
-            player.sendMessage(Message.COMMAND_USAGE + "/speed <Wert>");
-            return true;
-        }
-
-        if (player.hasPermission("skycade.speed")) {
-            float userSpeed = Float.valueOf(args[0]);
-
-            if (userSpeed > 10.0F) {
-                userSpeed = 10.0F;
-            } else if (userSpeed < 1.0E-004F) {
-                userSpeed = 1.0E-004F;
-            }
-
-            float defaultSpeed = player.isFlying() ? 0.1F : 0.2F;
-            float maxSpeed = 1.0F;
-            float ratio = (userSpeed - 1.0F) / 9.0F * (maxSpeed - defaultSpeed);
-            float speed = ratio + defaultSpeed;
-
-            if (player.isFlying()) {
-                player.setFlySpeed(speed);
-            } else {
-                player.setWalkSpeed(speed);
-            }
-            ActionBar.send("§7Dein §3" + ( player.isFlying() ? "Fly" : "Walk") + "speed §7ist jetzt auf §3" + userSpeed, player);
+        if (player.isFlying()) {
+            player.setFlySpeed(speed);
+            mode = "Fly";
         } else {
-            ActionBar.send(Message.NO_PERMISSION, player);
+            player.setWalkSpeed(speed);
+            mode = "Walk";
         }
-        return true;
+
+        player.sendMessage(Settings.PREFIX + "Dein §f" + mode + "§7-Speed beträgt jetzt §f" + userSpeed + "§7.");
     }
+
 }

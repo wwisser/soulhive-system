@@ -42,6 +42,9 @@ public class CommandStats implements CommandExecutor {
         player.sendMessage(" §7Spielzeit: §f" + (user.getPlaytime() / 60) + "h");
         player.sendMessage(" §7Votes: §f" + user.getVotes());
         player.sendMessage(" §7Registriert seit: §f" + DATE_FORMAT.format(new Date(user.getFirstSeen())));
+        if (player.isOp()) {
+            player.sendMessage(" §7Zul. gesehen: §f" + DATE_FORMAT.format(new Date(user.getLastSeen())));
+        }
 
         return true;
     }

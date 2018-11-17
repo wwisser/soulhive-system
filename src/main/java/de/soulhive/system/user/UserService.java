@@ -40,6 +40,7 @@ public class UserService extends Service {
     public void unloadUser(Player player) {
         User user = this.getUser(player);
 
+        user.setLastSeen(System.currentTimeMillis());
         this.userRepository.save(user);
         this.onlineCache.remove(player);
     }

@@ -15,20 +15,13 @@ public abstract class CommandExecutorWrapper implements CommandExecutor {
     public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         try {
             this.process(sender, args);
-        } catch (CommandException e) {
+        } catch (Exception e) {
             String message = e.getMessage();
 
             if (e instanceof PermissionException) {
                 ActionBar.send(message, sender);
-            } else if (e instanceof TargetNotFoundException){
-                sender.sendMessage(
-                    Settings.PREFIX
-                        + "§cZiel '"
-                        + ((TargetNotFoundException) e).getTarget()
-                        + "' nicht gefunden."
-                );
             } else {
-                sender.sendMessage(message);
+                sender.sendMessage(e instanceof CommandException ? message : Settings.PREFIX + "§4Fehler: §c" + message);
             }
         }
 

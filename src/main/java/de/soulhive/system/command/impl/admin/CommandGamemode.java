@@ -1,5 +1,6 @@
 package de.soulhive.system.command.impl.admin;
 
+import com.google.common.collect.ImmutableMap;
 import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
@@ -8,9 +9,17 @@ import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Map;
+
 public class CommandGamemode extends CommandExecutorWrapper {
 
     private static final String COMMAND_USAGE = "/gamemode <0|1|2|3> <Spieler";
+    private static final Map<String, GameMode> GAME_MODES = ImmutableMap.of(
+      "0", GameMode.SURVIVAL,
+      "1", GameMode.CREATIVE,
+      "2", GameMode.ADVENTURE,
+      "3", GameMode.SPECTATOR
+    );
 
     @Override
     public void process(CommandSender sender, String[] args) throws CommandException {
@@ -18,7 +27,7 @@ public class CommandGamemode extends CommandExecutorWrapper {
         ValidateCommand.minArgs(1, args, COMMAND_USAGE);
 
         Player target;
-        GameMode gameMode = this.parseGamemode(args[0]);
+        GameMode gameMode = GAME_MODES.getOrDefault(args[0], GameMode.SURVIVAL);
 
         if (args.length > 1) {
             target = ValidateCommand.target(args[1]);
@@ -36,30 +45,6 @@ public class CommandGamemode extends CommandExecutorWrapper {
 
         target.sendMessage(Settings.PREFIX + "Dein Spielmodus wurde zu §f" + gameMode + " §7geändert.");
         target.setGameMode(gameMode);
-    }
-
-    private GameMode parseGamemode(String arg) {
-        GameMode gameMode;
-
-        switch (arg) {
-            case "0":
-                gameMode = GameMode.SURVIVAL;
-                break;
-            case "1":
-                gameMode = GameMode.CREATIVE;
-                break;
-            case "2":
-                gameMode = GameMode.ADVENTURE;
-                break;
-            case "3":
-                gameMode = GameMode.SPECTATOR;
-                break;
-            default:
-                gameMode = GameMode.SURVIVAL;
-                break;
-        }
-
-        return gameMode;
     }
 
 }

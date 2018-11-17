@@ -1,13 +1,12 @@
 package de.soulhive.system.command.util;
 
-import de.soulhive.system.command.exception.impl.InvalidArgsException;
-import de.soulhive.system.command.exception.impl.InvalidSenderException;
-import de.soulhive.system.command.exception.impl.PermissionException;
-import de.soulhive.system.command.exception.impl.TargetNotFoundException;
+import de.soulhive.system.command.exception.impl.*;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 @UtilityClass
 public class ValidateCommand {
@@ -40,6 +39,16 @@ public class ValidateCommand {
         }
 
         return targetPlayer;
+    }
+
+    public ItemStack heldItem(Player player) throws HeldItemNotFoundException {
+        ItemStack itemInHand = player.getItemInHand();
+
+        if (itemInHand == null || itemInHand.getType() == Material.AIR) {
+            throw new HeldItemNotFoundException();
+        }
+
+        return itemInHand;
     }
 
 }

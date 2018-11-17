@@ -11,5 +11,23 @@ commands:
   stats:
   rawbc:
   vanish:
-  teamspeak:
-    aliases: [ts]
+  chatclear:
+    aliases: [cc]
+  gamemode:
+    aliases: [gm]
+  giveall:
+  item:
+    aliases: [i]
+  rename:
+  speed:
+  sudo:
+  teamchat:
+    aliases: [tc]
+  ping:
+  repair:
+  skull:
+  stack:
+  top:
+  workbench:
+  clearinventory:
+    aliases: [ci, clear]

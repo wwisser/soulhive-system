@@ -1,39 +1,29 @@
 package de.soulhive.system.command.impl.admin;
 
-import de.skycade.system.setting.Message;
-import de.skycade.system.util.ActionBar;
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
+import de.soulhive.system.command.CommandExecutorWrapper;
+import de.soulhive.system.command.exception.CommandException;
+import de.soulhive.system.command.util.ValidateCommand;
+import de.soulhive.system.setting.Settings;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CommandSudo implements CommandExecutor {
+import java.util.Arrays;
+
+public class CommandSudo extends CommandExecutorWrapper {
+
+    private static final String USAGE = "/sudo <player> <message>";
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-        if (commandSender.hasPermission("skycade.sudo")) {
-            if (args.length < 2) {
-                commandSender.sendMessage(Message.COMMAND_USAGE + "/sudo <player> <message|command>");
-                return true;
-            }
-            Player player = Bukkit.getPlayer(args[0]);
+    public void process(CommandSender sender, String[] args) throws CommandException {
+        ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
+        ValidateCommand.minArgs(2, args, USAGE);
 
-            if (player != null && player.isOnline()) {
-                StringBuilder stringBuilder = new StringBuilder();
-                for (int i = 1; i < args.length; i++) {
-                    stringBuilder.append(args[i]).append(" ");
-                }
-                String input = stringBuilder.toString();
-                player.chat(input);
-                commandSender.sendMessage(Message.PREFIX_TEAM + "Für " + player.getName() + " ausgegeben: §a" + input);
-            } else {
-                commandSender.sendMessage(Message.PREFIX + "§cSpieler nicht gefunden.");
-            }
-        } else {
-            ActionBar.send(Message.NO_PERMISSION, (Player) commandSender);
-        }
-        return true;
+        Player target = ValidateCommand.target(args[0]);
+        String message = StringUtils.join(Arrays.copyOfRange(args, 1, args.length), " ");
+
+        target.chat(message);
+        sender.sendMessage(Settings.PREFIX + "'§f" + message + "§7' für §f" + target.getName() + " §7ausgeführt.");
     }
 
 }

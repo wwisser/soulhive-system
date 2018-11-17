@@ -1,26 +1,24 @@
-package de.soulhive.system.command.impl.essential;
+package de.soulhive.system.command.impl.admin;
 
 import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.setting.Settings;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-public class CommandPing extends CommandExecutorWrapper {
+public class CommandClearInventory extends CommandExecutorWrapper {
 
     @Override
     public void process(CommandSender sender, String[] args) throws CommandException {
+        ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         Player player = ValidateCommand.onlyPlayer(sender);
-        int ping = ((CraftPlayer) player).getHandle().ping;
 
-        if (ping < 1 || ping > 999) {
-            ping = 999;
-        }
-
-        player.sendMessage(Settings.PREFIX + "Dein Ping liegt bei §f" + ping + "ms§7.");
+        player.getInventory().clear();
+        player.getInventory().setArmorContents(null);
+        player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1, 1);
+        player.sendMessage(Settings.PREFIX + "Dein Inventar wurde §fgeleert§7!");
     }
 
 }
-

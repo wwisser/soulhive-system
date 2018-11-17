@@ -1,53 +1,33 @@
 package de.soulhive.system.command.impl.admin;
 
-import de.skycade.system.setting.Message;
-import de.skycade.system.util.ActionBar;
+import de.soulhive.system.command.CommandExecutorWrapper;
+import de.soulhive.system.command.exception.CommandException;
+import de.soulhive.system.command.util.ValidateCommand;
+import de.soulhive.system.setting.Settings;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class CommandRename implements CommandExecutor {
+public class CommandRename extends CommandExecutorWrapper {
+
+    private static final String USAGE = "/rename <name>";
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-        if (!(commandSender instanceof Player)) {
-            commandSender.sendMessage(Message.COMMAND_ONLY_PLAYER);
-            return true;
-        }
+    public void process(CommandSender sender, String[] args) throws CommandException {
+        ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
+        Player player = ValidateCommand.onlyPlayer(sender);
 
-        Player player = (Player) commandSender;
+        ValidateCommand.minArgs(1, args, USAGE);
+        ItemStack itemStack = ValidateCommand.heldItem(player);
 
-        if (!player.hasPermission("skycade.rename")) {
-            ActionBar.send(Message.NO_PERMISSION, player);
-            return true;
-        }
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        String name = "§f" + String.join(" ", args);
 
-        if (args.length == 0) {
-            player.sendMessage(Message.COMMAND_USAGE + "/rename <Name>");
-            return true;
-        }
-
-        if ((player.getItemInHand() == null) || (player.getItemInHand().getType() == Material.AIR)) {
-            ActionBar.send("§cDu musst ein Item in deiner Hand halten.", player);
-            return true;
-        }
-
-        ItemStack item = player.getItemInHand();
-        ItemMeta meta = item.getItemMeta();
-        String name = "";
-
-        for (int i = 0; i < args.length; i++) {
-            name = name + args[i] + " ";
-        }
-
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-        item.setItemMeta(meta);
-        ActionBar.send("§7Item umbenannt zu: §3" + meta.getDisplayName(), player);
-        return true;
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+        itemStack.setItemMeta(itemMeta);
+        sender.sendMessage(Settings.PREFIX + "Item zu '§f" + name + "§7' umbenannt.");
     }
+
 }

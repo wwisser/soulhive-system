@@ -2,6 +2,7 @@ package de.soulhive.system.service;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import de.soulhive.system.command.CommandService;
+import de.soulhive.system.command.TabCompleterWrapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.event.HandlerList;
@@ -29,8 +30,13 @@ public class ServiceManager {
                 .registerEvents(listener, this.plugin)
         );
 
-        service.getCommands().forEach((name, commandExecutor) ->
-            this.plugin.getCommand(name).setExecutor(commandExecutor)
+        service.getCommands().forEach((name, commandExecutor) -> {
+                this.plugin.getCommand(name).setExecutor(commandExecutor);
+
+                if (commandExecutor instanceof TabCompleterWrapper) {
+                    this.plugin.getCommand(name).setTabCompleter((TabCompleterWrapper) commandExecutor);
+                }
+            }
         );
 
         service.getPacketAdapters().forEach(ProtocolLibrary.getProtocolManager()::addPacketListener);

@@ -16,7 +16,6 @@ public class PlayerQuitListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        this.userService.getUser(player).setLastSeen(System.currentTimeMillis());
         this.userService.unloadUser(player);
     }
 

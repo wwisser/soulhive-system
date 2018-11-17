@@ -23,11 +23,11 @@ public class CommandChatclear extends CommandExecutorWrapper {
             final String finalMessage = message;
             Bukkit.getOnlinePlayers()
                 .stream()
-                .filter(player -> player.hasPermission(Settings.PERMISSION_TEAM))
+                .filter(player -> !player.hasPermission(Settings.PERMISSION_TEAM))
                 .forEach(player -> player.sendMessage(finalMessage));
         }
 
-        Bukkit.broadcastMessage(Settings.PREFIX + "Der Chat wurde von §f" + sender.getName() + " §7geleert");
+        Bukkit.broadcastMessage(Settings.PREFIX + "Der Chat wurde von §f" + sender.getName() + " §7geleert.");
     }
 
 }
