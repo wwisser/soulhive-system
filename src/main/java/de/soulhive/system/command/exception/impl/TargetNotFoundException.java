@@ -13,7 +13,7 @@ public class TargetNotFoundException extends CommandException {
 
     @Override
     public String getMessage() {
-        return Settings.PREFIX + "§cZiel '" + target + "' nicht gefunden.";
+        return Settings.PREFIX + "§cZiel '" + this.target + "' nicht gefunden.";
     }
 
 }

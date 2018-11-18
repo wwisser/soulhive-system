@@ -26,7 +26,6 @@ public class CommandTop extends CommandExecutorWrapper {
             return;
         }
 
-
         player.teleport(block.getLocation().add(0, 1, 0));
         player.sendMessage(Settings.PREFIX + "Du wurdest an die §fhöchste Stelle §7teleportiert");
     }
