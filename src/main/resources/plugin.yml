@@ -25,11 +25,21 @@ commands:
     aliases: [tc]
   ping:
   repair:
+    aliases: [fix]
   skull:
+    aliases: [head]
   stack:
   top:
   workbench:
+    aliases: [wb]
   clearinventory:
     aliases: [ci, clear]
   spawn:
     aliases: [hub, lobby, l]
+  fly:
+  trash:
+    aliases: [abfall]
+  fill:
+  cook:
+    aliases:
+  bottle:

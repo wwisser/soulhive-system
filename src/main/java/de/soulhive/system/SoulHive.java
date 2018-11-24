@@ -36,7 +36,7 @@ public class SoulHive extends JavaPlugin {
             new MotdService(),
             new UserService(),
             new StatsService(),
-            new CommandService(),
+            new CommandService(this),
             new ListenerService(),
             new VanishService(this)
         ).forEach(serviceManager::registerService);
