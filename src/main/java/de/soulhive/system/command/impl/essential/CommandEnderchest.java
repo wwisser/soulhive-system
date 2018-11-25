@@ -18,7 +18,7 @@ public class CommandEnderchest extends CommandExecutorWrapper {
         Inventory enderchest;
 
         if (args.length > 0 && player.hasPermission("soulhive.enderchest.target")) {
-            Player target = ValidateCommand.target(args[0]);
+            Player target = ValidateCommand.target(args[0], player);
             enderchest = target.getEnderChest();
         } else {
             enderchest = player.getEnderChest();

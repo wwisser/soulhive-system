@@ -1,5 +1,6 @@
 package de.soulhive.system.command.util;
 
+import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.exception.impl.*;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
@@ -31,11 +32,15 @@ public class ValidateCommand {
         return (Player) sender;
     }
 
-    public Player target(String target) throws TargetNotFoundException {
+    public Player target(String target, CommandSender sender) throws CommandException {
         Player targetPlayer = Bukkit.getPlayer(target);
 
         if (targetPlayer == null || !targetPlayer.isOnline()) {
             throw new TargetNotFoundException(target);
+        }
+
+        if (targetPlayer == sender) {
+            throw new CommandException("Du darfst nicht mit dir selbst interagieren!");
         }
 
         return targetPlayer;

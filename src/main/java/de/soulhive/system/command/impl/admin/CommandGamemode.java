@@ -30,7 +30,7 @@ public class CommandGamemode extends CommandExecutorWrapper {
         GameMode gameMode = GAME_MODES.getOrDefault(args[0], GameMode.SURVIVAL);
 
         if (args.length > 1) {
-            target = ValidateCommand.target(args[1]);
+            target = ValidateCommand.target(args[1], sender);
             sender.sendMessage(
                 Settings.PREFIX
                     + "Spielmodus von §f"

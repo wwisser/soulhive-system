@@ -19,7 +19,7 @@ public class CommandSudo extends CommandExecutorWrapper {
         ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         ValidateCommand.minArgs(2, args, USAGE);
 
-        Player target = ValidateCommand.target(args[0]);
+        Player target = ValidateCommand.target(args[0], sender);
         String message = StringUtils.join(Arrays.copyOfRange(args, 1, args.length), " ");
 
         target.chat(message);

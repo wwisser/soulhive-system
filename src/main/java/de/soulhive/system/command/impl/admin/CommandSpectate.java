@@ -16,7 +16,7 @@ public class CommandSpectate extends CommandExecutorWrapper {
         ValidateCommand.minArgs(1, args, USAGE);
 
         Player player = ValidateCommand.onlyPlayer(sender);
-        Player target = ValidateCommand.target(args[0]);
+        Player target = ValidateCommand.target(args[0], player);
 
         player.chat("/vanish");
         player.chat("/gamemode 3");

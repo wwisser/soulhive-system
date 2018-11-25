@@ -37,7 +37,7 @@ public class CommandReport extends CommandExecutorWrapper implements TabComplete
     public void process(CommandSender sender, String label, String[] args) throws CommandException {
         Player player = ValidateCommand.onlyPlayer(sender);
         ValidateCommand.minArgs(2, args, USAGE);
-        Player target = ValidateCommand.target(args[0]);
+        Player target = ValidateCommand.target(args[0], player);
 
         if (target.hasPermission(Settings.PERMISSION_TEAM) || target.hasPermission(Settings.PERMISSION_ADMIN)) {
             throw new CommandException("§cDu darfst keine Teammitglieder melden.");
@@ -88,7 +88,7 @@ public class CommandReport extends CommandExecutorWrapper implements TabComplete
         } else {
             return Bukkit.getOnlinePlayers()
                 .stream()
-                .filter(player -> !player.hasPermission(Settings.PERMISSION_TEAM))
+                .filter(player -> !player.hasPermission(Settings.PERMISSION_TEAM) && player != sender)
                 .map(Player::getName)
                 .collect(Collectors.toList());
         }

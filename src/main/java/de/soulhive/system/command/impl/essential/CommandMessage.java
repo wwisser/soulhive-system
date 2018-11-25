@@ -68,7 +68,7 @@ public class CommandMessage extends CommandExecutorWrapper {
         }
 
         if (args.length > 1) {
-            Player target = ValidateCommand.target(args[0]);
+            Player target = ValidateCommand.target(args[0], player);
             String message = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
 
             if (vanishService.getVanishedPlayers().contains(target)
