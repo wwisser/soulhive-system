@@ -50,3 +50,7 @@ commands:
   day:
   enderchest:
     aliases: [ec]
+  feed:
+  heal:
+  hat:
+    aliases: [hut]

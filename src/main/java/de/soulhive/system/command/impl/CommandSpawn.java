@@ -3,6 +3,7 @@ package de.soulhive.system.command.impl;
 import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
+import de.soulhive.system.scheduled.AlreadyInTeleportException;
 import de.soulhive.system.scheduled.ScheduledTeleport;
 import de.soulhive.system.setting.Settings;
 import org.bukkit.Location;
@@ -35,10 +36,14 @@ public class CommandSpawn extends CommandExecutorWrapper {
             player.teleport(TARGET_LOCATION);
             player.sendMessage(MESSAGE_SUCCESS);
         } else {
-            player.sendMessage(
-                Settings.PREFIX + "Du wirst in §f" + SECONDS + " §7Sekunden teleportiert. Bewege dich nicht."
-            );
-            SCHEDULED_TELEPORT.process(player);
+            try {
+                SCHEDULED_TELEPORT.process(player);
+                player.sendMessage(
+                    Settings.PREFIX + "Du wirst in §f" + SECONDS + " §7Sekunden teleportiert. Bewege dich nicht."
+                );
+            } catch (AlreadyInTeleportException e) {
+                player.sendMessage(Settings.PREFIX + "§cDu wirst bereits teleportiert.");
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package de.soulhive.system.scheduled;
 
 import de.soulhive.system.SoulHive;
+import de.soulhive.system.setting.Settings;
 import de.soulhive.system.task.ComplexTask;
 import de.soulhive.system.task.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiConsumer;
 
 @RequiredArgsConstructor
@@ -20,11 +23,17 @@ public class ScheduledTeleport {
     private final Location targetLocation;
     private final int seconds;
     private final BiConsumer<Player, Boolean> result;
+    private List<Player> inTeleport = new ArrayList<>();
 
-    public void process(Player player) {
+    public void process(Player player) throws AlreadyInTeleportException {
+        if (this.inTeleport.contains(player)) {
+            throw new AlreadyInTeleportException();
+        }
+
         ScheduledTeleportTask teleportTask = new ScheduledTeleportTask(player, this.result);
 
         this.taskService.registerTasks(teleportTask);
+        this.inTeleport.add(player);
     }
 
     @RequiredArgsConstructor
@@ -57,6 +66,7 @@ public class ScheduledTeleport {
 
             if (currentX != this.startX || currentY != this.startY || currentZ != this.startZ) {
                 this.result.accept(this.player, false);
+                ScheduledTeleport.this.inTeleport.remove(this.player);
                 super.cancel();
                 return;
             }
@@ -64,6 +74,7 @@ public class ScheduledTeleport {
             if (this.count == (SECOND_IN_TICKS * ScheduledTeleport.this.seconds)) {
                 this.result.accept(this.player, true);
                 this.player.teleport(ScheduledTeleport.this.targetLocation);
+                ScheduledTeleport.this.inTeleport.remove(this.player);
                 super.cancel();
                 return;
             }

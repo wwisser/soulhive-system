@@ -34,11 +34,11 @@ public class DelayService extends Service {
                 action.accept(player);
                 this.addDelay(uuid, configuration);
             } else if (configuration.getMessage() != null) {
-                long pendingTime = System.currentTimeMillis() - endTimeStamp;
+                long pendingTime = endTimeStamp - System.currentTimeMillis();
                 String formattedTime = this.formatDelay(pendingTime);
 
                 player.sendMessage(
-                    Settings.PREFIX + configuration.getMessage().replace("%time", formattedTime)
+                    Settings.PREFIX + "§c" + configuration.getMessage().replace("%time", formattedTime)
                 );
             }
         }
