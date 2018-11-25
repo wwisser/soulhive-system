@@ -19,6 +19,7 @@ public class ShutdownHookThread extends Thread {
 
     private PlannedShutdownTask plannedShutdownTask;
     private final String url = WEBHOOK_CONFIG.getString("url");
+
     @Override
     public void run() {
         if (!this.plannedShutdownTask.isRegularShutdown()) {
