@@ -4,6 +4,7 @@ import de.soulhive.system.command.CommandService;
 import de.soulhive.system.delay.DelayService;
 import de.soulhive.system.listener.ListenerService;
 import de.soulhive.system.motd.MotdService;
+import de.soulhive.system.service.Service;
 import de.soulhive.system.service.ServiceManager;
 import de.soulhive.system.stats.StatsService;
 import de.soulhive.system.task.impl.PlannedShutdownTask;
@@ -11,6 +12,7 @@ import de.soulhive.system.task.impl.TablistUpdateTask;
 import de.soulhive.system.task.TaskService;
 import de.soulhive.system.thread.ShutdownHookThread;
 import de.soulhive.system.user.UserService;
+import de.soulhive.system.util.reflect.ReflectUtils;
 import de.soulhive.system.vanish.VanishService;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,6 +48,9 @@ public class SoulHive extends JavaPlugin {
             new ListenerService(),
             new VanishService(this)
         ).forEach(serviceManager::registerService);
+
+        ReflectUtils.getPacketObjects("de.soulhive.system.service.micro", Service.class)
+            .forEach(serviceManager::registerService);
     }
 
     @Override

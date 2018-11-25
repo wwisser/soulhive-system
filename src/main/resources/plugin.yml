@@ -63,3 +63,4 @@ commands:
     aliases: [ts]
   teleport:
     aliases: [tp, tpa, tpahere, tphere, s, tpaccept]
+  globalmute:
