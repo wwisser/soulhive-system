@@ -15,7 +15,7 @@ public class CommandSudo extends CommandExecutorWrapper {
     private static final String USAGE = "/sudo <player> <message>";
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         ValidateCommand.minArgs(2, args, USAGE);
 

@@ -15,7 +15,7 @@ public class CommandTeamchat extends CommandExecutorWrapper {
     private static final String USAGE = "/teamchat <Nachricht>";
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.onlyPlayer(sender);
         ValidateCommand.permission(sender, Settings.PERMISSION_TEAM);
         ValidateCommand.minArgs(1, args, USAGE);

@@ -8,18 +8,19 @@ import de.soulhive.system.delay.DelayConfiguration;
 import de.soulhive.system.delay.DelayService;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.text.TextComponentUtils;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class CommandReport extends CommandExecutorWrapper {
+public class CommandReport extends CommandExecutorWrapper implements TabCompleter {
 
     private static final DelayConfiguration DELAY_CONFIGURATION = new DelayConfiguration(
         "Bitte warte noch %time, um erneut einen Spieler zu melden.",
@@ -33,7 +34,7 @@ public class CommandReport extends CommandExecutorWrapper {
     private DelayService delayService = SoulHive.getServiceManager().getService(DelayService.class);
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         Player player = ValidateCommand.onlyPlayer(sender);
         ValidateCommand.minArgs(2, args, USAGE);
         Player target = ValidateCommand.target(args[0]);
@@ -77,4 +78,19 @@ public class CommandReport extends CommandExecutorWrapper {
         });
     }
 
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length > 1) {
+            if (args.length > 2) {
+                return Collections.emptyList();
+            }
+            return REPORT_REASONS;
+        } else {
+            return Bukkit.getOnlinePlayers()
+                .stream()
+                .filter(player -> !player.hasPermission(Settings.PERMISSION_TEAM))
+                .map(Player::getName)
+                .collect(Collectors.toList());
+        }
+    }
 }

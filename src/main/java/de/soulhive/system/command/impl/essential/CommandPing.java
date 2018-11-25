@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class CommandPing extends CommandExecutorWrapper {
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         Player player = ValidateCommand.onlyPlayer(sender);
         int ping = ((CraftPlayer) player).getHandle().ping;
 

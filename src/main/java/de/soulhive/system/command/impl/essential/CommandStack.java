@@ -13,7 +13,7 @@ public class CommandStack extends CommandExecutorWrapper {
     private static final int MAX_STACK_SIZE = 64;
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, "soulhive.stack");
         Player player = ValidateCommand.onlyPlayer(sender);
 

@@ -13,7 +13,7 @@ public class CommandRawbc extends CommandExecutorWrapper {
     private static final String USAGE = "/rawbc <message>";
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         ValidateCommand.minArgs(1, args, USAGE);
 

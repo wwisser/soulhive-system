@@ -13,7 +13,7 @@ public class CommandTrash extends CommandExecutorWrapper {
     private static final String INVENTORY_NAME = "Abfall";
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, "soulhive.trash");
         Player player = ValidateCommand.onlyPlayer(sender);
         Inventory inventory = Bukkit.createInventory(null, 6 * 9, INVENTORY_NAME);

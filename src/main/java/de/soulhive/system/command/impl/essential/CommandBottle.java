@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 public class CommandBottle extends CommandExecutorWrapper {
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, "soulhive.bottle");
         Player player = ValidateCommand.onlyPlayer(sender);
 

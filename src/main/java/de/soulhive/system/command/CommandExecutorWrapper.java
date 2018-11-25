@@ -11,7 +11,7 @@ public abstract class CommandExecutorWrapper implements CommandExecutor {
     @Override
     public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         try {
-            this.process(sender, args);
+            this.process(sender, label, args);
         } catch (Exception e) {
             String message = e.getMessage();
 
@@ -21,6 +21,6 @@ public abstract class CommandExecutorWrapper implements CommandExecutor {
         return true;
     }
 
-    public abstract void process(CommandSender sender, String[] args) throws CommandException;
+    public abstract void process(CommandSender sender, String label, String[] args) throws CommandException;
 
 }

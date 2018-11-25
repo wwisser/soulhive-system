@@ -28,7 +28,7 @@ public class CommandHeal extends CommandExecutorWrapper {
     private DelayService delayService = SoulHive.getServiceManager().getService(DelayService.class);
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, "soulhive.heal");
         Player player = ValidateCommand.onlyPlayer(sender);
 

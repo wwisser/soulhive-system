@@ -13,7 +13,7 @@ public class CommandItem extends CommandExecutorWrapper {
     private static final String COMMAND_USAGE = "/item <ID:Value> <Anzahl>";
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, "soulhive.item");
         ValidateCommand.onlyPlayer(sender);
         ValidateCommand.minArgs(1, args, COMMAND_USAGE);

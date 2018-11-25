@@ -22,7 +22,7 @@ public class CommandStats extends CommandExecutorWrapper {
     private UserService userService;
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         Player player = ValidateCommand.onlyPlayer(sender);
         User user = args.length > 0 ? this.userService.getUserByName(args[0]) : this.userService.getUser(player);
 

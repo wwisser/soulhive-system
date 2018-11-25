@@ -29,7 +29,7 @@ public class CommandSpawn extends CommandExecutorWrapper {
     private static final ScheduledTeleport SCHEDULED_TELEPORT = new ScheduledTeleport(TARGET_LOCATION, SECONDS, RESULT);
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         Player player = ValidateCommand.onlyPlayer(sender);
 
         if (player.hasPermission(Settings.PERMISSION_ADMIN)) {

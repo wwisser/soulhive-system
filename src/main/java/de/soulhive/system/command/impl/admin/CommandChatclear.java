@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 public class CommandChatclear extends CommandExecutorWrapper {
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, Settings.PERMISSION_TEAM);
 
         for (int i = 0; i < 300; i++) {

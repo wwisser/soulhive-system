@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class CommandFly extends CommandExecutorWrapper {
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, "soulhive.fly");
         Player player = ValidateCommand.onlyPlayer(sender);
         boolean flying = player.isFlying();

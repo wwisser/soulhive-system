@@ -15,7 +15,7 @@ public class CommandRename extends CommandExecutorWrapper {
     private static final String USAGE = "/rename <name>";
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         Player player = ValidateCommand.onlyPlayer(sender);
 

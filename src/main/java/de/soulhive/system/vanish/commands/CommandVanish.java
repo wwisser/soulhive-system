@@ -20,7 +20,7 @@ public class CommandVanish extends CommandExecutorWrapper {
     private VanishService vanishService;
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, "soulhive.vanish");
 
         Player player = ValidateCommand.onlyPlayer(sender);

@@ -14,7 +14,7 @@ public class CommandSkull extends CommandExecutorWrapper {
     private static final String COMMAND_USAGE = "/skull <name>";
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender,"soulhive.skull");
         Player player = ValidateCommand.onlyPlayer(sender);
 

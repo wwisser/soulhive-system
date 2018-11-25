@@ -18,7 +18,7 @@ public class CommandHat extends CommandExecutorWrapper {
     private static final List<String> FORBIDDEN_ITEMS = Arrays.asList("CHESTPLATE", "LEGGINGS", "BOOTS");
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, "soulhive.hat");
         Player player = ValidateCommand.onlyPlayer(sender);
         ItemStack itemStack = ValidateCommand.heldItem(player);

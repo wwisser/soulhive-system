@@ -2,14 +2,13 @@ package de.soulhive.system.service;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import de.soulhive.system.command.CommandService;
-import de.soulhive.system.command.TabCompleterWrapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -39,8 +38,8 @@ public class ServiceManager {
         service.getCommands().forEach((name, commandExecutor) -> {
                 this.plugin.getCommand(name).setExecutor(commandExecutor);
 
-                if (commandExecutor instanceof TabCompleterWrapper) {
-                    this.plugin.getCommand(name).setTabCompleter((TabCompleterWrapper) commandExecutor);
+                if (commandExecutor instanceof TabCompleter) {
+                    this.plugin.getCommand(name).setTabCompleter((TabCompleter) commandExecutor);
                 }
             }
         );

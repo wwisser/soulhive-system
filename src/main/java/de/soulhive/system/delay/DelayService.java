@@ -76,6 +76,10 @@ public class DelayService extends Service {
             results.add(seconds + "s");
         }
 
+        if (results.isEmpty()) {
+            return "1ms";
+        }
+
         return String.join(", ", results);
     }
 

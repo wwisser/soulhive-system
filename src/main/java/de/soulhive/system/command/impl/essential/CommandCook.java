@@ -25,7 +25,7 @@ public class CommandCook extends CommandExecutorWrapper {
     );
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, "soulhive.cook");
         Player player = ValidateCommand.onlyPlayer(sender);
 

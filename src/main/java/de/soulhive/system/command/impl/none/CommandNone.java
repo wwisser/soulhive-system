@@ -11,7 +11,7 @@ import org.bukkit.command.CommandSender;
 public class CommandNone extends CommandExecutorWrapper {
 
     @Override
-    public void process(CommandSender sender, String[] args) throws CommandException {
+    public void process(CommandSender sender, String label, String[] args) throws CommandException {
         sender.sendMessage(Settings.PREFIX + "§cUnbekannter Befehl. Vertippt?");
     }
 
