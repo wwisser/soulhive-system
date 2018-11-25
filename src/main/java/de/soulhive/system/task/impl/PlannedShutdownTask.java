@@ -2,6 +2,7 @@ package de.soulhive.system.task.impl;
 
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.task.ComplexTask;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,12 +12,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Getter
 public class PlannedShutdownTask extends BukkitRunnable implements ComplexTask {
 
     private static final long PERIOD = 20L;
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm");
     private static final String TIME_WARNING = "04:55";
     private static final String TIME_SHUTDOWN = "05:00";
+
+    private boolean regularShutdown = false;
 
     @Override
     public void setup(JavaPlugin plugin) {
@@ -29,6 +33,7 @@ public class PlannedShutdownTask extends BukkitRunnable implements ComplexTask {
 
         switch (time) {
             case TIME_WARNING:
+                this.regularShutdown = true;
                 Bukkit.broadcastMessage(Settings.PREFIX + "§cAutomatischer Serverneustart in 5 Minuten.");
                 break;
             case TIME_SHUTDOWN:

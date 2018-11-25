@@ -9,6 +9,7 @@ import de.soulhive.system.stats.StatsService;
 import de.soulhive.system.task.impl.PlannedShutdownTask;
 import de.soulhive.system.task.impl.TablistUpdateTask;
 import de.soulhive.system.task.TaskService;
+import de.soulhive.system.thread.ShutdownHookThread;
 import de.soulhive.system.user.UserService;
 import de.soulhive.system.vanish.VanishService;
 import lombok.Getter;
@@ -25,12 +26,15 @@ public class SoulHive extends JavaPlugin {
         ServiceManager serviceManager = new ServiceManager(this);
         SoulHive.serviceManager = serviceManager;
 
+        PlannedShutdownTask plannedShutdownTask = new PlannedShutdownTask();
         TaskService taskService = new TaskService(this);
 
         taskService.registerTasks(
             new TablistUpdateTask(),
-            new PlannedShutdownTask()
+            plannedShutdownTask
         );
+
+        Runtime.getRuntime().addShutdownHook(new ShutdownHookThread(plannedShutdownTask));
 
         Arrays.asList(
             taskService,

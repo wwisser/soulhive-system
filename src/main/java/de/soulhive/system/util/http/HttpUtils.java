@@ -1,6 +1,5 @@
 package de.soulhive.system.util.http;
 
-import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
@@ -13,16 +12,13 @@ import java.nio.charset.StandardCharsets;
 public class HttpUtils {
 
     @SneakyThrows
-    public void post(String requestUrl, String text, String contentType) {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("text", text);
-
+    public void post(String requestUrl, String data, String contentType) {
         URL url = new URL(requestUrl);
         HttpURLConnection http = (HttpURLConnection) url.openConnection();
         http.setRequestMethod("POST");
         http.setDoOutput(true);
 
-        byte[] out = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
+        byte[] out = data.getBytes(StandardCharsets.UTF_8);
         int length = out.length;
 
         http.setFixedLengthStreamingMode(length);
