@@ -4,14 +4,10 @@ import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.setting.Settings;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class InvalidArgsException extends CommandException {
 
-    private String message;
-
-    @Override
-    public String getMessage() {
-        return Settings.PREFIX + "§c" + message;
+    public InvalidArgsException(String usage) {
+        super(Settings.COMMAND_USAGE + usage);
     }
 
 }

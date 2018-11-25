@@ -1,35 +1,29 @@
 package de.soulhive.system.vanish.commands;
 
+import de.soulhive.system.command.CommandExecutorWrapper;
+import de.soulhive.system.command.exception.CommandException;
+import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.nms.ActionBar;
 import de.soulhive.system.vanish.VanishService;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
 @AllArgsConstructor
-public class CommandVanish implements CommandExecutor {
+public class CommandVanish extends CommandExecutorWrapper {
 
     private VanishService vanishService;
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-        if (!commandSender.hasPermission(Settings.PERMISSION_TEAM)) {
-            ActionBar.send(Settings.COMMAND_NO_PERMISSION, commandSender);
-            return true;
-        }
+    public void process(CommandSender sender, String[] args) throws CommandException {
+        ValidateCommand.permission(sender, "soulhive.vanish");
 
-        if (!(commandSender instanceof Player)) {
-            commandSender.sendMessage(Settings.COMMAND_ONLY_PLAYERS);
-            return true;
-        }
-
-        Player player = (Player) commandSender;
+        Player player = ValidateCommand.onlyPlayer(sender);
         List<Player> vanishedPlayers = this.vanishService.getVanishedPlayers();
 
         if (vanishedPlayers.contains(player)) {
@@ -41,8 +35,6 @@ public class CommandVanish implements CommandExecutor {
             Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.hidePlayer(player));
             player.sendMessage(Settings.PREFIX + "Du hast den Vanish-Modus §aaktiviert§f!");
         }
-
-        return true;
     }
 
 }

@@ -5,11 +5,10 @@ import de.soulhive.system.setting.Settings;
 
 public class HeldItemNotFoundException extends CommandException {
 
-    private static final String MESSAGE = "§cDu musst ein Item in deiner Hand halten.";
+    private static final String MESSAGE = Settings.PREFIX + "§cDu musst ein Item in deiner Hand halten.";
 
-    @Override
-    public String getMessage() {
-        return Settings.PREFIX + MESSAGE;
+    public HeldItemNotFoundException() {
+        super(MESSAGE);
     }
 
 }

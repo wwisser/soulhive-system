@@ -5,15 +5,10 @@ import de.soulhive.system.setting.Settings;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
-@Getter
 public class TargetNotFoundException extends CommandException {
 
-    private String target;
-
-    @Override
-    public String getMessage() {
-        return Settings.PREFIX + "§cZiel '" + this.target + "' nicht gefunden.";
+    public TargetNotFoundException(String target) {
+        super("§cZiel '" + target + "' nicht gefunden.");
     }
 
 }

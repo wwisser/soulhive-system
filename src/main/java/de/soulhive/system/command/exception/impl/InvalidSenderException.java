@@ -5,9 +5,8 @@ import de.soulhive.system.setting.Settings;
 
 public class InvalidSenderException extends CommandException {
 
-    @Override
-    public String getMessage() {
-        return Settings.COMMAND_ONLY_PLAYERS;
+    public InvalidSenderException() {
+        super(Settings.COMMAND_ONLY_PLAYERS);
     }
 
 }
