@@ -1,4 +1,4 @@
-package de.soulhive.system.command.impl.essential;
+package de.soulhive.system.command.impl;
 
 import de.soulhive.system.SoulHive;
 import de.soulhive.system.command.CommandExecutorWrapper;
