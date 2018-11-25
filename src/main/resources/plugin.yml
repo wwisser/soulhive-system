@@ -64,3 +64,5 @@ commands:
   teleport:
     aliases: [tp, tpa, tpahere, tphere, s, tpaccept]
   globalmute:
+  invsee:
+  bodysee:
