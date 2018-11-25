@@ -59,3 +59,5 @@ commands:
     aliases: [spec]
   message:
     aliases: [pm, whisper, msg, dm, r, reply]
+  teamspeak:
+    aliases: [ts]
