@@ -9,6 +9,9 @@ import javax.annotation.Nullable;
 @Getter
 public class DelayConfiguration {
 
+    /**
+     * Can contain a <code>%time</code> placeholder which gets replaced with a formatted version of the pending time.
+     */
     @Nullable
     private String message;
     private long time;

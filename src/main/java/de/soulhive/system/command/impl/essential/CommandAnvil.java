@@ -18,10 +18,10 @@ public class CommandAnvil extends CommandExecutorWrapper {
         EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
         MockAnvilContainer container = new MockAnvilContainer(entityPlayer);
 
-        int c = entityPlayer.nextContainerCounter();
+        int containerCount = entityPlayer.nextContainerCounter();
         entityPlayer.playerConnection.sendPacket(
             new PacketPlayOutOpenWindow(
-                c,
+                containerCount,
                 "minecraft:anvil",
                 new ChatMessage("Repairing"),
                 0
@@ -29,7 +29,7 @@ public class CommandAnvil extends CommandExecutorWrapper {
         );
 
         entityPlayer.activeContainer = container;
-        entityPlayer.activeContainer.windowId = c;
+        entityPlayer.activeContainer.windowId = containerCount;
         entityPlayer.activeContainer.addSlotListener(entityPlayer);
         entityPlayer.activeContainer = container;
     }

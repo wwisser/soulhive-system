@@ -45,3 +45,8 @@ commands:
   bottle:
   anvil:
     aliases: [amboss]
+  enchanter:
+    aliases: [zaubertisch]
+  day:
+  enderchest:
+    aliases: [ec]

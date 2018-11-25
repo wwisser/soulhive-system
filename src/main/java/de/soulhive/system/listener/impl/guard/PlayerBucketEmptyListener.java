@@ -13,7 +13,7 @@ public class PlayerBucketEmptyListener implements Listener {
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
         Player player = event.getPlayer();
 
-        if (!Settings.SKYBLOCK_WORLDS.contains(player.getWorld()) && !player.hasPermission("skydust.build")) {
+        if (!Settings.SKYBLOCK_WORLDS.contains(player.getWorld()) && !player.hasPermission("soulhive.build")) {
             ActionBar.send("§cDu darfst hier nichts platzieren.", event.getPlayer());
             event.setCancelled(true);
         }

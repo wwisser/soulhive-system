@@ -13,7 +13,7 @@ public class BlockPlaceListener implements Listener {
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
 
-        if (!Settings.SKYBLOCK_WORLDS.contains(player.getWorld()) && !player.hasPermission("skydust.build")) {
+        if (!Settings.SKYBLOCK_WORLDS.contains(player.getWorld()) && !player.hasPermission("soulhive.build")) {
             ActionBar.send("§cDu darfst hier nichts platzieren.", event.getPlayer());
             event.setCancelled(true);
         }

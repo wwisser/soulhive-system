@@ -13,7 +13,7 @@ public class BlockBreakListener implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
 
-        if (!Settings.SKYBLOCK_WORLDS.contains(player.getWorld()) && !player.hasPermission("skydust.build")) {
+        if (!Settings.SKYBLOCK_WORLDS.contains(player.getWorld()) && !player.hasPermission("soulhive.build")) {
             ActionBar.send("§cDu darfst hier nichts zerstören.", player);
             event.setCancelled(true);
         }

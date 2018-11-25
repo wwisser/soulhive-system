@@ -2,9 +2,11 @@ package de.soulhive.system.delay;
 
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 public class DelayService extends Service {
@@ -32,7 +34,12 @@ public class DelayService extends Service {
                 action.accept(player);
                 this.addDelay(uuid, configuration);
             } else if (configuration.getMessage() != null) {
-                player.sendMessage(Settings.PREFIX + configuration.getMessage());
+                long pendingTime = System.currentTimeMillis() - endTimeStamp;
+                String formattedTime = this.formatDelay(pendingTime);
+
+                player.sendMessage(
+                    Settings.PREFIX + configuration.getMessage().replace("%time", formattedTime)
+                );
             }
         }
     }
@@ -46,6 +53,30 @@ public class DelayService extends Service {
         );
 
         this.delays.put(uuid, delayEntry);
+    }
+
+    private String formatDelay(long millis) {
+        long hours = TimeUnit.MILLISECONDS.toHours(millis);
+        millis -= TimeUnit.HOURS.toMillis(hours);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
+        millis -= TimeUnit.MINUTES.toMillis(minutes);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
+
+        Set<String> results = new HashSet<>();
+
+        if (hours != 0) {
+            results.add(hours + "h");
+        }
+
+        if (minutes != 0) {
+            results.add(minutes + "min");
+        }
+
+        if (seconds != 0) {
+            results.add(seconds + "s");
+        }
+
+        return String.join(", ", results);
     }
 
 }
