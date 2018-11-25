@@ -1,6 +1,7 @@
 package de.soulhive.system;
 
 import de.soulhive.system.command.CommandService;
+import de.soulhive.system.delay.DelayService;
 import de.soulhive.system.listener.ListenerService;
 import de.soulhive.system.motd.MotdService;
 import de.soulhive.system.service.ServiceManager;
@@ -35,6 +36,7 @@ public class SoulHive extends JavaPlugin {
             taskService,
             new MotdService(),
             new UserService(),
+            new DelayService(),
             new StatsService(),
             new CommandService(this),
             new ListenerService(),

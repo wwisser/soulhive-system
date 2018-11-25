@@ -1,6 +1,7 @@
 package de.soulhive.system.vanish;
 
 import com.comphenix.protocol.events.PacketAdapter;
+import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.vanish.commands.CommandVanish;
 import de.soulhive.system.vanish.listeners.PlayerJoinListener;
@@ -15,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
+@FeatureService
 @RequiredArgsConstructor
 public class VanishService extends Service {
 

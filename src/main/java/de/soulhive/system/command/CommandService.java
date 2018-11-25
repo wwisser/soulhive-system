@@ -21,13 +21,16 @@ public class CommandService extends Service {
 
     public CommandService(JavaPlugin plugin) {
         this.plugin = plugin;
+    }
+
+    @Override
+    public void initialize() {
         this.resolveCommands();
     }
 
-    public void unregisterCommand(CommandExecutor commandExecutor) {
-        this.plugin.getCommand(
-            commandExecutor.getClass().getSimpleName().substring(INDEX_SUBSTRING)
-        ).setExecutor(NO_COMMAND);
+    @Override
+    public void disable() {
+        this.commands.values().forEach(this::unregisterCommand);
     }
 
     @Override
@@ -44,6 +47,12 @@ public class CommandService extends Service {
                     commandExecutor -> commandExecutor
                 )
             );
+    }
+
+    private void unregisterCommand(CommandExecutor commandExecutor) {
+        this.plugin.getCommand(
+            commandExecutor.getClass().getSimpleName().substring(INDEX_SUBSTRING)
+        ).setExecutor(NO_COMMAND);
     }
 
 }

@@ -14,13 +14,19 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
+@Getter
 public class ServiceManager {
 
     private List<Service> services = new ArrayList<>();
+    private List<Service> featureServices = new ArrayList<>();
     private final JavaPlugin plugin;
 
     public void registerService(Service service) {
         this.services.add(service);
+
+        if (service.getClass().getDeclaredAnnotation(FeatureService.class) != null) {
+            this.featureServices.add(service);
+        }
 
         service.initialize();
         service.getListeners().forEach(listener ->
@@ -51,6 +57,7 @@ public class ServiceManager {
         service.getPacketAdapters().forEach(ProtocolLibrary.getProtocolManager()::addPacketListener);
         service.disable();
         this.services.remove(service);
+        this.featureServices.remove(service);
     }
 
     public <T> T getService(Class<T> clazz) {
@@ -60,7 +67,7 @@ public class ServiceManager {
             }
         }
 
-        throw new NoSuchElementException("Could not find Service '" + clazz.getName() + "'");
+        throw new NoSuchElementException("Could not find service '" + clazz.getName() + "'");
     }
 
     public List<Service> getServices() {
