@@ -37,12 +37,12 @@ public class ServerInfoPacketAdapter extends PacketAdapter {
         Bukkit.getOnlinePlayers()
             .stream()
             .filter(player -> !this.vanishService.getVanishedPlayers().contains(player))
-            .forEach(player -> stringBuilder.append("\n").append("§f").append(player.getName()));
+            .forEach(player -> stringBuilder.append("\n").append(" ").append("§f").append(player.getName()).append(" "));
 
         stringBuilder.append("§c\n§c\n");
 
         ping.setPlayers(Collections.singletonList(
-            new WrappedGameProfile(UUID.randomUUID(), " "+ stringBuilder.toString() + " ")
+            new WrappedGameProfile(UUID.randomUUID(), stringBuilder.toString())
         ));
         ping.setPlayersOnline(diff);
     }

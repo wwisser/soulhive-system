@@ -54,3 +54,4 @@ commands:
   heal:
   hat:
     aliases: [hut]
+  report:
