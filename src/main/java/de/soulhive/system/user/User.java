@@ -43,4 +43,15 @@ public class User {
         this.jewels -= amount;
     }
 
+    public double getKdr() {
+        if (this.kills != 0 && this.deaths != 0) {
+            return Math.round(((double) this.kills / (double) this.deaths) * 100.0) / 100.0;
+        }
+        if (this.kills != 0) {
+            return this.kills;
+        }
+
+        return Double.NaN;
+    }
+
 }
