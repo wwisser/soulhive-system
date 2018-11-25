@@ -3,6 +3,7 @@ package de.soulhive.system.service.micro;
 import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
+import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
 import org.bukkit.Bukkit;
@@ -18,6 +19,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+@FeatureService
 public class GlobalmuteService extends Service implements Listener {
 
     private boolean active = false;

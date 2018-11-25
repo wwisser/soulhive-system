@@ -1,6 +1,7 @@
 package de.soulhive.system.listener.impl.item;
 
 import de.soulhive.system.util.nms.ActionBar;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -19,10 +20,27 @@ public class InventoryClickListener implements Listener {
     public void onClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         Inventory inventory = event.getInventory();
+        Inventory topInventory = event.getView().getTopInventory();
 
         if (event.getInventory().getType().equals(InventoryType.ENCHANTING)
             && event.getRawSlot() == 1) {
             event.setCancelled(true);
+        }
+
+        if (inventory.getTitle().startsWith("§0Rüstung von")) {
+            event.setCancelled(true);
+        }
+
+        boolean strangeInventory = false;
+
+        strangeInventory = Bukkit.getOnlinePlayers()
+            .stream()
+            .filter(onlinePlayer -> onlinePlayer != player)
+            .anyMatch(onlinePlayer -> onlinePlayer.getInventory().equals(inventory));
+
+        if (strangeInventory || topInventory.equals(player.getInventory())) {
+            event.setCancelled(true);
+            return;
         }
 
         if (!(inventory instanceof AnvilInventory)) {
