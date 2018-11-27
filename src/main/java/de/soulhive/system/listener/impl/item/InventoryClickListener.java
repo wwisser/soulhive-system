@@ -20,7 +20,6 @@ public class InventoryClickListener implements Listener {
     public void onClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         Inventory inventory = event.getInventory();
-        Inventory topInventory = event.getView().getTopInventory();
 
         if (event.getInventory().getType().equals(InventoryType.ENCHANTING)
             && event.getRawSlot() == 1) {
@@ -29,16 +28,15 @@ public class InventoryClickListener implements Listener {
 
         if (inventory.getTitle().startsWith("§0Rüstung von")) {
             event.setCancelled(true);
+            return;
         }
 
-        boolean strangeInventory = false;
-
-        strangeInventory = Bukkit.getOnlinePlayers()
+        boolean strangeInventory = Bukkit.getOnlinePlayers()
             .stream()
             .filter(onlinePlayer -> onlinePlayer != player)
             .anyMatch(onlinePlayer -> onlinePlayer.getInventory().equals(inventory));
 
-        if (strangeInventory || topInventory.equals(player.getInventory())) {
+        if (strangeInventory) {
             event.setCancelled(true);
             return;
         }

@@ -40,7 +40,7 @@ public class ValidateCommand {
         }
 
         if (targetPlayer == sender) {
-            throw new CommandException("Du darfst nicht mit dir selbst interagieren!");
+            throw new CommandException("§cDu darfst nicht mit dir selbst interagieren!");
         }
 
         return targetPlayer;
