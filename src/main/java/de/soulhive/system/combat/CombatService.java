@@ -25,10 +25,11 @@ public class CombatService extends Service {
     };
 
     private Map<Player, Long> fightTimestamps = new HashMap<>();
-    private TaskService taskService = SoulHive.getServiceManager().getService(TaskService.class);
 
     @Override
     public void initialize() {
+        TaskService taskService = SoulHive.getServiceManager().getService(TaskService.class);
+
         super.registerListeners(
             new EntityDamageByEntityListener(this),
             new PlayerCommandPreprocessListener(this),
@@ -36,7 +37,7 @@ public class CombatService extends Service {
             new PlayerQuitListener(this)
         );
 
-        this.taskService.registerTasks(
+        taskService.registerTasks(
             new CombatUpdateTask(this)
         );
     }
