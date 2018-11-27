@@ -2,7 +2,6 @@ package de.soulhive.system.delay;
 
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 
 import java.util.*;

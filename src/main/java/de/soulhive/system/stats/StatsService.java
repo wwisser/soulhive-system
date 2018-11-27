@@ -50,19 +50,12 @@ public class StatsService extends Service {
         };
 
         this.taskService.registerTasks(new ToplistUpdateTask(toplistContexts));
-    }
 
-    @Override
-    public Set<Listener> getListeners() {
-        return new HashSet<Listener>() {{
-            super.add(new EntityDamageByEntityListener(StatsService.this));
-            super.add(new PlayerDeathListener(StatsService.this));
-        }};
-    }
-
-    @Override
-    public Map<String, CommandExecutor> getCommands() {
-        return Collections.singletonMap("stats", new CommandStats(this.userService));
+        super.registerListeners(
+            new EntityDamageByEntityListener(this),
+            new PlayerDeathListener(this)
+        );
+        super.registerCommand("stats", new CommandStats(this.userService));
     }
 
 }

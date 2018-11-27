@@ -4,27 +4,48 @@ import com.comphenix.protocol.events.PacketAdapter;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Service {
+
+    private Set<Listener> listeners = new HashSet<>();
+    private Set<PacketAdapter> packetAdapters = new HashSet<>();
+    private Map<String, CommandExecutor> commands = new HashMap<>();
 
     public void initialize() {}
 
     public void disable() {}
 
-    public Set<Listener> getListeners() {
-        return Collections.emptySet();
+    protected void registerListener(Listener listener) {
+        this.listeners.add(listener);
     }
 
-    public Map<String, CommandExecutor> getCommands() {
-        return Collections.emptyMap();
+    protected void registerListeners(Listener... listeners) {
+        this.listeners.addAll(Arrays.asList(listeners));
     }
 
-    public Set<PacketAdapter> getPacketAdapters() {
-        return Collections.emptySet();
+    protected void registerPacketAdapter(PacketAdapter packetAdapter) {
+        this.packetAdapters.add(packetAdapter);
+    }
+
+    protected void registerPacketAdapters(PacketAdapter... packetAdapters) {
+        this.packetAdapters.addAll(Arrays.asList(packetAdapters));
+    }
+
+    protected void registerCommand(String name, CommandExecutor commandExecutor) {
+        this.commands.put(name, commandExecutor);
+    }
+
+    final Set<Listener> getListeners() {
+        return this.listeners;
+    }
+
+    final Set<PacketAdapter> getPacketAdapters() {
+        return this.packetAdapters;
+    }
+
+    final Map<String, CommandExecutor> getCommands() {
+        return this.commands;
     }
 
 }

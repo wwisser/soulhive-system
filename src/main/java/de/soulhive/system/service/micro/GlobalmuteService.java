@@ -7,22 +7,22 @@ import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 @FeatureService
 public class GlobalmuteService extends Service implements Listener {
 
     private boolean active = false;
+
+    @Override
+    public void initialize() {
+        super.registerCommand("globalmute", new CommandGlobalmute());
+        super.registerListener(this);
+    }
 
     @EventHandler
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
@@ -48,18 +48,6 @@ public class GlobalmuteService extends Service implements Listener {
             );
         }
 
-    }
-
-    @Override
-    public Set<Listener> getListeners() {
-        return new HashSet<Listener>() {{
-            super.add(GlobalmuteService.this);
-        }};
-    }
-
-    @Override
-    public Map<String, CommandExecutor> getCommands() {
-        return Collections.singletonMap("globalmute", new CommandGlobalmute());
     }
 
 }

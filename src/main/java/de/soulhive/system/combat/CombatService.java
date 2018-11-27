@@ -12,7 +12,6 @@ import de.soulhive.system.setting.Settings;
 import de.soulhive.system.task.TaskService;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,22 +20,21 @@ import java.util.stream.Collectors;
 public class CombatService extends Service {
 
     private static final long COMBAT_TIME = 8000;
-    public static final String[] ALLOWED_COMMANDS = {
+    private static final String[] ALLOWED_COMMANDS = {
         "msg", "report", "vote", "buy", "teamchat", "tc", "spec", "spectator", "stats", "friede"
     };
 
-    private Set<Listener> listeners;
     private Map<Player, Long> fightTimestamps = new HashMap<>();
     private TaskService taskService = SoulHive.getServiceManager().getService(TaskService.class);
 
     @Override
     public void initialize() {
-        this.listeners = new HashSet<>();
-
-        this.listeners.add(new EntityDamageByEntityListener(this));
-        this.listeners.add(new PlayerCommandPreprocessListener(this));
-        this.listeners.add(new PlayerDeathListener(this));
-        this.listeners.add(new PlayerQuitListener(this));
+        super.registerListeners(
+            new EntityDamageByEntityListener(this),
+            new PlayerCommandPreprocessListener(this),
+            new PlayerDeathListener(this),
+            new PlayerQuitListener(this)
+        );
 
         this.taskService.registerTasks(
             new CombatUpdateTask(this)
@@ -83,11 +81,6 @@ public class CombatService extends Service {
             .stream()
             .filter(OfflinePlayer::isOnline)
             .collect(Collectors.toList());
-    }
-
-    @Override
-    public Set<Listener> getListeners() {
-        return this.listeners;
     }
 
 }

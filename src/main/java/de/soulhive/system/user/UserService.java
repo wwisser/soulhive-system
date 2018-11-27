@@ -8,7 +8,6 @@ import de.soulhive.system.user.repository.impl.FileUserRepository;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -22,6 +21,11 @@ public class UserService extends Service {
 
     @Override
     public void initialize() {
+        super.registerListeners(
+            new PlayerJoinListener(this),
+            new PlayerQuitListener(this)
+        );
+
         Bukkit.getOnlinePlayers().forEach(this::loadUser);
     }
 
@@ -67,14 +71,6 @@ public class UserService extends Service {
         } else {
             return result.get(0);
         }
-    }
-
-    @Override
-    public Set<Listener> getListeners() {
-        return new HashSet<Listener>() {{
-            super.add(new PlayerJoinListener(UserService.this));
-            super.add(new PlayerQuitListener(UserService.this));
-        }};
     }
 
     private List<User> filterCache(Predicate<? super User> predicate) {

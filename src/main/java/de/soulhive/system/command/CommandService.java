@@ -3,7 +3,6 @@ package de.soulhive.system.command;
 import de.soulhive.system.command.impl.none.CommandNone;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.util.reflect.ReflectUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,16 +25,12 @@ public class CommandService extends Service {
     @Override
     public void initialize() {
         this.resolveCommands();
+        this.commands.forEach((name, commandExecutor) -> super.registerCommand(name, commandExecutor));
     }
 
     @Override
     public void disable() {
         this.commands.values().forEach(this::unregisterCommand);
-    }
-
-    @Override
-    public Map<String, CommandExecutor> getCommands() {
-        return this.commands;
     }
 
     private void resolveCommands() {

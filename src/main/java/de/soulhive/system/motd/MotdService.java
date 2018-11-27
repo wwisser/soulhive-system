@@ -5,12 +5,6 @@ import de.soulhive.system.motd.listeners.ServerListPingListener;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.Config;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.event.Listener;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
 
 public class MotdService extends Service {
 
@@ -25,6 +19,12 @@ public class MotdService extends Service {
         this.reloadConig();
         this.config.setDefault(KEY_HEADER, "§fSettings.de");
         this.config.setDefault(KEY_FOOTER, "§fhuh, motd?");
+    }
+
+    @Override
+    public void initialize() {
+        super.registerCommand("motd", new CommandMotd(this));
+        super.registerListener(new ServerListPingListener(this));
     }
 
     public void reloadConig() {
@@ -47,16 +47,6 @@ public class MotdService extends Service {
 
     public String fetchFooter() {
         return this.config.getString(KEY_FOOTER);
-    }
-
-    @Override
-    public Set<Listener> getListeners() {
-        return Collections.singleton(new ServerListPingListener(this));
-    }
-
-    @Override
-    public Map<String, CommandExecutor> getCommands() {
-        return Collections.singletonMap("motd", new CommandMotd(this));
     }
 
 }
