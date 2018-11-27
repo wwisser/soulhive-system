@@ -1,5 +1,6 @@
 package de.soulhive.system;
 
+import de.soulhive.system.combat.CombatService;
 import de.soulhive.system.command.CommandService;
 import de.soulhive.system.delay.DelayService;
 import de.soulhive.system.listener.ListenerService;
@@ -46,7 +47,8 @@ public class SoulHive extends JavaPlugin {
             new StatsService(),
             new CommandService(this),
             new ListenerService(),
-            new VanishService(this)
+            new VanishService(this),
+            new CombatService()
         ).forEach(serviceManager::registerService);
 
         ReflectUtils.getPacketObjects("de.soulhive.system.service.micro", Service.class)
