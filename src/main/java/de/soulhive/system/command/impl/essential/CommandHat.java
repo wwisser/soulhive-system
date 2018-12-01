@@ -37,7 +37,7 @@ public class CommandHat extends CommandExecutorWrapper {
 
         player.getInventory().setHelmet(player.getItemInHand().clone());
         player.setItemInHand(null);
-        player.sendMessage("§7Du hast dir §f" + itemStack.getType() + " §7aufgesetzt.");
+        player.sendMessage(Settings.PREFIX + "§7Du hast dir §f" + itemStack.getType() + " §7aufgesetzt.");
     }
 
 }
