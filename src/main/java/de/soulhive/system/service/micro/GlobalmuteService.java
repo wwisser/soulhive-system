@@ -41,7 +41,7 @@ public class GlobalmuteService extends Service implements Listener {
             ValidateCommand.permission(sender, "soulhive.globalmute");
 
             boolean active = GlobalmuteService.this.active;
-            GlobalmuteService.this.active = !active;
+            GlobalmuteService.this.active ^= true;
 
             Bukkit.broadcastMessage(
                 Settings.PREFIX + "Der globale Chat wurde " + (active ? "§cdeaktiviert" : "§aaktiviert") + "§7!"
