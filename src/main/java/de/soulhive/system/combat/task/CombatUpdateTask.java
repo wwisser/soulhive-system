@@ -27,8 +27,10 @@ public class CombatUpdateTask extends BukkitRunnable implements ComplexTask {
             if (player.hasPermission("soulhive.combatlog.bypass")) {
                 continue;
             }
-            if (this.combatService.isUpdated(this.combatService.getStartTimeStamp(player))) {
+
+            if (!this.combatService.isUpdated(this.combatService.getStartTimeStamp(player))) {
                 player.sendMessage(Settings.PREFIX + "Du bist nicht mehr im Kampf und darfst dich sicher ausloggen.");
+                this.combatService.detachFight(player, false);
                 continue;
             }
 

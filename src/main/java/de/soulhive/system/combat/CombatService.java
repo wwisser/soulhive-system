@@ -43,6 +43,13 @@ public class CombatService extends Service {
     }
 
     public void setFighting(Player player) {
+        if (player.hasPermission("soulhive.combatlog.bypass")) {
+            return;
+        }
+
+        if (!this.isFighting(player)) {
+            player.sendMessage(Settings.PREFIX + "§cDu bist jetzt im Kampf, bitte logge dich §c§nnicht§c aus.");
+        }
         this.fightTimestamps.put(player, System.currentTimeMillis() + COMBAT_TIME);
     }
 
