@@ -14,11 +14,21 @@ public class DelayService extends Service {
     private Map<UUID, Map<Integer, Long>> delays = new HashMap<>();
 
     public void handleDelay(Player player, DelayConfiguration configuration, Consumer<Player> action) {
+        this.handle(player, configuration, action, false);
+    }
+
+    public void handleDelayInverted(Player player, DelayConfiguration configuration, Consumer<Player> action) {
+        this.handle(player, configuration, action, true);
+    }
+
+    private void handle(Player player, DelayConfiguration configuration, Consumer<Player> action, boolean inverted) {
         UUID uuid = player.getUniqueId();
 
         if (!this.configurations.contains(configuration)) {
             this.configurations.add(configuration);
-            action.accept(player);
+            if (!inverted) {
+                action.accept(player);
+            }
             this.addDelay(uuid, configuration);
             return;
         }
@@ -30,15 +40,21 @@ public class DelayService extends Service {
             long endTimeStamp = delayEntry.get(configIndex);
 
             if (System.currentTimeMillis() > endTimeStamp) {
-                action.accept(player);
+                if (!inverted) {
+                    action.accept(player);
+                }
                 this.addDelay(uuid, configuration);
             } else if (configuration.getMessage() != null) {
                 long pendingTime = endTimeStamp - System.currentTimeMillis();
                 String formattedTime = this.formatDelay(pendingTime);
 
-                player.sendMessage(
-                    Settings.PREFIX + "§c" + configuration.getMessage().replace("%time", formattedTime)
-                );
+                if (!inverted) {
+                    player.sendMessage(
+                        Settings.PREFIX + "§c" + configuration.getMessage().replace("%time", formattedTime)
+                    );
+                } else {
+                    action.accept(player);
+                }
             }
         }
     }
