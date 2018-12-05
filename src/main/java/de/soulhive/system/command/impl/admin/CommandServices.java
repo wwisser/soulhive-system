@@ -14,33 +14,37 @@ import de.soulhive.system.util.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
+import org.bukkit.inventory.Inventory;
 
 public class CommandServices extends CommandExecutorWrapper {
 
-    private ContainerService containerService;
+    private Inventory inventory;
 
-    public CommandServices() {
+    @Override
+    public void initialize() {
         ServiceManager serviceManager = SoulHive.getServiceManager();
-        this.containerService = serviceManager.getService(ContainerService.class);
+        ContainerService containerService = serviceManager.getService(ContainerService.class);
 
-        Container container = new Container(
-            "§0§lServices",
-            new HashMap<ItemStack, ContainerAction>() {{
-                for (Service service : serviceManager.getFeatureServices()) {
-                    ItemStack itemStack = new ItemBuilder(Material.BOOK)
-                        .name("§b" + service.getClass().getSimpleName())
-                        .build();
+        Container.ContainerBuilder containerBuilder = new Container.ContainerBuilder("§0§lServices")
+            .withSize(6 * 9);
 
-                    this.put(itemStack, player -> {
-                        player.sendMessage(service.getClass().getName());
-                        player.closeInventory();
-                    });
+        for (int i = 0; i < serviceManager.getServices().size(); i++) {
+            Service service = serviceManager.getServices().get(i);
+
+            containerBuilder.withAction(
+                i,
+                new ItemBuilder(Material.BOOK).name(service.getClass().getSimpleName()).build(),
+                player -> {
+                    player.closeInventory();
+                    player.sendMessage(service.getClass().getName());
                 }
-            }}
-        );
+            );
+        }
+
+        Container builtContainer = containerBuilder.build();
+
+        containerService.addContainer(builtContainer);
+        this.inventory = builtContainer.generateInventory();
     }
 
     @Override
@@ -48,7 +52,7 @@ public class CommandServices extends CommandExecutorWrapper {
         ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         Player player = ValidateCommand.onlyPlayer(sender);
 
-
+        player.openInventory(this.inventory);
     }
 
 }

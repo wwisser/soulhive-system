@@ -30,7 +30,7 @@ public class InventoryClickListener implements Listener {
             if (currentItem != null) {
                 container.getActions().keySet()
                     .stream()
-                    .filter(itemStack -> itemStack == currentItem)
+                    .filter(containerEntry -> containerEntry.getItemStack().equals(currentItem))
                     .forEach(itemStack -> container.getActions().get(itemStack).process(player));
             }
         }

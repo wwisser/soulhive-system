@@ -51,9 +51,6 @@ public class Container {
         }
 
         public Container build() {
-            if (this.actions.isEmpty()) {
-                throw new IllegalArgumentException("Container must have at least 1 entry");
-            }
             if (this.actions.size() > this.size) {
                 throw new IllegalArgumentException(
                     "There are " + this.actions.size() + " item entries but only " + this.size + " slots"
