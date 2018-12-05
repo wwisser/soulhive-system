@@ -43,6 +43,7 @@ public class SoulHive extends JavaPlugin {
 
         Arrays.asList(
             taskService,
+            new ContainerService(),
             new MotdService(),
             new UserService(),
             new DelayService(),
@@ -51,8 +52,7 @@ public class SoulHive extends JavaPlugin {
             new ListenerService(),
             new VanishService(this),
             new CombatService(),
-            new ScoreboardService(),
-            new ContainerService()
+            new ScoreboardService()
         ).forEach(serviceManager::registerService);
 
         ReflectUtils.getPacketObjects("de.soulhive.system.service.micro", Service.class)
