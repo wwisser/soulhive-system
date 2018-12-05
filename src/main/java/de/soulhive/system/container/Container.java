@@ -8,7 +8,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 
-@AllArgsConstructor
 @Getter
 @EqualsAndHashCode
 @ToString
@@ -20,6 +19,12 @@ public class Container {
     private String name;
     private int size;
     private Map<ContainerEntry, ContainerAction> actions;
+
+    private Container(ContainerBuilder builder) {
+        this.name = builder.name;
+        this.size = builder.size;
+        this.actions = builder.actions;
+    }
 
     public Inventory generateInventory() {
         final Inventory inventory = Bukkit.createInventory(null, this.size, this.name);
@@ -57,7 +62,7 @@ public class Container {
                 );
             }
 
-            return new Container(this.name, this.size, this.actions);
+            return new Container(this);
         }
 
     }
