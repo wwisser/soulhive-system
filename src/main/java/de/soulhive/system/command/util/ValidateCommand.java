@@ -18,6 +18,20 @@ public class ValidateCommand {
         }
     }
 
+    public int amount(String argument) throws CommandException {
+        try {
+            final int amount = Integer.parseInt(argument);
+
+            if (amount > 0) {
+                return amount;
+            } else {
+                throw new CommandException("§c'" + argument + "' ist keine gültige Zahl.");
+            }
+        } catch (NumberFormatException e) {
+            throw new CommandException("§c'" + argument + "' ist keine gültige Zahl.");
+        }
+    }
+
     public void permission(CommandSender sender, String permission) throws PermissionException {
         if (!sender.hasPermission(permission)) {
             throw new PermissionException();
