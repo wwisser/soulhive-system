@@ -40,7 +40,7 @@ public class FileUserRepository implements UserRepository {
             Integer.valueOf(data[3]),
             Integer.valueOf(data[4]),
             Integer.valueOf(data[5]),
-            Long.valueOf(data[6])
+            Integer.valueOf(data[6])
         );
     }
 

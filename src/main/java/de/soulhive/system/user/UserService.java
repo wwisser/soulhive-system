@@ -1,6 +1,7 @@
 package de.soulhive.system.user;
 
 import de.soulhive.system.service.Service;
+import de.soulhive.system.user.helper.UserHelper;
 import de.soulhive.system.user.listeners.PlayerJoinListener;
 import de.soulhive.system.user.listeners.PlayerQuitListener;
 import de.soulhive.system.user.repository.UserRepository;
@@ -18,6 +19,7 @@ public class UserService extends Service {
 
     private Map<Player, User> onlineCache = new HashMap<>();
     private UserRepository userRepository = new FileUserRepository();
+    private UserHelper userHelper;
 
     @Override
     public void initialize() {
@@ -27,6 +29,7 @@ public class UserService extends Service {
         );
 
         Bukkit.getOnlinePlayers().forEach(this::loadUser);
+        this.userHelper = UserHelper.getInstance();
     }
 
     @Override

@@ -16,7 +16,7 @@ public class User {
     private int deaths;
     private int votes;
     private int playtime;
-    private long jewels;
+    private int jewels;
 
     public void addKill() {
         this.kills++;
@@ -34,11 +34,11 @@ public class User {
         this.playtime++;
     }
 
-    public void addJewels(long amount) {
+    public void addJewels(int amount) {
         this.jewels += amount;
     }
 
-    public void removeJewels(long amount) {
+    public void removeJewels(int amount) {
         this.jewels -= amount;
     }
 
