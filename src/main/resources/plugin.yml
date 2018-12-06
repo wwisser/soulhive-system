@@ -67,3 +67,5 @@ commands:
   invsee:
   bodysee:
   services:
+  jewels:
+    aliases: [j, juwelen, money, geld]
