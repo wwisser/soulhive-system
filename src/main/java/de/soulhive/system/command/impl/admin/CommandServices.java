@@ -44,7 +44,7 @@ public class CommandServices extends CommandExecutorWrapper {
         Container builtContainer = containerBuilder.build();
 
         containerService.addContainer(builtContainer);
-        this.inventory = builtContainer.generateInventory();
+        this.inventory = builtContainer.getInventory();
     }
 
     @Override
