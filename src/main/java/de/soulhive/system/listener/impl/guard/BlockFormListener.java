@@ -1,6 +1,5 @@
 package de.soulhive.system.listener.impl.guard;
 
-import de.soulhive.system.SoulHive;
 import de.soulhive.system.setting.Settings;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

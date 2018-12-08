@@ -1,7 +1,6 @@
 package de.soulhive.system.combat.listeners;
 
 import de.soulhive.system.combat.CombatService;
-import de.soulhive.system.setting.Settings;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
