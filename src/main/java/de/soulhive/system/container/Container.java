@@ -19,14 +19,29 @@ public class Container {
     private String name;
     private int size;
     private Map<ContainerEntry, ContainerAction> actions;
+    private ContainerStorageLevel storageLevel;
+    private Inventory inventory;
 
     private Container(ContainerBuilder builder) {
         this.name = builder.name;
         this.size = builder.size;
         this.actions = builder.actions;
+        this.storageLevel = builder.storageLevel;
     }
 
-    public Inventory generateInventory() {
+    public Inventory getInventory() {
+        if (this.storageLevel == ContainerStorageLevel.NEW) {
+            return this.generateInventory();
+        } else {
+            if (this.inventory == null) {
+                return (this.inventory = this.generateInventory());
+            } else {
+                return this.inventory;
+            }
+        }
+    }
+
+    private Inventory generateInventory() {
         final Inventory inventory = Bukkit.createInventory(null, this.size, this.name);
 
         this.actions.keySet().forEach(containerEntry ->
@@ -44,9 +59,15 @@ public class Container {
         @NonNull private String name;
         private Map<ContainerEntry, ContainerAction> actions = new HashMap<>();
         private int size = DEFAULT_INVENTORY_SIZE;
+        private ContainerStorageLevel storageLevel = ContainerStorageLevel.NEW;
 
         public ContainerBuilder withAction(int slot, ItemStack itemStack, ContainerAction action) {
             this.actions.put(new ContainerEntry(slot, itemStack), action);
+            return this;
+        }
+
+        public ContainerBuilder withStorageLevel(ContainerStorageLevel storageLevel) {
+            this.storageLevel = storageLevel;
             return this;
         }
 
