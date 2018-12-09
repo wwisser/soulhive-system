@@ -1,9 +1,12 @@
 package de.soulhive.system.motd;
 
-import de.soulhive.system.motd.commands.CommandMotd;
-import de.soulhive.system.motd.listeners.ServerListPingListener;
+import de.soulhive.system.SoulHive;
+import de.soulhive.system.motd.command.CommandMotd;
+import de.soulhive.system.motd.listener.ServerListPingListener;
+import de.soulhive.system.motd.task.MotdUpdateTask;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
+import de.soulhive.system.task.TaskService;
 import de.soulhive.system.util.Config;
 
 public class MotdService extends Service {
@@ -15,19 +18,21 @@ public class MotdService extends Service {
 
     private Config config;
 
-    public MotdService() {
-        this.reloadConig();
-        this.config.setDefault(KEY_HEADER, "§fSettings.de");
-        this.config.setDefault(KEY_FOOTER, "§fhuh, motd?");
-    }
-
     @Override
     public void initialize() {
+        this.reloadConfig();
+        this.config.setDefault(KEY_HEADER, "§fSoulHive.de");
+        this.config.setDefault(KEY_FOOTER, "§fLoading MOTD...");
+
         super.registerCommand("motd", new CommandMotd(this));
         super.registerListener(new ServerListPingListener(this));
+
+        SoulHive.getServiceManager().getService(TaskService.class).registerTasks(
+            new MotdUpdateTask(this)
+        );
     }
 
-    public void reloadConig() {
+    public void reloadConfig() {
         this.config = new Config(Settings.CONFIG_PATH, FILE_NAME);
     }
 

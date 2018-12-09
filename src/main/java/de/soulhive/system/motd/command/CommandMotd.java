@@ -1,4 +1,4 @@
-package de.soulhive.system.motd.commands;
+package de.soulhive.system.motd.command;
 
 import de.soulhive.system.motd.MotdService;
 import de.soulhive.system.setting.Settings;
@@ -40,7 +40,7 @@ public class CommandMotd implements CommandExecutor {
                 this.motdService.updateFooter(this.joinText(args));
                 break;
             case "reload":
-                this.motdService.reloadConig();
+                this.motdService.reloadConfig();
                 break;
             default:
                 commandSender.sendMessage(USAGE);

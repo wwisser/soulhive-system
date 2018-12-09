@@ -6,7 +6,7 @@ import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 
 /**
- * Placeholder class for unregistered commands.
+ * Placeholder class for unregistered command.
  */
 public class CommandNone extends CommandExecutorWrapper {
 

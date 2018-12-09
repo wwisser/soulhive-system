@@ -1,4 +1,4 @@
-package de.soulhive.system.motd.listeners;
+package de.soulhive.system.motd.listener;
 
 import de.soulhive.system.motd.MotdService;
 import lombok.AllArgsConstructor;
