@@ -4,8 +4,12 @@ import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.setting.Settings;
+import de.soulhive.system.util.Config;
 import org.bukkit.command.CommandSender;
+import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
+
+import java.util.Set;
 
 public class CommandDebug extends CommandExecutorWrapper {
 
@@ -16,9 +20,13 @@ public class CommandDebug extends CommandExecutorWrapper {
         ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         ValidateCommand.minArgs(1, args, USAGE);
 
-        PermissionsEx.getPermissionManager().getGroup(args[0]).getUsers().forEach(
-            permissionUser -> sender.sendMessage(permissionUser.getName())
-        );
+        final Config fileStorage = new Config(Settings.CONFIG_PATH, args[0] + ".yml");
+        final Set<PermissionUser> users = PermissionsEx.getPermissionManager().getGroup(args[0]).getUsers();
+
+        fileStorage.set(args[0], users);
+        fileStorage.saveFile();
+
+        sender.sendMessage(Settings.PREFIX + "§f" + users.size() + " §7users extracted into §f" + args[0] + "§7.");
     }
 
 }
