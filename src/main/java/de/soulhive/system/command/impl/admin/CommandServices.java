@@ -7,6 +7,7 @@ import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.container.Container;
 import de.soulhive.system.container.ContainerAction;
 import de.soulhive.system.container.ContainerService;
+import de.soulhive.system.container.ContainerStorageLevel;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.service.ServiceManager;
 import de.soulhive.system.setting.Settings;
@@ -26,7 +27,8 @@ public class CommandServices extends CommandExecutorWrapper {
         ContainerService containerService = serviceManager.getService(ContainerService.class);
 
         Container.ContainerBuilder containerBuilder = new Container.ContainerBuilder("§0§lServices")
-            .withSize(6 * 9);
+            .withSize(6 * 9)
+            .withStorageLevel(ContainerStorageLevel.STORED);
 
         for (int i = 0; i < serviceManager.getServices().size(); i++) {
             Service service = serviceManager.getServices().get(i);
