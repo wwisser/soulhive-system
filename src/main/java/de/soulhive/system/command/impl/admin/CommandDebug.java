@@ -9,7 +9,8 @@ import org.bukkit.command.CommandSender;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CommandDebug extends CommandExecutorWrapper {
 
@@ -21,12 +22,15 @@ public class CommandDebug extends CommandExecutorWrapper {
         ValidateCommand.minArgs(1, args, USAGE);
 
         final Config fileStorage = new Config(Settings.CONFIG_PATH, args[0] + ".yml");
-        final Set<PermissionUser> users = PermissionsEx.getPermissionManager().getGroup(args[0]).getUsers();
+        final List<String> users = PermissionsEx.getPermissionManager().getGroup(args[0]).getUsers()
+            .stream()
+            .map(PermissionUser::getName)
+            .collect(Collectors.toList());
 
         fileStorage.set(args[0], users);
         fileStorage.saveFile();
 
-        sender.sendMessage(Settings.PREFIX + "§f" + users.size() + " §7users extracted into §f" + args[0] + "§7.");
+        sender.sendMessage(Settings.PREFIX + "§f" + users.size() + " §7users extracted into §f" + args[0] + ".yml");
     }
 
 }

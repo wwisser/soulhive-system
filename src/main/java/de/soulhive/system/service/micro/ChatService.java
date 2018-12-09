@@ -5,6 +5,9 @@ import de.soulhive.system.delay.DelayConfiguration;
 import de.soulhive.system.delay.DelayService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
+import net.milkbowl.vault.chat.Chat;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,22 +15,34 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatService extends Service implements Listener {
 
+    private static final String PREFIX_FORMAT = "§8[%s§8]";
+
     private static final DelayConfiguration DELAY_CONFIGURATION = new DelayConfiguration(
         "Bitte warte noch %time.",
         1500
     );
 
     private DelayService delayService;
+    private Chat vaultChat;
 
     @Override
     public void initialize() {
-        this.delayService = SoulHive.getServiceManager().getService(DelayService.class);
         super.registerListener(this);
+        this.delayService = SoulHive.getServiceManager().getService(DelayService.class);
+        this.vaultChat = Bukkit.getServer().getServicesManager().getRegistration(Chat.class).getProvider();
     }
 
     @EventHandler
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
+
+        event.setFormat(
+            this.fetchPrefix(player)
+                + " §7"
+                + player.getName()
+                + "§8: §r"
+                + this.formatMessage(player, event.getMessage())
+        );
 
         if (player.hasPermission("soulhive.chat.bypass")) {
             return;
@@ -37,6 +52,24 @@ public class ChatService extends Service implements Listener {
             event.setCancelled(true);
             sender.sendMessage(Settings.PREFIX + "§cDu schreibst zu schnell.");
         });
+    }
+
+    private String fetchPrefix(final Player player) {
+        final String playerPrefix = ChatColor.translateAlternateColorCodes(
+            '&', this.vaultChat.getPlayerPrefix(player)
+        );
+
+        return String.format(PREFIX_FORMAT, playerPrefix);
+    }
+
+    private String formatMessage(final Player sender, final String message) {
+        String formattedMessage = message;
+
+        if (sender.hasPermission("soulhive.chat.color")) {
+            formattedMessage = ChatColor.translateAlternateColorCodes('&', formattedMessage);
+        }
+
+        return formattedMessage.replace("%", "%%");
     }
 
 }
