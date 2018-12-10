@@ -13,14 +13,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.*;
+
 public class ChatService extends Service implements Listener {
 
     private static final String PREFIX_FORMAT = "§8[%s§8]";
-
+    private static final int MESSAGE_LENGTH_IGNORE_REPEAT = 3;
     private static final DelayConfiguration DELAY_CONFIGURATION = new DelayConfiguration(
         "Bitte warte noch %time.",
         1500
     );
+
+    private Map<Player, Deque<String>> sentMessages = new HashMap<>();
 
     private DelayService delayService;
     private Chat vaultChat;
@@ -34,15 +38,15 @@ public class ChatService extends Service implements Listener {
 
     @EventHandler
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
+        final String message = event.getMessage();
+        final String formattedMessage = this.fetchPrefix(player)
+            + " §7"
+            + player.getName()
+            + "§8: §r"
+            + this.formatMessage(player, message);
 
-        event.setFormat(
-            this.fetchPrefix(player)
-                + " §7"
-                + player.getName()
-                + "§8: §r"
-                + this.formatMessage(player, event.getMessage())
-        );
+        event.setFormat(formattedMessage);
 
         if (player.hasPermission("soulhive.chat.bypass")) {
             return;
@@ -52,6 +56,26 @@ public class ChatService extends Service implements Listener {
             event.setCancelled(true);
             sender.sendMessage(Settings.PREFIX + "§cDu schreibst zu schnell.");
         });
+
+        if (message.length() <= MESSAGE_LENGTH_IGNORE_REPEAT) {
+            return;
+        }
+
+        final Deque<String> messages = this.sentMessages.getOrDefault(player, new ArrayDeque<>());
+
+        if (messages.stream().anyMatch(message::equalsIgnoreCase)) {
+            player.sendMessage(formattedMessage);
+            event.setCancelled(true);
+            return;
+        }
+
+        messages.addLast(message);
+
+        if (messages.size() > MESSAGE_LENGTH_IGNORE_REPEAT) {
+            messages.removeFirst();
+        }
+
+        this.sentMessages.put(player, messages);
     }
 
     private String fetchPrefix(final Player player) {
