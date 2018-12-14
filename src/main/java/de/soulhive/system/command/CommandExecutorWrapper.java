@@ -27,7 +27,13 @@ public abstract class CommandExecutorWrapper implements CommandExecutor {
         } catch (Exception e) {
             String message = e.getMessage();
 
-            sender.sendMessage(e instanceof CommandException ? message : Settings.PREFIX + "§4Fehler: §c" + message);
+            if (e instanceof CommandException) {
+                message = Settings.PREFIX + "§c" + e.getMessage();
+            } else {
+                message = Settings.PREFIX + "§c" + e.getClass().getSimpleName() + ": §o" + message;
+            }
+
+            sender.sendMessage(message);
         }
 
         return true;
