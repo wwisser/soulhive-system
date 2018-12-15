@@ -32,7 +32,7 @@ public class CommandJewels extends CommandExecutorWrapper {
 
             player.sendMessage(Settings.PREFIX + "§dJuwelen §7System");
             player.sendMessage(" §7Deine Juwelen: §f" + user.getJewels());
-            player.sendMessage(" §7Juwelen transferieren: §f/pay <target> <amount>");
+            player.sendMessage(" §7Juwelen transferieren: §f/juwelen pay <target> <amount>");
             return;
         }
 

@@ -6,7 +6,9 @@ import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.user.User;
 import de.soulhive.system.user.UserService;
+import de.soulhive.system.util.MillisecondsConverter;
 import lombok.AllArgsConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -41,7 +43,18 @@ public class CommandStats extends CommandExecutorWrapper {
 
         if (player.isOp()) {
             player.sendMessage(" §7Registriert seit: §f" + DATE_FORMAT.format(new Date(user.getFirstSeen())));
-            player.sendMessage(" §7Zul. gesehen: §f" + DATE_FORMAT.format(new Date(user.getLastSeen())));
+
+            final Player targetPlayer = Bukkit.getPlayer(user.getName());
+            String lastSeen;
+
+            if (targetPlayer != null && targetPlayer.isOnline()) {
+                lastSeen = "Jetzt";
+            } else {
+                long diff = System.currentTimeMillis() - user.getLastSeen();
+                lastSeen = MillisecondsConverter.convertToString(diff);
+            }
+
+            player.sendMessage(" §7Zul. gesehen: §f" + lastSeen);
         }
     }
 
