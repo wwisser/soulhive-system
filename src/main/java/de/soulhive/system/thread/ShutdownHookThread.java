@@ -22,17 +22,19 @@ public class ShutdownHookThread extends Thread {
 
     @Override
     public void run() {
-        if (!this.plannedShutdownTask.isRegularShutdown()) {
-            JsonObject jsonObject = new JsonObject();
-
-            jsonObject.addProperty("icon_emoji", ":exclamation:");
-            jsonObject.addProperty(
-                "text",
-                "Unregulärer Serverstopp: " + DATE_FORMAT.format(new Date())
-            );
-
-            HttpUtils.post(this.url, jsonObject.toString(), "application/json");
+        if (this.plannedShutdownTask.isRegularShutdown()) {
+            return;
         }
+
+        JsonObject jsonObject = new JsonObject();
+
+        jsonObject.addProperty("icon_emoji", ":exclamation:");
+        jsonObject.addProperty(
+            "text",
+            "Unregulärer Serverstopp: " + DATE_FORMAT.format(new Date())
+        );
+
+        HttpUtils.post(this.url, jsonObject.toString(), "application/json");
     }
 
 }
