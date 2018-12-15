@@ -36,7 +36,7 @@ public class CommandJewels extends CommandExecutorWrapper {
             return;
         }
 
-        if (args.length < 2) {
+        if (args.length < 3 || !args[0].equalsIgnoreCase("pay")) {
             throw new InvalidArgsException(USAGE);
         }
 
@@ -44,18 +44,18 @@ public class CommandJewels extends CommandExecutorWrapper {
         User targetUser;
 
         try {
-            targetUser = this.userService.getUser(ValidateCommand.target(args[0], sender));
+            targetUser = this.userService.getUser(ValidateCommand.target(args[1], sender));
         } catch (TargetNotFoundException e) {
-            final User userByName = this.userService.getUserByName(args[0]);
+            final User userByName = this.userService.getUserByName(args[1]);
 
             if (userByName != null) {
-                targetUser = this.userService.getUserByName(args[0]);
+                targetUser = this.userService.getUserByName(args[1]);
             } else {
                 throw e;
             }
         }
 
-        final int amount = ValidateCommand.amount(args[1]);
+        final int amount = ValidateCommand.amount(args[2]);
         final boolean success = this.userService.getUserHelper().handleTransaction(user, targetUser, amount);
 
         if (success) {
@@ -63,7 +63,7 @@ public class CommandJewels extends CommandExecutorWrapper {
                 Settings.PREFIX
                     + "Du hast §f"
                     + targetUser.getName()
-                    + " die folgende Menge an Juwelen gesendet: §d"
+                    + " §7die folgende Menge an Juwelen gesendet: §d"
                     + amount
             );
         } else {
