@@ -9,6 +9,7 @@ import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.user.User;
 import de.soulhive.system.user.UserService;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -66,6 +67,19 @@ public class CommandJewels extends CommandExecutorWrapper {
                     + " §7die folgende Menge an Juwelen gesendet: §d"
                     + amount
             );
+
+            final Player targetPlayer = Bukkit.getPlayer(targetUser.getName());
+
+            if (targetPlayer != null && targetPlayer.isOnline()) {
+                targetPlayer.sendMessage(
+                    Settings.PREFIX
+                        + "Du hast §d"
+                        + amount
+                        + " Juwelen §7von §f"
+                        + player.getName()
+                        + " §7erhalten!"
+                );
+            }
         } else {
             // TODO: link shop
             player.sendMessage(
