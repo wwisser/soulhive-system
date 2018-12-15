@@ -12,14 +12,15 @@ public abstract class CommandExecutorWrapper implements CommandExecutor {
 
     @Override
     public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        try {
-            if (!this.initialized) {
+        if (!this.initialized) {
+            this.initialized = true;
+
+            try {
                 this.initialize();
-                this.initialized = true;
+            } catch (Exception e) {
+                System.out.println("An error occurred while initializing command: " + e.getMessage());
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            System.out.println("An error occurred while initializing command: " + e.getMessage());
-            e.printStackTrace();
         }
 
         try {
