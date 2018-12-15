@@ -2,6 +2,7 @@ package de.soulhive.system.delay;
 
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
+import de.soulhive.system.util.MillisecondsConverter;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -46,7 +47,7 @@ public class DelayService extends Service {
                 this.addDelay(uuid, configuration);
             } else if (configuration.getMessage() != null) {
                 long pendingTime = endTimeStamp - System.currentTimeMillis();
-                String formattedTime = this.formatDelay(pendingTime);
+                String formattedTime = MillisecondsConverter.convertToString(pendingTime);
 
                 if (!inverted) {
                     player.sendMessage(
@@ -68,34 +69,6 @@ public class DelayService extends Service {
         );
 
         this.delays.put(uuid, delayEntry);
-    }
-
-    private String formatDelay(long millis) {
-        long hours = TimeUnit.MILLISECONDS.toHours(millis);
-        millis -= TimeUnit.HOURS.toMillis(hours);
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
-        millis -= TimeUnit.MINUTES.toMillis(minutes);
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
-
-        Set<String> results = new HashSet<>();
-
-        if (hours != 0) {
-            results.add(hours + "h");
-        }
-
-        if (minutes != 0) {
-            results.add(minutes + "min");
-        }
-
-        if (seconds != 0) {
-            results.add(seconds + "s");
-        }
-
-        if (results.isEmpty()) {
-            return "1ms";
-        }
-
-        return String.join(", ", results);
     }
 
 }

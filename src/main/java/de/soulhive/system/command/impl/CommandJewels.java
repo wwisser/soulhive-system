@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 public class CommandJewels extends CommandExecutorWrapper {
 
-    private static final String USAGE = "/j pay <target> <amount>";
+    private static final String USAGE = "/juwelen pay <target> <amount>";
 
     private UserService userService;
 
@@ -32,7 +32,7 @@ public class CommandJewels extends CommandExecutorWrapper {
 
             player.sendMessage(Settings.PREFIX + "§dJuwelen §7System");
             player.sendMessage(" §7Deine Juwelen: §f" + user.getJewels());
-            player.sendMessage(" §7Juwelen transferieren: §f/j pay <target> <amount>");
+            player.sendMessage(" §7Juwelen transferieren: §f/pay <target> <amount>");
             return;
         }
 
