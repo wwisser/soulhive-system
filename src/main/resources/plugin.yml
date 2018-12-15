@@ -60,7 +60,7 @@ commands:
   message:
     aliases: [pm, whisper, msg, dm, r, reply]
   teamspeak:
-    aliases: [ts]
+    aliases: [ts, discord, skype]
   teleport:
     aliases: [tp, tpa, tpahere, tphere, s, tpaccept]
   globalmute:
