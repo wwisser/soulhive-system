@@ -29,7 +29,7 @@ public abstract class CommandExecutorWrapper implements CommandExecutor {
             String message = e.getMessage();
 
             if (e instanceof CommandException) {
-                message = Settings.PREFIX + "§c" + e.getMessage();
+                message = "§c" + e.getMessage();
             } else {
                 message = Settings.PREFIX + "§c" + e.getClass().getSimpleName() + ": §o" + message;
             }
