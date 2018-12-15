@@ -19,7 +19,7 @@ public class CommandJewels extends CommandExecutorWrapper {
     private UserService userService;
 
     @Override
-    public void initialize() {
+    protected void initialize() {
         this.userService = SoulHive.getServiceManager().getService(UserService.class);
     }
 

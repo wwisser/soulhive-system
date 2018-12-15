@@ -42,7 +42,7 @@ public abstract class CommandExecutorWrapper implements CommandExecutor {
 
     public abstract void process(CommandSender sender, String label, String[] args) throws CommandException;
 
-    public void initialize() {
+    protected void initialize() {
         // placeholder method, can be overwritten
     }
 
