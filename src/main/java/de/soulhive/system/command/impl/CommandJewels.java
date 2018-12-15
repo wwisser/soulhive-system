@@ -64,7 +64,7 @@ public class CommandJewels extends CommandExecutorWrapper {
                 Settings.PREFIX
                     + "Du hast §f"
                     + targetUser.getName()
-                    + "§d" + amount + " Juwelen §7überwiesen."
+                    + " §d" + amount + " Juwelen §7überwiesen."
             );
 
             final Player targetPlayer = Bukkit.getPlayer(targetUser.getName());
