@@ -16,7 +16,7 @@ public class ContainerService extends Service {
         super.registerListener(new InventoryClickListener(this));
     }
 
-    public void addContainer(Container container) {
+    public void registerContainer(final Container container) {
         this.containers.add(container);
     }
 

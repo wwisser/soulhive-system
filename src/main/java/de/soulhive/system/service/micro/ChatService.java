@@ -64,7 +64,9 @@ public class ChatService extends Service implements Listener {
         final Deque<String> messages = this.sentMessages.getOrDefault(player, new ArrayDeque<>());
 
         if (messages.stream().anyMatch(message::equalsIgnoreCase)) {
-            player.sendMessage(formattedMessage);
+            if (!event.isCancelled()) {
+                player.sendMessage(formattedMessage);
+            }
             event.setCancelled(true);
             return;
         }

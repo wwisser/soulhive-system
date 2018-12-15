@@ -9,6 +9,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class RankPurchaseContainerAction implements ContainerAction {
                 Bukkit.getConsoleSender(),
                 "pex user " + player.getName() + " group set " + this.rank
             );
-
+            player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
             player.sendMessage(
                 Settings.PREFIX
                     + "Du hast dir den Rang "
@@ -51,6 +52,8 @@ public class RankPurchaseContainerAction implements ContainerAction {
                     + " Juwelen, um diesen Rang kaufen zu können."
             );
         }
+
+        player.closeInventory();
     }
 
 }

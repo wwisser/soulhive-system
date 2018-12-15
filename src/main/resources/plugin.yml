@@ -69,3 +69,5 @@ commands:
   services:
   jewels:
     aliases: [j, juwelen, money, geld]
+  shop:
+    aliases: [usershop, itemshop, rank, ranks, rang]
