@@ -32,7 +32,11 @@ public class CommandVanish extends CommandExecutorWrapper {
             player.sendMessage(Settings.PREFIX + "Du hast den Vanish-Modus §cdeaktiviert§f!");
         } else {
             vanishedPlayers.add(player);
-            Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.hidePlayer(player));
+            Bukkit.getOnlinePlayers()
+                .stream()
+                .filter(onlinePlayer -> !onlinePlayer.hasPermission(Settings.PERMISSION_TEAM))
+                .filter(onlinePlayer -> onlinePlayer != player)
+                .forEach(onlinePlayer -> onlinePlayer.hidePlayer(player));
             player.sendMessage(Settings.PREFIX + "Du hast den Vanish-Modus §aaktiviert§f!");
         }
     }

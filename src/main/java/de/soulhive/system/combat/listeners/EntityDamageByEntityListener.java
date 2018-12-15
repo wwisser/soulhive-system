@@ -14,7 +14,7 @@ public class EntityDamageByEntityListener implements Listener {
 
     private CombatService combatService;
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof Player)) {
             return;
