@@ -1,5 +1,6 @@
 package de.soulhive.system.container;
 
+import de.soulhive.system.container.action.ContainerAction;
 import lombok.*;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;

@@ -5,7 +5,6 @@ import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.container.Container;
-import de.soulhive.system.container.ContainerAction;
 import de.soulhive.system.container.ContainerService;
 import de.soulhive.system.container.ContainerStorageLevel;
 import de.soulhive.system.service.Service;

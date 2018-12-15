@@ -10,7 +10,7 @@ public class UserHelper {
     private static UserHelper instance;
 
     /**
-     * Handles a simple jewels transaction.
+     * Handles a simple jewel transaction.
      *
      * @return false if the sender has not enough jewel balance
      */
