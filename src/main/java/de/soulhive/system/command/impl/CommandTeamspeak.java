@@ -10,7 +10,7 @@ public class CommandTeamspeak extends CommandExecutorWrapper {
     @Override
     public void process(CommandSender sender, String label, String[] args) throws CommandException {
         sender.sendMessage(Settings.PREFIX + "TeamSpeak-IP: §fts.soulhive.de");
-        sender.sendMessage(Settings.PREFIX + "Discord-Server: §fhttps://discord.gg/kbFbZbw");
+        sender.sendMessage(Settings.PREFIX + "Discord-Server: §fhttps://discord.gg/mxBaDKj");
     }
 
 }
