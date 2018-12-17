@@ -71,3 +71,5 @@ commands:
     aliases: [j, juwelen, money, geld]
   shop:
     aliases: [usershop, itemshop, rank, ranks, rang]
+  buy:
+    aliases: [spenden, kaufen, donate, buycraft]
