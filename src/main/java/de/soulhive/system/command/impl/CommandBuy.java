@@ -28,7 +28,6 @@ public class CommandBuy extends CommandExecutorWrapper {
         if (args.length < 2) {
             sender.sendMessage(Settings.PREFIX + "§d§lJuwelen §7kaufen, so geht's:");
             sender.sendMessage(" §d1000 Juwelen §7sind §f1 EUR §7wert.");
-            sender.sendMessage(" §7Für 10 EUR §7bekommst du §d10000 §7Juwelen, für 20 EUR §d20000§7, usw.");
             sender.sendMessage(" §7Zahlungsmittel: §b§lPaySafeCard §7PIN");
             sender.sendMessage(" " + USAGE);
             sender.sendMessage(" §7Bsp. für 5000 Juwelen und 5 EUR: §c/buy 0123634612341648 5");
@@ -39,8 +38,8 @@ public class CommandBuy extends CommandExecutorWrapper {
         int amount = ValidateCommand.amount(args[1]);
 
         if (StringUtils.isNumeric(pin) && pin.length() == 16 && pin.startsWith("0") && amount > 0) {
-            sender.sendMessage(Settings.PREFIX + "Vielen Dank!");
-            sender.sendMessage(" §7Deine Spende wird innerhalb der nächsten 48 Stunden bearbeitet.");
+            sender.sendMessage(Settings.PREFIX + "Vielen Dank für deine Unterstützung §c<3");
+            sender.sendMessage(" §7Die Spende wird innerhalb der nächsten §d48 Stunden §7bearbeitet.");
             sender.sendMessage(" §7Bitte habe ein wenig Gedult, wir kümmern uns umgehend darum.");
             player.playSound(player.getLocation(), Sound.LEVEL_UP, Float.MAX_VALUE, Float.MIN_VALUE);
 
@@ -63,7 +62,7 @@ public class CommandBuy extends CommandExecutorWrapper {
                 "\nGesendet: " + time +
                 "\nUUID: " + player.getUniqueId();
 
-            SlackUtils.postMessage(slackText, "geld_ausgeben", "donation");
+            SlackUtils.postMessage(slackText, "money_with_wings", "donation");
         } else {
             sender.sendMessage(Settings.PREFIX + USAGE);
         }

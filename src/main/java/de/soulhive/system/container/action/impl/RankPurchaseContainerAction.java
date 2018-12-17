@@ -51,6 +51,7 @@ public class RankPurchaseContainerAction implements ContainerAction {
                     + (this.costs - user.getJewels())
                     + " Juwelen, um diesen Rang kaufen zu können."
             );
+            player.sendMessage(Settings.PREFIX + "Jetzt §d§lJuwelen §7kaufen §8> §f/buy");
         }
 
         player.closeInventory();
