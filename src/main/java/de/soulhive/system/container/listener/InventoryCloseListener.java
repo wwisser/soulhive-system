@@ -19,10 +19,20 @@ public class InventoryCloseListener implements Listener {
         Inventory inventory = event.getInventory();
         Player player = (Player) event.getPlayer();
 
+        Container containerToDestroy = null;
+
         for (Container container : this.containerService.getContainers()) {
             if (inventory.getName().equals(container.getName())) {
                 container.getCloseHook().accept(player, event);
+
+                if (container.isDestroy()) {
+                    containerToDestroy = container;
+                }
             }
+        }
+
+        if (containerToDestroy != null) {
+            this.containerService.destroyContainer(containerToDestroy);
         }
     }
 

@@ -16,7 +16,7 @@ import de.soulhive.system.task.impl.TablistUpdateTask;
 import de.soulhive.system.task.TaskService;
 import de.soulhive.system.thread.ShutdownHookThread;
 import de.soulhive.system.user.UserService;
-import de.soulhive.system.util.reflect.ReflectUtils;
+import de.soulhive.system.util.ReflectUtils;
 import de.soulhive.system.vanish.VanishService;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;

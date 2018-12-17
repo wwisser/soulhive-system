@@ -2,7 +2,7 @@ package de.soulhive.system.command;
 
 import de.soulhive.system.command.impl.none.CommandNone;
 import de.soulhive.system.service.Service;
-import de.soulhive.system.util.reflect.ReflectUtils;
+import de.soulhive.system.util.ReflectUtils;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 

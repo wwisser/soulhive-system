@@ -38,8 +38,11 @@ public class CommandSupply extends CommandExecutorWrapper {
         ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         final Player player = ValidateCommand.onlyPlayer(sender);
 
-        final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lSupply Items")
-            .setSize(6 * 9)
+        final Container.ContainerBuilder builder = new Container.ContainerBuilder(
+            "§0§lSupply Items §0| "
+                + this.supplyService.getItemStacks().size()
+                + "/" + this.supplyService.getSignLocations().size()
+        ).setSize(6 * 9)
             .setStorageLevel(ContainerStorageLevel.NEW)
             .setEventCancelled(false)
             .setInventoryCloseHook((closer, inventoryCloseEvent) ->

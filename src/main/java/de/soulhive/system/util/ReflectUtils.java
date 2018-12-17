@@ -1,4 +1,4 @@
-package de.soulhive.system.util.reflect;
+package de.soulhive.system.util;
 
 import com.google.common.reflect.ClassPath;
 import de.soulhive.system.command.CommandService;

@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 @Getter
 @EqualsAndHashCode
@@ -28,6 +27,7 @@ public class Container {
     private Inventory inventory;
     private boolean eventCancelled;
     private BiConsumer<Player, InventoryCloseEvent> closeHook;
+    private boolean destroy;
 
     private Container(ContainerBuilder builder) {
         this.name = builder.name;
@@ -36,6 +36,7 @@ public class Container {
         this.storageLevel = builder.storageLevel;
         this.eventCancelled = builder.cancelEvent;
         this.closeHook = builder.closeHook;
+        this.destroy = builder.destroy;
     }
 
     public Inventory getInventory() {
@@ -71,6 +72,7 @@ public class Container {
         private ContainerStorageLevel storageLevel = ContainerStorageLevel.NEW;
         private boolean cancelEvent;
         private BiConsumer<Player, InventoryCloseEvent> closeHook = (player, inventoryCloseEvent) -> {};
+        private boolean destroy = false;
 
         public ContainerBuilder addAction(int slot, ItemStack itemStack, ContainerAction action) {
             this.actions.put(new ContainerEntry(slot, itemStack), action);
@@ -99,6 +101,11 @@ public class Container {
 
         public ContainerBuilder setSize(int size) {
             this.size = size;
+            return this;
+        }
+
+        public ContainerBuilder setDestroyOnClose(boolean destroy) {
+            this.destroy = destroy;
             return this;
         }
 

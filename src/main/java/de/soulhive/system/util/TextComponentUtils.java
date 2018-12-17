@@ -1,4 +1,4 @@
-package de.soulhive.system.util.text;
+package de.soulhive.system.util;
 
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.chat.ClickEvent;

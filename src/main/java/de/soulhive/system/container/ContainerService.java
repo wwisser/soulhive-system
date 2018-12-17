@@ -18,6 +18,10 @@ public class ContainerService extends Service {
         super.registerListener(new InventoryCloseListener(this));
     }
 
+    public void destroyContainer(final Container container) {
+        this.containers.remove(container);
+    }
+
     public void registerContainer(final Container container) {
         this.containers.add(container);
     }

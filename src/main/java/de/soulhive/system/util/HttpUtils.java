@@ -1,4 +1,4 @@
-package de.soulhive.system.util.http;
+package de.soulhive.system.util;
 
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;

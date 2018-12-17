@@ -7,7 +7,7 @@ import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.delay.DelayConfiguration;
 import de.soulhive.system.delay.DelayService;
 import de.soulhive.system.setting.Settings;
-import de.soulhive.system.util.text.TextComponentUtils;
+import de.soulhive.system.util.TextComponentUtils;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

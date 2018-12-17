@@ -2,7 +2,6 @@ package de.soulhive.system.util;
 
 import com.google.gson.JsonObject;
 import de.soulhive.system.setting.Settings;
-import de.soulhive.system.util.http.HttpUtils;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

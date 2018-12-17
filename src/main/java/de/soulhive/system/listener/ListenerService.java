@@ -1,7 +1,7 @@
 package de.soulhive.system.listener;
 
 import de.soulhive.system.service.Service;
-import de.soulhive.system.util.reflect.ReflectUtils;
+import de.soulhive.system.util.ReflectUtils;
 import org.bukkit.event.Listener;
 
 public class ListenerService extends Service {
