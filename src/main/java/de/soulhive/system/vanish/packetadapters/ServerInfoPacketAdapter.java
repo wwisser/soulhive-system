@@ -10,8 +10,8 @@ import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Collections;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ServerInfoPacketAdapter extends PacketAdapter {
 
@@ -48,11 +48,14 @@ public class ServerInfoPacketAdapter extends PacketAdapter {
                 .append(" ")
             );
 
-        stringBuilder.append("§c\n§c\n");
+        stringBuilder.append("§c\n§c\n§c");
 
-        ping.setPlayers(Collections.singletonList(
-            new WrappedGameProfile(UUID.randomUUID(), stringBuilder.toString())
-        ));
+        final List<WrappedGameProfile> gameProfiles = Arrays
+            .stream(stringBuilder.toString().split("\n"))
+            .map(s -> new WrappedGameProfile(UUID.randomUUID(), s))
+            .collect(Collectors.toList());
+
+        ping.setPlayers(gameProfiles);
         ping.setPlayersOnline(diff);
     }
 
