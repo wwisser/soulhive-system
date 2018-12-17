@@ -42,7 +42,7 @@ public class StatsService extends Service {
 
         ToplistContext[] toplistContexts = {
             new KillToplistContext(userRepository),
-            new DeathToplistContext(userRepository),
+            //new DeathToplistContext(userRepository),
             new PlaytimeToplistContext(userRepository),
             new JewelToplistContext(userRepository),
             new VoteToplistContext(userRepository),
