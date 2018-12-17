@@ -47,7 +47,7 @@ public class CommandBuy extends CommandExecutorWrapper {
             final String time = DATE_FORMAT.format(new Date());
             final Config donationFile = new Config(
                 Settings.CONFIG_PATH,
-                time + "_" + player.getName() + "_" + UUID.randomUUID()
+                "donations/" + time + "_" + player.getName() + "_" + UUID.randomUUID()
             );
 
             donationFile.set("Name", player.getName());
