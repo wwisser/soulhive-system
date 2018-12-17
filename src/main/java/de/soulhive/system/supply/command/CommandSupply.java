@@ -10,7 +10,9 @@ import de.soulhive.system.container.ContainerStorageLevel;
 import de.soulhive.system.service.ServiceManager;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.supply.SupplyService;
+import de.soulhive.system.util.LocationUtils;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -38,12 +40,44 @@ public class CommandSupply extends CommandExecutorWrapper {
         ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         final Player player = ValidateCommand.onlyPlayer(sender);
 
+        if (args.length >= 1) {
+            String arg = args[0];
+
+            if (arg.equalsIgnoreCase("update")) {
+                this.supplyService.update();
+                sender.sendMessage(Settings.PREFIX + "§aDu hast die Supply-Schilder erfolgreich geshuffled & geupdated.");
+                return;
+            }
+
+            final Block block = LocationUtils.getTargetBlock(player, 15);
+
+            if (block != null && block.getType().toString().endsWith("SIGN")) {
+                if (arg.equalsIgnoreCase("add")) {
+                    this.supplyService.addSignLocation(block.getLocation());
+                    sender.sendMessage(
+                        Settings.PREFIX + "§2Folgende Location wurde hinzugefügt: " + block.getLocation()
+                    );
+                } else if (arg.equalsIgnoreCase("remove")) {
+                    this.supplyService.removeSignLocation(block.getLocation());
+                    sender.sendMessage(
+                        Settings.PREFIX + "§4Folgende Location wurde entfernt: " + block.getLocation()
+                    );
+                } else {
+                    sender.sendMessage(Settings.PREFIX + "§cVerwendung: §f/supply <add|remove>");
+                }
+            } else {
+                sender.sendMessage(Settings.PREFIX + "§cEs wurde kein Schild in Sicht gefunden.");
+            }
+            return;
+        }
+
         final Container.ContainerBuilder builder = new Container.ContainerBuilder(
             "§0§lSupply Items §0| "
                 + this.supplyService.getItemStacks().size()
                 + "/" + this.supplyService.getSignLocations().size()
         ).setSize(6 * 9)
             .setStorageLevel(ContainerStorageLevel.NEW)
+            .setDestroyOnClose(true)
             .setEventCancelled(false)
             .setInventoryCloseHook((closer, inventoryCloseEvent) ->
                 this.supplyService.setItems(
