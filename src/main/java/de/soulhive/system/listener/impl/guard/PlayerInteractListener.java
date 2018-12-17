@@ -14,14 +14,10 @@ import java.util.*;
 public class PlayerInteractListener implements Listener {
 
     private static final List<Material> BLACKLISTED_MATERIALS = Arrays.asList(
-        Material.ENDER_CHEST,
         Material.CHEST,
         Material.TRAPPED_CHEST,
         Material.HOPPER,
-        Material.WORKBENCH,
-        Material.ENCHANTMENT_TABLE,
         Material.FURNACE,
-        Material.ANVIL,
         Material.DROPPER,
         Material.DISPENSER,
         Material.ITEM_FRAME,
@@ -43,6 +39,8 @@ public class PlayerInteractListener implements Listener {
                     && !player.hasPermission(Settings.PERMISSION_BUILD)) {
                     ActionBar.send("§cDu darfst damit nicht interagieren.", player);
                     event.setCancelled(true);
+                } else if (event.getClickedBlock().getType() == Material.ANVIL) {
+                    event.getClickedBlock().setData((byte) 0);
                 }
             });
         }
