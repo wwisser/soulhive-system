@@ -24,10 +24,12 @@ import java.util.Arrays;
 
 public class SoulHive extends JavaPlugin {
 
+    @Getter private static JavaPlugin plugin;
     @Getter private static ServiceManager serviceManager;
 
     @Override
     public void onEnable() {
+        SoulHive.plugin = this;
         ServiceManager serviceManager = new ServiceManager(this);
         SoulHive.serviceManager = serviceManager;
 
