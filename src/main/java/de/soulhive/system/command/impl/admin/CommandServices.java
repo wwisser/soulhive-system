@@ -26,13 +26,13 @@ public class CommandServices extends CommandExecutorWrapper {
         ContainerService containerService = serviceManager.getService(ContainerService.class);
 
         Container.ContainerBuilder containerBuilder = new Container.ContainerBuilder("§0§lServices")
-            .withSize(6 * 9)
-            .withStorageLevel(ContainerStorageLevel.STORED);
+            .setSize(6 * 9)
+            .setStorageLevel(ContainerStorageLevel.STORED);
 
         for (int i = 0; i < serviceManager.getServices().size(); i++) {
             Service service = serviceManager.getServices().get(i);
 
-            containerBuilder.withAction(
+            containerBuilder.addAction(
                 i,
                 new ItemBuilder(Material.BOOK).name(service.getClass().getSimpleName()).build(),
                 player -> {

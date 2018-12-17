@@ -1,6 +1,7 @@
 package de.soulhive.system.container;
 
 import de.soulhive.system.container.listener.InventoryClickListener;
+import de.soulhive.system.container.listener.InventoryCloseListener;
 import de.soulhive.system.service.Service;
 
 import java.util.Collections;
@@ -14,6 +15,7 @@ public class ContainerService extends Service {
     @Override
     public void initialize() {
         super.registerListener(new InventoryClickListener(this));
+        super.registerListener(new InventoryCloseListener(this));
     }
 
     public void registerContainer(final Container container) {

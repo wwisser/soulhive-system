@@ -25,7 +25,7 @@ public class InventoryClickListener implements Listener {
             if (!inventory.getName().equals(container.getName())) {
                 continue;
             }
-            event.setCancelled(true);
+            event.setCancelled(container.isEventCancelled());
 
             if (currentItem != null) {
                 container.getActions().keySet()

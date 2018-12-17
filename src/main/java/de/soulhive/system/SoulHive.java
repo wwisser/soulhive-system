@@ -10,6 +10,7 @@ import de.soulhive.system.scoreboard.ScoreboardService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.service.ServiceManager;
 import de.soulhive.system.stats.StatsService;
+import de.soulhive.system.supply.SupplyService;
 import de.soulhive.system.task.impl.PlannedShutdownTask;
 import de.soulhive.system.task.impl.TablistUpdateTask;
 import de.soulhive.system.task.TaskService;
@@ -54,7 +55,8 @@ public class SoulHive extends JavaPlugin {
             new ListenerService(),
             new VanishService(this),
             new CombatService(),
-            new ScoreboardService()
+            new ScoreboardService(),
+            new SupplyService()
         ).forEach(serviceManager::registerService);
 
         ReflectUtils.getPacketObjects("de.soulhive.system.service.micro", Service.class)

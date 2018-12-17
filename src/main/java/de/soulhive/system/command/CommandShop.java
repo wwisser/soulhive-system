@@ -40,7 +40,7 @@ public class CommandShop extends CommandExecutorWrapper {
         final Player player = ValidateCommand.onlyPlayer(sender);
 
         final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop")
-            .withStorageLevel(ContainerStorageLevel.STORED);
+            .setStorageLevel(ContainerStorageLevel.STORED);
 
         int count = 10;
         for (PremiumRank rank : PremiumRank.values()) {
@@ -59,7 +59,7 @@ public class CommandShop extends CommandExecutorWrapper {
                 .finish()
                 .build();
 
-            builder.withAction(count, itemStack, action);
+            builder.addAction(count, itemStack, action);
 
             count += 2;
         }
