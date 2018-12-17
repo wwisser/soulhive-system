@@ -26,7 +26,11 @@ public class PlayerDeathListener implements Listener {
 
         event.setDeathMessage(null);
         victim.playSound(victim.getLocation(), Sound.BLAZE_DEATH, 1, 1);
-        userService.getUser(victim).addDeath();
+        final User user = userService.getUser(victim);
+
+        if (user != null) {
+            user.addDeath();
+        }
 
         this.statsService.getTaskService().registerTasks(new PlayerRespawnTask(victim));
 
