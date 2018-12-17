@@ -1,7 +1,9 @@
 package de.soulhive.system.scoreboard.impl;
 
+import de.soulhive.system.SoulHive;
 import de.soulhive.system.scoreboard.DynamicScoreboard;
 import de.soulhive.system.user.User;
+import de.soulhive.system.vanish.VanishService;
 import org.bukkit.Bukkit;
 
 public class UserScoreboard extends DynamicScoreboard {
@@ -20,7 +22,9 @@ public class UserScoreboard extends DynamicScoreboard {
     }
 
     public void update(User user) {
-        super.updateLine("players", "  §f" + Bukkit.getOnlinePlayers().size());
+        VanishService vanishService = SoulHive.getServiceManager().getService(VanishService.class);
+
+        super.updateLine("players", "  §f" + vanishService.getOnlinePlayersDiff());
         super.updateLine("kills", "  §f" + user.getKills());
         super.updateLine("jewels", "  §f" + user.getJewels());
     }
