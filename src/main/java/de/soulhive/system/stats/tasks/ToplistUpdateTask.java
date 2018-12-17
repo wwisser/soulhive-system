@@ -52,7 +52,6 @@ public class ToplistUpdateTask extends BukkitRunnable implements ComplexTask {
 
             skull.setOwner(entry.getKey());
             skull.update();
-            currentHead.getWorld().playSound(currentHead, Sound.CHICKEN_EGG_POP, 3, 5);
 
             Location lowerLoc = currentHead.clone().add(0, -1, 0);
 
