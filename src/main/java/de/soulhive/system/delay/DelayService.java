@@ -3,6 +3,7 @@ package de.soulhive.system.delay;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.MillisecondsConverter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -26,7 +27,16 @@ public class DelayService extends Service {
         UUID uuid = player.getUniqueId();
 
         if (!this.configurations.contains(configuration)) {
+
             this.configurations.add(configuration);
+            if (!inverted) {
+                action.accept(player);
+            }
+            this.addDelay(uuid, configuration);
+            return;
+        }
+
+        if (!this.delays.containsKey(uuid)) {
             if (!inverted) {
                 action.accept(player);
             }
@@ -40,7 +50,7 @@ public class DelayService extends Service {
         if (delayEntry.containsKey(configIndex)) {
             long endTimeStamp = delayEntry.get(configIndex);
 
-            if (System.currentTimeMillis() > endTimeStamp) {
+            if (System.currentTimeMillis() >= endTimeStamp) {
                 if (!inverted) {
                     action.accept(player);
                 }
