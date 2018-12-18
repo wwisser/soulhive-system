@@ -57,7 +57,7 @@ public class ChatService extends Service implements Listener {
             sender.sendMessage(Settings.PREFIX + "§cDu schreibst zu schnell.");
         });
 
-        if (message.length() <= MESSAGE_LENGTH_IGNORE_REPEAT) {
+        if (event.isCancelled() || message.length() <= MESSAGE_LENGTH_IGNORE_REPEAT) {
             return;
         }
 
