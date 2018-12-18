@@ -5,6 +5,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import de.soulhive.system.SoulHive;
+import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -12,6 +13,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 
+@FeatureService
 public class PayloadPreventionService extends Service {
 
     @Override

@@ -2,6 +2,7 @@ package de.soulhive.system.supply;
 
 import de.soulhive.system.SoulHive;
 import de.soulhive.system.delay.DelayService;
+import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.supply.command.CommandSupply;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@FeatureService
 @Getter
 public class SupplyService extends Service {
 

@@ -58,8 +58,21 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
-            int index = Integer.parseInt(sign.getLines()[1].split(" ")[1]);
-            final ItemStack itemStack = this.supplyService.getItemStacks().get(index);
+            final ItemStack itemStack;
+
+            if (sign.getLine(1).startsWith("S-ID")) {
+                final String[] data = sign.getLine(1).split(" ")[1].split(":");
+
+                int id = Integer.parseInt(data[0]);
+                short damage = Short.parseShort(data[1]);
+                int amount = Integer.parseInt(sign.getLine(2));
+
+                itemStack = new ItemStack(id, amount, damage);
+            } else {
+                int index = Integer.parseInt(sign.getLines()[1].split(" ")[1]);
+                itemStack = this.supplyService.getItemStacks().get(index);
+            }
+
             final Inventory inventory = Bukkit.createInventory(
                 null,
                 3 * 9,
