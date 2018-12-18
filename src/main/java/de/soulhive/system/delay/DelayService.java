@@ -3,11 +3,9 @@ package de.soulhive.system.delay;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.MillisecondsConverter;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 public class DelayService extends Service {
