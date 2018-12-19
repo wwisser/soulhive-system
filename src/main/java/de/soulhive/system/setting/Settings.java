@@ -33,5 +33,6 @@ public final class Settings {
     public static final List<World> SKYBLOCK_WORLDS = ImmutableList.of(WORLD_SKYBLOCK, WORLD_SKYBLOCK_NETHER);
 
     public static final int SPAWN_HEIGHT = WORLD_MAIN.getSpawnLocation().getBlockY() - 20;
+    public static final int VOID_HEIGHT = 50;
 
 }

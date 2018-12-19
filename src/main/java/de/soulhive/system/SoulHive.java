@@ -12,6 +12,7 @@ import de.soulhive.system.service.ServiceManager;
 import de.soulhive.system.stats.StatsService;
 import de.soulhive.system.supply.SupplyService;
 import de.soulhive.system.task.impl.PlannedShutdownTask;
+import de.soulhive.system.task.impl.PlayerVoidKillTask;
 import de.soulhive.system.task.impl.TablistUpdateTask;
 import de.soulhive.system.task.TaskService;
 import de.soulhive.system.thread.ShutdownHookThread;
@@ -39,7 +40,8 @@ public class SoulHive extends JavaPlugin {
 
         taskService.registerTasks(
             new TablistUpdateTask(),
-            plannedShutdownTask
+            plannedShutdownTask,
+            new PlayerVoidKillTask()
         );
 
         Runtime.getRuntime().addShutdownHook(new ShutdownHookThread(plannedShutdownTask));
