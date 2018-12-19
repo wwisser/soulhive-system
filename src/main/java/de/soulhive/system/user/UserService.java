@@ -57,10 +57,14 @@ public class UserService extends Service {
     }
 
     public User getUserByName(String name) {
-        List<User> result = this.filterCache(user -> user.getName().equals(name));
+        List<User> result = this.filterCache(user -> user.getName().equalsIgnoreCase(name));
 
         if (result.isEmpty()) {
-            return this.userRepository.fetchByName(name);
+            try {
+                return this.userRepository.fetchByName(name);
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
         } else {
             return result.get(0);
         }
