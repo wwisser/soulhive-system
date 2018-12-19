@@ -3,6 +3,7 @@ package de.soulhive.system.command.impl.admin;
 import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
+import de.soulhive.system.entity.ImmutableVillager;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.Config;
 import de.soulhive.system.util.nms.ParticleUtils;
@@ -11,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -29,6 +31,10 @@ public class CommandDebug extends CommandExecutorWrapper {
     public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         final Player player = ValidateCommand.onlyPlayer(sender);
+
+        if (this.checkArg(args, "v")) {
+            new ImmutableVillager(player.getLocation());
+        }
 
         if (this.checkArg(args, "guardian")) {
             ParticleUtils.play(player, player.getLocation(), EnumParticle.MOB_APPEARANCE, 0, 0, 0, 0, 0);
