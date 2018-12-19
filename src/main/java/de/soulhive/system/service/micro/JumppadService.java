@@ -42,7 +42,6 @@ public class JumppadService extends Service implements Listener {
         this.delayService.handleDelay(player, DELAY_CONFIGURATION, jumper -> {
             player.setVelocity(player.getLocation().getDirection().setY(0.3).multiply(2.5));
             player.playSound(player.getLocation(), Sound.SLIME_ATTACK, 1, 1);
-            ActionBar.send("§a§lWoooosh!", player);
         });
     }
 
