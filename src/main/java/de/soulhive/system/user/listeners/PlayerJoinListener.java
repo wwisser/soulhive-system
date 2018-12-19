@@ -24,6 +24,7 @@ public class PlayerJoinListener implements Listener {
         }
 
         this.userService.loadUser(player);
+        this.userService.getUser(player).setLastSeen(System.currentTimeMillis());
     }
 
 }
