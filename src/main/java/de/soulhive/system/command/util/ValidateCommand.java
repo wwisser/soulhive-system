@@ -1,7 +1,9 @@
 package de.soulhive.system.command.util;
 
+import de.soulhive.system.SoulHive;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.exception.impl.*;
+import de.soulhive.system.vanish.VanishService;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -47,9 +49,12 @@ public class ValidateCommand {
     }
 
     public Player target(String target, CommandSender sender) throws CommandException {
+        final VanishService vanishService = SoulHive.getServiceManager().getService(VanishService.class);
         Player targetPlayer = Bukkit.getPlayer(target);
 
-        if (targetPlayer == null || !targetPlayer.isOnline()) {
+        if (targetPlayer == null
+            || !targetPlayer.isOnline()
+            || vanishService.getVanishedPlayers().contains(targetPlayer)) {
             throw new TargetNotFoundException(target);
         }
 
