@@ -1,6 +1,7 @@
-package de.soulhive.system.command;
+package de.soulhive.system.command.impl;
 
 import de.soulhive.system.SoulHive;
+import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.impl.InvalidSenderException;
 import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.container.Container;
