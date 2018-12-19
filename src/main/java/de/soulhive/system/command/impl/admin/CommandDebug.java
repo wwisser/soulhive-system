@@ -5,6 +5,8 @@ import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.Config;
+import de.soulhive.system.util.nms.ParticleUtils;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -18,6 +20,7 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class CommandDebug extends CommandExecutorWrapper {
@@ -27,19 +30,38 @@ public class CommandDebug extends CommandExecutorWrapper {
         ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         final Player player = ValidateCommand.onlyPlayer(sender);
 
-        if (args.length > 0 && args[0].equalsIgnoreCase("--s")) {
+        if (this.checkArg(args, "guardian")) {
+            ParticleUtils.play(player, player.getLocation(), EnumParticle.MOB_APPEARANCE, 0, 0, 0, 0, 0);
+        }
+
+        if (this.checkArg(args, "randeff")) {
+            final EnumParticle[] values = EnumParticle.values();
+            final int i = ThreadLocalRandom.current().nextInt(values.length);
+
+            ParticleUtils.play(player, player.getLocation(), values[i], 0, 0, 0, 0, 0);
+            sender.sendMessage(Settings.PREFIX + "§a§l" + values[i].toString());
+        }
+
+        if (this.checkArg(args, "a")) {
+            final ArmorStand armorStand = player.getLocation().getWorld().spawn(player.getLocation(), ArmorStand.class);
+
+            armorStand.setVisible(false);
+            armorStand.setGravity(false);
+            armorStand.setHelmet(new ItemStack(Material.PACKED_ICE));
+        }
+
+        if (this.checkArg(args, "s")) {
             player.getNearbyEntities(10, 10, 10)
                 .stream()
                 .filter(entity -> entity instanceof ArmorStand)
                 .forEach(Entity::remove);
-            return;
         }
 
-        final ArmorStand armorStand = player.getLocation().getWorld().spawn(player.getLocation(), ArmorStand.class);
+        player.sendMessage(Settings.PREFIX + "§dDebug command ran successfully");
+    }
 
-        armorStand.setVisible(false);
-        armorStand.setGravity(false);
-        armorStand.setHelmet(new ItemStack(Material.PACKED_ICE));
+    private boolean checkArg(final String[] args, final String expected) {
+        return args.length > 0 && args[0].equalsIgnoreCase("--" + expected);
     }
 
 }
