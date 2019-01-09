@@ -1,8 +1,10 @@
 package de.soulhive.system.command.impl.admin;
 
+import de.soulhive.system.SoulHive;
 import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
+import de.soulhive.system.npc.NpcService;
 import de.soulhive.system.npc.impl.VillagerNpc;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.nms.ParticleUtils;
@@ -24,7 +26,11 @@ public class CommandDebug extends CommandExecutorWrapper {
         final Player player = ValidateCommand.onlyPlayer(sender);
 
         if (this.checkArg(args, "v")) {
-            new VillagerNpc(player.getLocation());
+            final NpcService npcService = SoulHive.getServiceManager().getService(NpcService.class);
+
+            npcService.addNpc(
+                new VillagerNpc(player.getLocation(), player1 -> player1.sendMessage("§cIt works :)"))
+            );
         }
 
         if (this.checkArg(args, "guardian")) {
@@ -52,6 +58,10 @@ public class CommandDebug extends CommandExecutorWrapper {
                 .stream()
                 .filter(entity -> entity instanceof ArmorStand)
                 .forEach(Entity::remove);
+        }
+
+        if (this.checkArg(args, "ce")) {
+            player.getNearbyEntities(3, 3, 3).forEach(Entity::remove);
         }
 
         player.sendMessage(Settings.PREFIX + "§dDebug command ran successfully");

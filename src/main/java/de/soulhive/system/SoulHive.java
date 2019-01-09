@@ -6,6 +6,7 @@ import de.soulhive.system.container.ContainerService;
 import de.soulhive.system.delay.DelayService;
 import de.soulhive.system.listener.ListenerService;
 import de.soulhive.system.motd.MotdService;
+import de.soulhive.system.npc.NpcService;
 import de.soulhive.system.scoreboard.ScoreboardService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.service.ServiceManager;
@@ -58,7 +59,8 @@ public class SoulHive extends JavaPlugin {
             new VanishService(this),
             new CombatService(),
             new ScoreboardService(),
-            new SupplyService()
+            new SupplyService(),
+            new NpcService(this)
         ).forEach(serviceManager::registerService);
 
         ReflectUtils.getPacketObjects("de.soulhive.system.service.micro", Service.class)

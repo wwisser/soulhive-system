@@ -78,6 +78,8 @@ public class NpcService extends Service {
         if (npc instanceof HologramNpc) {
             this.registerHologram(((HologramNpc) npc));
         }
+
+        this.npcs.add(npc);
     }
 
     private void registerHologram(final HologramNpc hologramNpc) {
