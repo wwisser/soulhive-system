@@ -1,6 +1,8 @@
 package de.soulhive.system.setting;
 
 import com.google.common.collect.ImmutableList;
+import de.soulhive.system.npc.Npc;
+import de.soulhive.system.npc.impl.VillagerHologramNpc;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
@@ -34,5 +36,20 @@ public final class Settings {
 
     public static final int SPAWN_HEIGHT = WORLD_MAIN.getSpawnLocation().getBlockY() - 20;
     public static final int VOID_HEIGHT = 50;
+
+    public static final List<Npc> NPCS = ImmutableList.of(
+        new VillagerHologramNpc(
+            new Location(WORLD_MAIN, -44.5, 113, -347.5, 45, 0),
+            player -> {
+                player.sendMessage(" ");
+                player.sendMessage("§6§lJimmy der NPC> §eIch grüße dich, " + player.getName() + "!");
+                player.sendMessage(" §eDu stehst hier vor der Feuerlotus Höhle.");
+                player.sendMessage(" §eAufgrund der Wärme wachsen dort seltene Feuerlotusblüten.");
+                player.sendMessage(" §eVielleicht hast du ja etwas Glück und schnappst dir eine.");
+                player.sendMessage(" ");
+            },
+            "§6§lFeuerlotus Höhle"
+        )
+    );
 
 }

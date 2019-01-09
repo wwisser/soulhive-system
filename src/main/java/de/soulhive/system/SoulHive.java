@@ -10,6 +10,7 @@ import de.soulhive.system.npc.NpcService;
 import de.soulhive.system.scoreboard.ScoreboardService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.service.ServiceManager;
+import de.soulhive.system.setting.Settings;
 import de.soulhive.system.stats.StatsService;
 import de.soulhive.system.supply.SupplyService;
 import de.soulhive.system.task.impl.PlannedShutdownTask;
@@ -36,16 +37,17 @@ public class SoulHive extends JavaPlugin {
         ServiceManager serviceManager = new ServiceManager(this);
         SoulHive.serviceManager = serviceManager;
 
-        PlannedShutdownTask plannedShutdownTask = new PlannedShutdownTask();
-        TaskService taskService = new TaskService(this);
+        final TaskService taskService = new TaskService(this);
+        final PlannedShutdownTask plannedShutdownTask = new PlannedShutdownTask();
+        final NpcService npcService = new NpcService(this);
 
+        Runtime.getRuntime().addShutdownHook(new ShutdownHookThread(plannedShutdownTask));
         taskService.registerTasks(
             new TablistUpdateTask(),
             plannedShutdownTask,
             new PlayerVoidKillTask()
         );
-
-        Runtime.getRuntime().addShutdownHook(new ShutdownHookThread(plannedShutdownTask));
+        Settings.NPCS.forEach(npcService::addNpc);
 
         Arrays.asList(
             taskService,
@@ -60,7 +62,7 @@ public class SoulHive extends JavaPlugin {
             new CombatService(),
             new ScoreboardService(),
             new SupplyService(),
-            new NpcService(this)
+            npcService
         ).forEach(serviceManager::registerService);
 
         ReflectUtils.getPacketObjects("de.soulhive.system.service.micro", Service.class)
