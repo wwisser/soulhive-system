@@ -73,4 +73,5 @@ public class VillagerHologramNpc extends EntityVillager implements HologramNpc {
     public double getHeight() {
         return HOLOGRAM_HEIGHT;
     }
+
 }

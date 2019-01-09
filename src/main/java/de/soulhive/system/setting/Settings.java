@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.World;
 
 import java.util.List;
@@ -43,10 +44,11 @@ public final class Settings {
             player -> {
                 player.sendMessage(" ");
                 player.sendMessage("§6§lJimmy der NPC> §eIch grüße dich, " + player.getName() + "!");
-                player.sendMessage(" §eDu stehst hier vor der Feuerlotus Höhle.");
+                player.sendMessage(" §eDu stehst hier vor der bekannten Feuerlotus Höhle.");
                 player.sendMessage(" §eAufgrund der Wärme wachsen dort seltene Feuerlotusblüten.");
                 player.sendMessage(" §eVielleicht hast du ja etwas Glück und schnappst dir eine.");
                 player.sendMessage(" ");
+                player.playSound(player.getLocation(), Sound.NOTE_SNARE_DRUM, Float.MAX_VALUE, Float.MAX_VALUE);
             },
             "§6§lFeuerlotus Höhle"
         )
