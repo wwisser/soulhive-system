@@ -15,20 +15,15 @@ import java.util.function.Consumer;
 public class VillagerNpc extends EntityVillager implements Npc {
 
     private static final int ENTITY_TYPE_ID = 120;
+    private static final String ENTITY_NAME = "Villager";
 
-    public VillagerNpc(Location location) {
+    private Location location;
+    private Consumer<Player> clickAction;
+
+    public VillagerNpc(final Location location, final Consumer<Player> clickAction) {
         super(((CraftWorld) location.getWorld()).getHandle());
-
-        ((Map<Class<? extends Entity>, String>) VillagerNpc.getObject(net.minecraft.server.v1_8_R3.EntityTypes.class, "d", null)).put(this.getClass(), "Villager");
-        ((Map<Class<? extends net.minecraft.server.v1_8_R3.Entity>, Integer>) VillagerNpc.getObject(net.minecraft.server.v1_8_R3.EntityTypes.class, "f", null)).put(this.getClass(), 120);
-
-        ((UnsafeList<PathfinderGoal>) VillagerNpc.getObject(PathfinderGoalSelector.class, "b", super.goalSelector)).clear();
-        ((UnsafeList<PathfinderGoal>) VillagerNpc.getObject(PathfinderGoalSelector.class, "c", super.goalSelector)).clear();
-
-        super.goalSelector.a(0, new PathfinderGoalFloat(this));
-        super.setPosition(location.getX(), location.getY(), location.getZ());
-
-        super.world.addEntity(this);
+        this.location = location;
+        this.clickAction = clickAction;
     }
 
     @Override
@@ -46,7 +41,7 @@ public class VillagerNpc extends EntityVillager implements Npc {
 
     @Override
     public Consumer<Player> getClickAction() {
-        return player -> { player.sendMessage("It works"); };
+        return this.clickAction;
     }
 
     @Override
@@ -55,8 +50,18 @@ public class VillagerNpc extends EntityVillager implements Npc {
     }
 
     @Override
+    public Location getLocation() {
+        return this.location;
+    }
+
+    @Override
     public Entity getEntity() {
         return this;
+    }
+
+    @Override
+    public String getEntityName() {
+        return ENTITY_NAME;
     }
 
 }

@@ -16,4 +16,6 @@ public interface Npc {
 
     Entity getEntity();
 
+    String getEntityName();
+
 }
