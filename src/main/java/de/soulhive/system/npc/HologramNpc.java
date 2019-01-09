@@ -7,6 +7,6 @@ public interface HologramNpc extends Npc {
     /**
      * @return the Y distance between the mob and the Hologram
      */
-    double getLocationDistance();
+    double getHeight();
 
 }

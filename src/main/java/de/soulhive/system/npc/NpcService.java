@@ -2,7 +2,6 @@ package de.soulhive.system.npc;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import de.soulhive.system.npc.impl.VillagerNpc;
 import de.soulhive.system.npc.listener.PlayerInteractAtEntityListener;
 import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
@@ -85,7 +84,7 @@ public class NpcService extends Service {
     private void registerHologram(final HologramNpc hologramNpc) {
         final Hologram hologram = HologramsAPI.createHologram(
             this.plugin,
-            hologramNpc.getLocation().clone().add(0, hologramNpc.getLocationDistance(), 0)
+            hologramNpc.getLocation().clone().add(0, hologramNpc.getHeight(), 0)
         );
 
         hologram.appendTextLine(hologramNpc.getHologramName());

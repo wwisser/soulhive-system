@@ -1,29 +1,29 @@
 package de.soulhive.system.npc.impl;
 
-import de.soulhive.system.npc.Npc;
-import lombok.SneakyThrows;
+import de.soulhive.system.npc.HologramNpc;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
-import java.util.Map;
 import java.util.function.Consumer;
 
-public class VillagerNpc extends EntityVillager implements Npc {
+public class VillagerHologramNpc extends EntityVillager implements HologramNpc {
 
     private static final int ENTITY_TYPE_ID = 120;
     private static final String ENTITY_NAME = "Villager";
 
+    private static final double HOLOGRAM_HEIGHT = 2.35;
+
     private Location location;
     private Consumer<Player> clickAction;
+    private String hologramName;
 
-    public VillagerNpc(final Location location, final Consumer<Player> clickAction) {
+    public VillagerHologramNpc(final Location location, final Consumer<Player> clickAction, final String hologramName) {
         super(((CraftWorld) location.getWorld()).getHandle());
         this.location = location;
         this.clickAction = clickAction;
+        this.hologramName = hologramName;
     }
 
     @Override
@@ -64,4 +64,13 @@ public class VillagerNpc extends EntityVillager implements Npc {
         return ENTITY_NAME;
     }
 
+    @Override
+    public String getHologramName() {
+        return this.hologramName;
+    }
+
+    @Override
+    public double getHeight() {
+        return HOLOGRAM_HEIGHT;
+    }
 }

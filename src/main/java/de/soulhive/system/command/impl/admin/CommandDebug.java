@@ -5,7 +5,7 @@ import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.npc.NpcService;
-import de.soulhive.system.npc.impl.VillagerNpc;
+import de.soulhive.system.npc.impl.VillagerHologramNpc;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.nms.ParticleUtils;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -29,7 +29,10 @@ public class CommandDebug extends CommandExecutorWrapper {
             final NpcService npcService = SoulHive.getServiceManager().getService(NpcService.class);
 
             npcService.addNpc(
-                new VillagerNpc(player.getLocation(), player1 -> player1.sendMessage("§cIt works :)"))
+                new VillagerHologramNpc(
+                    player.getLocation(), clicker -> clicker.sendMessage("§bClick!"),
+                    "§c§lDebug-NPC"
+                )
             );
         }
 
