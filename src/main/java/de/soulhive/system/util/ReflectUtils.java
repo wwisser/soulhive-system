@@ -5,6 +5,7 @@ import de.soulhive.system.command.CommandService;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -28,6 +29,14 @@ public class ReflectUtils {
         }
 
         return Collections.unmodifiableSet(objects);
+    }
+
+    @SneakyThrows
+    public Object getObject(final Class<?> target, final String varName, final Object object) {
+        final Field field = target.getDeclaredField(varName);
+        field.setAccessible(true);
+
+        return field.get(object);
     }
 
 }

@@ -12,16 +12,18 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class ImmutableVillager extends EntityVillager implements Npc {
+public class VillagerNpc extends EntityVillager implements Npc {
 
-    public ImmutableVillager(Location location) {
+    private static final int ENTITY_TYPE_ID = 120;
+
+    public VillagerNpc(Location location) {
         super(((CraftWorld) location.getWorld()).getHandle());
 
-        ((Map<Class<? extends Entity>, String>) ImmutableVillager.getObject(net.minecraft.server.v1_8_R3.EntityTypes.class, "d", null)).put(this.getClass(), "Villager");
-        ((Map<Class<? extends net.minecraft.server.v1_8_R3.Entity>, Integer>) ImmutableVillager.getObject(net.minecraft.server.v1_8_R3.EntityTypes.class, "f", null)).put(this.getClass(), 120);
+        ((Map<Class<? extends Entity>, String>) VillagerNpc.getObject(net.minecraft.server.v1_8_R3.EntityTypes.class, "d", null)).put(this.getClass(), "Villager");
+        ((Map<Class<? extends net.minecraft.server.v1_8_R3.Entity>, Integer>) VillagerNpc.getObject(net.minecraft.server.v1_8_R3.EntityTypes.class, "f", null)).put(this.getClass(), 120);
 
-        ((UnsafeList<PathfinderGoal>) ImmutableVillager.getObject(PathfinderGoalSelector.class, "b", super.goalSelector)).clear();
-        ((UnsafeList<PathfinderGoal>) ImmutableVillager.getObject(PathfinderGoalSelector.class, "c", super.goalSelector)).clear();
+        ((UnsafeList<PathfinderGoal>) VillagerNpc.getObject(PathfinderGoalSelector.class, "b", super.goalSelector)).clear();
+        ((UnsafeList<PathfinderGoal>) VillagerNpc.getObject(PathfinderGoalSelector.class, "c", super.goalSelector)).clear();
 
         super.goalSelector.a(0, new PathfinderGoalFloat(this));
         super.setPosition(location.getX(), location.getY(), location.getZ());
@@ -42,22 +44,19 @@ public class ImmutableVillager extends EntityVillager implements Npc {
         return false;
     }
 
-    @SneakyThrows
-    private static Object getObject(final Class<?> target, final String variable, final Object object) {
-        final Field field = target.getDeclaredField(variable);
-        field.setAccessible(true);
-
-        return field.get(object);
-    }
-
     @Override
     public Consumer<Player> getClickAction() {
         return player -> { player.sendMessage("It works"); };
     }
 
     @Override
-    public org.bukkit.entity.Entity getEntity() {
-        this.getH
+    public int getEntityTypeId() {
+        return ENTITY_TYPE_ID;
+    }
+
+    @Override
+    public Entity getEntity() {
+        return this;
     }
 
 }
