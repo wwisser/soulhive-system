@@ -1,15 +1,18 @@
-package de.soulhive.system.entity;
+package de.soulhive.system.npc.impl;
 
+import de.soulhive.system.npc.Npc;
 import lombok.SneakyThrows;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
+import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
 import java.util.Map;
+import java.util.function.Consumer;
 
-public class ImmutableVillager extends EntityVillager {
+public class ImmutableVillager extends EntityVillager implements Npc {
 
     public ImmutableVillager(Location location) {
         super(((CraftWorld) location.getWorld()).getHandle());
@@ -45,6 +48,16 @@ public class ImmutableVillager extends EntityVillager {
         field.setAccessible(true);
 
         return field.get(object);
+    }
+
+    @Override
+    public Consumer<Player> getClickAction() {
+        return player -> { player.sendMessage("It works"); };
+    }
+
+    @Override
+    public org.bukkit.entity.Entity getEntity() {
+        this.getH
     }
 
 }
