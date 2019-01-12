@@ -52,6 +52,7 @@ public class FirelotusService extends Service {
         final TaskService taskService = SoulHive.getServiceManager().getService(TaskService.class);
 
         taskService.registerTasks(new FirelotusBloomDropTask());
+        super.registerListener(new PlayerPickupItemListener());
     }
 
     @Override
@@ -92,7 +93,7 @@ public class FirelotusService extends Service {
 
                 final Location location = BLOOM_DROP_LOCATIONS.get(
                     random.nextInt(BLOOM_DROP_LOCATIONS.size())
-                ).clone().add(0, 0.3, 0);
+                ).clone().add(random.nextInt(5), random.nextInt(5) + 0.3, random.nextInt(5));
 
                 location.getWorld().dropItem(location, BLOOM_ITEM);
                 ParticleUtils.play(location, EnumParticle.VILLAGER_ANGRY, 0, 0, 0, 0, 0);
@@ -112,14 +113,13 @@ public class FirelotusService extends Service {
                 return;
             }
 
-            event.setCancelled(true);
             event.getItem().remove();
 
             final User user = FirelotusService.this.userService.getUser(player);
             final int amount = ThreadLocalRandom.current().nextInt(MAX_JEWEL_REWARD) + 1;
 
             player.sendMessage(
-                Settings.PREFIX + "Du hast eine §6Feuerlotusblüte §7gefunden. + §d" + amount + " Juwelen"
+                Settings.PREFIX + "Du hast eine §6Feuerlotusblüte §7gefunden. +§d" + amount + " Juwelen"
             );
             player.setHealth(20);
             player.setFoodLevel(20);
