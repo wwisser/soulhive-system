@@ -64,6 +64,10 @@ public class SupplyService extends Service {
                     sign.setLine(2, "§0" + itemStack.getAmount());
                     sign.setLine(3, "§9" + itemStack.getType().toString());
                     sign.update();
+                } else {
+                    System.out.println(
+                        "Couldn't update supply sign as the state is not SIGN: " + state.getBlock().toString()
+                    );
                 }
             }
         }
