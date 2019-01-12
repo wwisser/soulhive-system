@@ -10,6 +10,7 @@ import de.soulhive.system.npc.NpcService;
 import de.soulhive.system.scoreboard.ScoreboardService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.service.ServiceManager;
+import de.soulhive.system.service.micro.FirelotusService;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.stats.StatsService;
 import de.soulhive.system.supply.SupplyService;
@@ -62,7 +63,8 @@ public class SoulHive extends JavaPlugin {
             new CombatService(),
             new ScoreboardService(),
             new SupplyService(),
-            npcService
+            npcService,
+            new FirelotusService()
         ).forEach(serviceManager::registerService);
 
         ReflectUtils.getPacketObjects("de.soulhive.system.service.micro", Service.class)
