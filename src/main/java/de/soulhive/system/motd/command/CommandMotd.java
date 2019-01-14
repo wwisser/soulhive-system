@@ -43,7 +43,7 @@ public class CommandMotd implements CommandExecutor {
                 this.motdService.reloadConfig();
                 break;
             default:
-                commandSender.sendMessage(USAGE);
+                commandSender.sendMessage(Settings.PREFIX + USAGE);
                 return true;
         }
 
