@@ -57,6 +57,20 @@ public class CommandScoreboard extends CommandExecutorWrapper {
                         Settings.PREFIX + "Du hast dein Scoreboard zu '" + type.getName() + "§7' gewechselt."
                     );
                 });
+            } else if (this.scoreboardService.hasSelected(player, type)) {
+                ItemStack itemStack = new ItemBuilder(type.getMaterial())
+                    .name(type.getName())
+                    .modifyLore()
+                    .add("§c")
+                    .add("§cBereits ausgewählt.")
+                    .finish()
+                    .build();
+
+                builder.addAction(
+                    count,
+                    itemStack,
+                    clicker -> clicker.playSound(clicker.getLocation(), Sound.NOTE_STICKS, 1, 1)
+                );
             } else {
                 ItemStack itemStack = new ItemBuilder(Material.BARRIER)
                     .name(type.getName())
@@ -72,6 +86,7 @@ public class CommandScoreboard extends CommandExecutorWrapper {
                     clicker -> clicker.playSound(clicker.getLocation(), Sound.CREEPER_HISS, 1, 1)
                 );
             }
+
         }
 
         final Container builtContainer = builder.build();

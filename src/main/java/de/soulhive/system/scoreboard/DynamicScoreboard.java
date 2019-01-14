@@ -29,6 +29,8 @@ public abstract class DynamicScoreboard {
         this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
     }
 
+    public abstract ScoreboardType getType();
+
     protected void addBlankLine(int height) {
         this.objective.getScore(PLACEHOLDERS[this.teams++]).setScore(height);
     }
@@ -46,7 +48,7 @@ public abstract class DynamicScoreboard {
         this.objective.getScore(PLACEHOLDERS[this.teams - 1]).setScore(height);
     }
 
-    public void updateLine(String name, String value) {
+    protected void updateLine(String name, String value) {
         this.scoreboard.getTeam(name).setSuffix(value);
     }
 

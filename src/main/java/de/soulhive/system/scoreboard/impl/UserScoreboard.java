@@ -2,11 +2,15 @@ package de.soulhive.system.scoreboard.impl;
 
 import de.soulhive.system.SoulHive;
 import de.soulhive.system.scoreboard.DynamicScoreboard;
+import de.soulhive.system.scoreboard.ScoreboardType;
 import de.soulhive.system.user.User;
 import de.soulhive.system.vanish.VanishService;
 import org.bukkit.Bukkit;
 
 public class UserScoreboard extends DynamicScoreboard {
+
+    private static final ScoreboardType SCOREBOARD_TYPE = ScoreboardType.USER;
+
 
     public UserScoreboard() {
         super(" §9§lSoulHive ");
@@ -27,6 +31,11 @@ public class UserScoreboard extends DynamicScoreboard {
         super.updateLine("players", "  §f" + vanishService.getOnlinePlayersDiff());
         super.updateLine("kills", "  §f" + user.getKills());
         super.updateLine("jewels", "  §f" + user.getJewels());
+    }
+
+    @Override
+    public ScoreboardType getType() {
+        return SCOREBOARD_TYPE;
     }
 
 }

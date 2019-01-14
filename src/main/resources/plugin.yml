@@ -74,3 +74,4 @@ commands:
   buy:
     aliases: [spenden, kaufen, donate, buycraft]
   supply:
+  scoreboard:

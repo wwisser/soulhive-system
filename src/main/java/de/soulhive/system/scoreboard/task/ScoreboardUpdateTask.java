@@ -1,6 +1,9 @@
 package de.soulhive.system.scoreboard.task;
 
+import de.soulhive.system.scoreboard.DynamicScoreboard;
 import de.soulhive.system.scoreboard.ScoreboardService;
+import de.soulhive.system.scoreboard.impl.AdminScoreboard;
+import de.soulhive.system.scoreboard.impl.PvpScoreboard;
 import de.soulhive.system.scoreboard.impl.UserScoreboard;
 import de.soulhive.system.task.ComplexTask;
 import de.soulhive.system.user.User;
@@ -31,18 +34,41 @@ public class ScoreboardUpdateTask extends BukkitRunnable implements ComplexTask 
     public void run() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             User user = this.userService.getUser(player);
-            UserScoreboard userScoreboard;
 
             if (this.scoreboardService.getScoreboard(player) != null) {
-                userScoreboard = (UserScoreboard) this.scoreboardService.getScoreboard(player);
+                DynamicScoreboard dynScoreboard = this.scoreboardService.getScoreboard(player);
+
+                switch (dynScoreboard.getType()) {
+                    case USER:
+                        ((UserScoreboard) dynScoreboard).update(user);
+                        break;
+                    case PVP:
+                        ((PvpScoreboard) dynScoreboard).update(user);
+                        break;
+                    case ADMIN:
+                        ((AdminScoreboard) dynScoreboard).update(player);
+                        break;
+                }
             } else {
                 player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
-                userScoreboard = new UserScoreboard();
-                this.scoreboardService.setScoreboard(player, userScoreboard);
+                DynamicScoreboard dynScoreboard = null;
+
+                switch (this.scoreboardService.fetchSelectedType(player)) {
+                    case USER:
+                        dynScoreboard = new UserScoreboard();
+                        break;
+                    case PVP:
+                        dynScoreboard = new PvpScoreboard();
+                        break;
+                    case ADMIN:
+                        dynScoreboard = new AdminScoreboard();
+                        break;
+                }
+
+                this.scoreboardService.setScoreboard(player, dynScoreboard);
             }
 
-            userScoreboard.update(user);
             Scoreboard scoreboard = player.getScoreboard();
 
             if (scoreboard == null) {
@@ -61,7 +87,7 @@ public class ScoreboardUpdateTask extends BukkitRunnable implements ComplexTask 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 User onlineUser = this.userService.getUser(onlinePlayer);
 
-                objective.getScore(onlinePlayer).setScore((int) onlineUser.getJewels());
+                objective.getScore(onlinePlayer).setScore(onlineUser.getJewels());
             }
         }
     }

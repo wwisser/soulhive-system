@@ -1,9 +1,13 @@
 package de.soulhive.system.scoreboard.impl;
 
 import de.soulhive.system.scoreboard.DynamicScoreboard;
+import de.soulhive.system.scoreboard.ScoreboardType;
 import de.soulhive.system.user.User;
 
 public class PvpScoreboard extends DynamicScoreboard {
+
+    private static final ScoreboardType SCOREBOARD_TYPE = ScoreboardType.PVP;
+
 
     public PvpScoreboard() {
         super(" §9SoulHive ");
@@ -24,4 +28,8 @@ public class PvpScoreboard extends DynamicScoreboard {
         super.updateLine("kdr", "  §f" + user.getKdr());
     }
 
+    @Override
+    public ScoreboardType getType() {
+        return SCOREBOARD_TYPE;
+    }
 }

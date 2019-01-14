@@ -1,6 +1,7 @@
 package de.soulhive.system.scoreboard;
 
 import de.soulhive.system.SoulHive;
+import de.soulhive.system.scoreboard.command.CommandScoreboard;
 import de.soulhive.system.scoreboard.impl.AdminScoreboard;
 import de.soulhive.system.scoreboard.impl.PvpScoreboard;
 import de.soulhive.system.scoreboard.impl.UserScoreboard;
@@ -30,6 +31,7 @@ public class ScoreboardService extends Service {
         TaskService taskService = SoulHive.getServiceManager().getService(TaskService.class);
 
         taskService.registerTasks(new ScoreboardUpdateTask(this, this.userService));
+        super.registerCommand("scoreboard", new CommandScoreboard(this));
     }
 
     @Override
@@ -70,6 +72,10 @@ public class ScoreboardService extends Service {
         }
 
         return ScoreboardType.USER;
+    }
+
+    public boolean hasSelected(final Player player, final ScoreboardType type) {
+        return this.fetchSelectedType(player) == type;
     }
 
 }
