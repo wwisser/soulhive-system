@@ -10,7 +10,7 @@ public class PvpScoreboard extends DynamicScoreboard {
 
 
     public PvpScoreboard() {
-        super(" §9SoulHive ");
+        super(" §9§lSoulHive ");
 
         super.addBlankLine(7);
         super.addStaticLine(" §7Kills", 6);

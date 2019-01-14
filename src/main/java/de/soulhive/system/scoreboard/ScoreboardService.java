@@ -61,6 +61,8 @@ public class ScoreboardService extends Service {
                 break;
         }
 
+        this.scoreboards.get(player).show(player);
+
         this.database.set(player.getUniqueId().toString(), type.ordinal());
     }
 
