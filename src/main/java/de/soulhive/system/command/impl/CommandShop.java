@@ -8,9 +8,13 @@ import de.soulhive.system.container.Container;
 import de.soulhive.system.container.ContainerService;
 import de.soulhive.system.container.ContainerStorageLevel;
 import de.soulhive.system.container.action.ContainerAction;
-import de.soulhive.system.container.action.impl.RankPurchaseContainerAction;
+import de.soulhive.system.container.action.impl.PurchaseContainerAction;
 import de.soulhive.system.rank.PremiumRank;
+import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.item.ItemBuilder;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -31,7 +35,20 @@ public class CommandShop extends CommandExecutorWrapper {
         for (PremiumRank rank : PremiumRank.values()) {
             this.purchaseActions.put(
                 rank.getGroupName(),
-                new RankPurchaseContainerAction(rank.getGroupName(), rank.getCosts())
+                new PurchaseContainerAction(player -> {
+                    Bukkit.dispatchCommand(
+                        Bukkit.getConsoleSender(),
+                        "pex user " + player.getName() + " group set " + rank.getGroupName()
+                    );
+                    player.sendMessage(
+                        Settings.PREFIX
+                            + "Du hast dir den Rang "
+                            + rank.getChatColor() + ChatColor.BOLD + rank.getName()
+                            + " §7für §d"
+                            + rank.getCosts()
+                            + " Juwelen §7gekauft!"
+                    );
+                }, rank.getCosts())
             );
         }
     }
@@ -39,7 +56,6 @@ public class CommandShop extends CommandExecutorWrapper {
     @Override
     public void process(CommandSender sender, String label, String[] args) throws InvalidSenderException {
         final Player player = ValidateCommand.onlyPlayer(sender);
-
         final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop")
             .setStorageLevel(ContainerStorageLevel.STORED);
 
