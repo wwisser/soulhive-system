@@ -14,6 +14,7 @@ import de.soulhive.system.service.micro.FirelotusService;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.stats.StatsService;
 import de.soulhive.system.supply.SupplyService;
+import de.soulhive.system.task.impl.JumpboostSupplierTask;
 import de.soulhive.system.task.impl.PlannedShutdownTask;
 import de.soulhive.system.task.impl.PlayerVoidKillTask;
 import de.soulhive.system.task.impl.TablistUpdateTask;
@@ -46,7 +47,8 @@ public class SoulHive extends JavaPlugin {
         taskService.registerTasks(
             new TablistUpdateTask(),
             plannedShutdownTask,
-            new PlayerVoidKillTask()
+            new PlayerVoidKillTask(),
+            new JumpboostSupplierTask()
         );
         Settings.NPCS.forEach(npcService::addNpc);
 
