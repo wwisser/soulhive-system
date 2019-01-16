@@ -5,17 +5,14 @@ import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.motd.MotdService;
 import de.soulhive.system.setting.Settings;
-import de.soulhive.system.util.nms.ActionBar;
 import lombok.AllArgsConstructor;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
 
 @AllArgsConstructor
-public class CommandMotd extendsCommandExecutorWrapper {
+public class CommandMotd extends CommandExecutorWrapper {
 
     private static final String USAGE = "/motd <reload|header|footer> <Text>";
 

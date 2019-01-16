@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 @Getter
-@EqualsAndHashCode
 @ToString
 public class Container {
 
@@ -70,7 +69,7 @@ public class Container {
         private Map<ContainerEntry, ContainerAction> actions = new HashMap<>();
         private int size = DEFAULT_INVENTORY_SIZE;
         private ContainerStorageLevel storageLevel = ContainerStorageLevel.NEW;
-        private boolean cancelEvent;
+        private boolean cancelEvent = true;
         private BiConsumer<Player, InventoryCloseEvent> closeHook = (player, inventoryCloseEvent) -> {};
         private boolean destroy = false;
 
