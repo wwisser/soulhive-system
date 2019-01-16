@@ -23,7 +23,10 @@ import de.soulhive.system.thread.ShutdownHookThread;
 import de.soulhive.system.user.UserService;
 import de.soulhive.system.util.ReflectUtils;
 import de.soulhive.system.vanish.VanishService;
+import de.soulhive.system.vault.JewelEconomy;
 import lombok.Getter;
+import net.milkbowl.vault.economy.Economy;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
@@ -42,6 +45,14 @@ public class SoulHive extends JavaPlugin {
         final TaskService taskService = new TaskService(this);
         final PlannedShutdownTask plannedShutdownTask = new PlannedShutdownTask();
         final NpcService npcService = new NpcService(this);
+        final UserService userService = new UserService();
+
+        super.getServer().getServicesManager().register(
+            Economy.class,
+            new JewelEconomy(userService),
+            this,
+            ServicePriority.Highest
+        );
 
         Runtime.getRuntime().addShutdownHook(new ShutdownHookThread(plannedShutdownTask));
         taskService.registerTasks(
@@ -56,7 +67,7 @@ public class SoulHive extends JavaPlugin {
             taskService,
             new ContainerService(),
             new MotdService(),
-            new UserService(),
+            userService,
             new DelayService(),
             new StatsService(),
             new CommandService(this),
