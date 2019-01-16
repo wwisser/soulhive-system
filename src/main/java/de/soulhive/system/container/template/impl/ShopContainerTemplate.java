@@ -4,9 +4,16 @@ import de.soulhive.system.container.Container;
 import de.soulhive.system.container.ContainerService;
 import de.soulhive.system.container.ContainerStorageLevel;
 import de.soulhive.system.container.template.ContainerTemplate;
+import de.soulhive.system.util.item.ItemBuilder;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class ShopContainerTemplate extends ContainerTemplate {
+
+    static final ItemStack ITEM_BACK = new ItemBuilder(Material.BARRIER)
+        .name("§cZurück zur Shopübersicht")
+        .build();
 
     private Container container;
 
@@ -16,7 +23,16 @@ public class ShopContainerTemplate extends ContainerTemplate {
         final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop")
             .setStorageLevel(ContainerStorageLevel.STORED);
 
-        //TODO: add shop template links
+        final RankShopContainerTemplate rankShopTemplate = new RankShopContainerTemplate(
+            super.containerService,
+            this
+        );
+
+        builder.addAction(
+            13,
+            new ItemBuilder(Material.EMERALD).name("§9§lRänge").build(),
+            rankShopTemplate::openContainer
+        );
 
         final Container builtContainer = builder.build();
 
@@ -25,7 +41,7 @@ public class ShopContainerTemplate extends ContainerTemplate {
     }
 
     @Override
-    public void open(Player player) {
+    protected void openContainer(Player player) {
         player.openInventory(this.container.getInventory());
     }
 

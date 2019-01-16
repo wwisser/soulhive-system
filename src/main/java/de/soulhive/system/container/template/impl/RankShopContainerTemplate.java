@@ -20,10 +20,12 @@ import java.util.Map;
 public class RankShopContainerTemplate extends ContainerTemplate {
 
     private Map<String, ContainerAction> purchaseActions = new HashMap<>();
+    private ShopContainerTemplate shopContainerTemplate;
 
-    public RankShopContainerTemplate(ContainerService containerService) {
+    RankShopContainerTemplate(final ContainerService containerService, final ShopContainerTemplate shopTemplate) {
         super(containerService);
 
+        this.shopContainerTemplate = shopTemplate;
         for (PremiumRank rank : PremiumRank.values()) {
             this.purchaseActions.put(
                 rank.getGroupName(),
@@ -46,9 +48,11 @@ public class RankShopContainerTemplate extends ContainerTemplate {
     }
 
     @Override
-    public void open(Player player) {
-        final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop")
+    protected void openContainer(Player player) {
+        final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop §0> §0§lRänge")
             .setStorageLevel(ContainerStorageLevel.STORED);
+
+        builder.addAction(26, ShopContainerTemplate.ITEM_BACK, this.shopContainerTemplate::openContainer);
 
         int count = 10;
         for (PremiumRank rank : PremiumRank.values()) {

@@ -9,6 +9,11 @@ public abstract class ContainerTemplate {
 
     protected ContainerService containerService;
 
-    public abstract void open(Player player);
+    protected abstract void openContainer(Player player);
+
+    public void open(final Player player) {
+        player.closeInventory();
+        this.openContainer(player);
+    }
 
 }

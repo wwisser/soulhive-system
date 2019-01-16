@@ -1,6 +1,7 @@
 package de.soulhive.system.container.listener;
 
 import de.soulhive.system.container.Container;
+import de.soulhive.system.container.ContainerEntry;
 import de.soulhive.system.container.ContainerService;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
@@ -10,6 +11,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @AllArgsConstructor
 public class InventoryClickListener implements Listener {
 
@@ -17,9 +24,10 @@ public class InventoryClickListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        Inventory inventory = event.getInventory();
-        Player player = (Player) event.getWhoClicked();
-        ItemStack currentItem = event.getCurrentItem();
+        final Inventory inventory = event.getInventory();
+        final Player player = (Player) event.getWhoClicked();
+        final ItemStack currentItem = event.getCurrentItem();
+        final Map<Container, ContainerEntry> elementsToExecute = new HashMap<>(); // stored to prevent ConcurrentModificationException
 
         for (Container container : this.containerService.getContainers()) {
             if (!inventory.getName().equals(container.getName())) {
@@ -31,9 +39,13 @@ public class InventoryClickListener implements Listener {
                 container.getActions().keySet()
                     .stream()
                     .filter(containerEntry -> containerEntry.getItemStack().equals(currentItem))
-                    .forEach(itemStack -> container.getActions().get(itemStack).process(player));
+                    .forEach(containerEntry -> elementsToExecute.put(container, containerEntry));
             }
         }
+
+        elementsToExecute.forEach(
+            (container, containerEntry) -> container.getActions().get(containerEntry).process(player)
+        );
     }
 
 }
