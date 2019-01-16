@@ -70,7 +70,7 @@ public class FirelotusService extends Service {
 
     private class FirelotusBloomDropTask extends BukkitRunnable implements ComplexTask {
 
-        private static final long PERIOD = 20L * 30;
+        private static final long PERIOD = 20L * 10;
 
         @Override
         public void setup(JavaPlugin plugin) {
