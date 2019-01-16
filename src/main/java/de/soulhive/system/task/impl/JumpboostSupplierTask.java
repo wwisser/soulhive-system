@@ -22,7 +22,7 @@ public class JumpboostSupplierTask extends BukkitRunnable implements ComplexTask
     public void run() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (!player.getWorld().equals(Settings.WORLD_MAIN)
-                || player.getLocation().add(0, -1, 0).getBlock().getType() != Material.SLIME_BLOCK) {
+                || player.getLocation().clone().add(0, -1, 0).getBlock().getType() != Material.SLIME_BLOCK) {
                 continue;
             }
 
