@@ -1,5 +1,8 @@
 package de.soulhive.system.motd.command;
 
+import de.soulhive.system.command.CommandExecutorWrapper;
+import de.soulhive.system.command.exception.CommandException;
+import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.motd.MotdService;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.nms.ActionBar;
@@ -12,23 +15,16 @@ import org.bukkit.command.CommandSender;
 import java.util.Arrays;
 
 @AllArgsConstructor
-public class CommandMotd implements CommandExecutor {
+public class CommandMotd extendsCommandExecutorWrapper {
 
-    private static final String USAGE = Settings.COMMAND_USAGE + "/motd <reload|header|footer> <Text>";
+    private static final String USAGE = "/motd <reload|header|footer> <Text>";
 
     private final MotdService motdService;
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-        if (!commandSender.hasPermission("soulhive.motd")) {
-            ActionBar.send(Settings.COMMAND_NO_PERMISSION, commandSender);
-            return true;
-        }
-
-        if (args.length < 1) {
-            commandSender.sendMessage(USAGE);
-            return true;
-        }
+    public void process(CommandSender commandSender, String label, String[] args) throws CommandException {
+        ValidateCommand.permission(commandSender, "soulhive.motd");
+        ValidateCommand.minArgs(1, args, USAGE);
 
         String argument = args[0].toLowerCase();
 
@@ -44,15 +40,13 @@ public class CommandMotd implements CommandExecutor {
                 break;
             default:
                 commandSender.sendMessage(Settings.PREFIX + USAGE);
-                return true;
+                return;
         }
 
         commandSender.sendMessage(Settings.PREFIX + "Du hast die §fMOTD §7erfolgreich aktualisiert");
         commandSender.sendMessage("");
         commandSender.sendMessage("§7" + this.motdService.fetchHeader());
         commandSender.sendMessage("§7" + this.motdService.fetchFooter());
-
-        return true;
     }
 
     private String joinText(String[] args) {

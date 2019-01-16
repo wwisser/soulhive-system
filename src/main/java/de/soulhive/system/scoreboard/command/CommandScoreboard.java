@@ -6,6 +6,7 @@ import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.container.Container;
 import de.soulhive.system.container.ContainerService;
+import de.soulhive.system.container.ContainerStorageLevel;
 import de.soulhive.system.scoreboard.ScoreboardService;
 import de.soulhive.system.scoreboard.ScoreboardType;
 import de.soulhive.system.setting.Settings;
@@ -36,6 +37,7 @@ public class CommandScoreboard extends CommandExecutorWrapper {
         final ScoreboardType[] values = ScoreboardType.values();
         final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lWähle dein Scoreboard")
             .setSize(9)
+            .setStorageLevel(ContainerStorageLevel.NEW)
             .setDestroyOnClose(true);
 
         int count = 3;
