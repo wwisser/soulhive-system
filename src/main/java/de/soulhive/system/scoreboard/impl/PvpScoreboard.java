@@ -2,6 +2,7 @@ package de.soulhive.system.scoreboard.impl;
 
 import de.soulhive.system.scoreboard.DynamicScoreboard;
 import de.soulhive.system.scoreboard.ScoreboardType;
+import de.soulhive.system.setting.Settings;
 import de.soulhive.system.user.User;
 
 public class PvpScoreboard extends DynamicScoreboard {
@@ -10,7 +11,8 @@ public class PvpScoreboard extends DynamicScoreboard {
 
 
     public PvpScoreboard() {
-        super(" §9§lSoulHive ");
+        super(" " + Settings.NAME + " ");
+
 
         super.addBlankLine(7);
         super.addStaticLine(" §7Kills", 6);

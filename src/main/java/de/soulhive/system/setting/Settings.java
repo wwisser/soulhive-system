@@ -15,7 +15,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Settings {
 
-    public static final String PREFIX = "§9§lSoulHive §8➥ §7";
+    public static final String NAME = "§9§lSoulHive";
+    public static final String PREFIX = NAME + " §8➥ §7";
 
     public static final String COMMAND_NO_PERMISSION = "§cDu hast keinen Zugriff auf diesen Befehl.";
     public static final String COMMAND_ONLY_PLAYERS = "Diesen Befehl dürfen nur Spieler verwenden.";

@@ -3,6 +3,7 @@ package de.soulhive.system.scoreboard.impl;
 import de.soulhive.system.SoulHive;
 import de.soulhive.system.scoreboard.DynamicScoreboard;
 import de.soulhive.system.scoreboard.ScoreboardType;
+import de.soulhive.system.setting.Settings;
 import de.soulhive.system.user.User;
 import de.soulhive.system.vanish.VanishService;
 import org.bukkit.Bukkit;
@@ -13,7 +14,8 @@ public class UserScoreboard extends DynamicScoreboard {
 
 
     public UserScoreboard() {
-        super(" §9§lSoulHive ");
+        super(" " + Settings.NAME + " ");
+
 
         super.addBlankLine(7);
         super.addStaticLine(" §7Spieler", 6);
