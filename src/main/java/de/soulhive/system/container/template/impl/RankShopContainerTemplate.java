@@ -49,10 +49,10 @@ public class RankShopContainerTemplate extends ContainerTemplate {
 
     @Override
     protected void openContainer(Player player) {
-        final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop §0> §0§lRänge")
-            .setStorageLevel(ContainerStorageLevel.STORED);
+        final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop §0> §0§lRänge");
 
-        builder.addAction(26, ShopContainerTemplate.ITEM_BACK, this.shopContainerTemplate::openContainer);
+        builder.addAction(26, ShopContainerTemplate.ITEM_BACK, this.shopContainerTemplate::openContainer)
+            .setStorageLevel(ContainerStorageLevel.STORED);
 
         int count = 10;
         for (PremiumRank rank : PremiumRank.values()) {

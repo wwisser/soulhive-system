@@ -8,25 +8,16 @@ import org.bukkit.Material;
 @Getter
 public enum ScoreboardType {
 
-    USER("§2User", Material.FEATHER),
-    PVP("§6PvP", Material.STONE_SWORD),
-    ADMIN("§cAdmin", Material.TNT);
+    USER("§2User", Material.FEATHER, 0),
+    ADMIN("§cAdmin", Material.TNT, 1000),
+    PVP("§6PvP", Material.STONE_SWORD, 1500);
 
     private String name;
     private Material material;
+    private int costs;
 
     public String getPermission() {
-        return "soulhive." + this.toString().toLowerCase();
-    }
-
-    public static ScoreboardType fromMaterial(final Material material) {
-        for (ScoreboardType type : ScoreboardType.values()) {
-            if (type.getMaterial() == material) {
-                return type;
-            }
-        }
-
-        return null;
+        return "soulhive.scoreboard." + this.toString().toLowerCase();
     }
 
 }

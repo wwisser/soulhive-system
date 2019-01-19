@@ -7,6 +7,7 @@ import de.soulhive.system.user.User;
 import de.soulhive.system.user.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.function.Consumer;
@@ -30,6 +31,7 @@ public class PurchaseContainerAction implements ContainerAction {
         if (user.getJewels() >= this.costs) {
             user.removeJewels(this.costs);
             this.buyAction.accept(player);
+            player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
         } else {
             player.sendMessage(
                 Settings.PREFIX
@@ -38,6 +40,7 @@ public class PurchaseContainerAction implements ContainerAction {
                     + " Juwelen."
             );
             player.sendMessage(Settings.PREFIX + "Jetzt §d§lJuwelen §7kaufen §8> §f/buy");
+            player.playSound(player.getLocation(), Sound.CREEPER_HISS, 1, 1);
         }
 
         player.closeInventory();

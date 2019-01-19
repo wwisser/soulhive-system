@@ -43,9 +43,10 @@ public class InventoryClickListener implements Listener {
             }
         }
 
-        elementsToExecute.forEach(
-            (container, containerEntry) -> container.getActions().get(containerEntry).process(player)
-        );
+        elementsToExecute.entrySet()
+            .stream()
+            .findFirst()
+            .ifPresent(entry -> entry.getKey().getActions().get(entry.getValue()).process(player));
     }
 
 }

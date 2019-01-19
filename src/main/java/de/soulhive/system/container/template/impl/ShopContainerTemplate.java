@@ -27,11 +27,20 @@ public class ShopContainerTemplate extends ContainerTemplate {
             super.containerService,
             this
         );
+        final ScoreboardShopContainerTemplate scoreboardShopTemplate = new ScoreboardShopContainerTemplate(
+            super.containerService,
+            this
+        );
 
         builder.addAction(
             13,
             new ItemBuilder(Material.EMERALD).name("§9§lRänge").build(),
             rankShopTemplate::openContainer
+        );
+        builder.addAction(
+            15,
+            new ItemBuilder(Material.SIGN).name("§9§lScoreboards").build(),
+            scoreboardShopTemplate::openContainer
         );
 
         final Container builtContainer = builder.build();

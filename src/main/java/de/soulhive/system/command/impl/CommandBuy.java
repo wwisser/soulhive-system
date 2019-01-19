@@ -39,7 +39,7 @@ public class CommandBuy extends CommandExecutorWrapper {
 
         if (StringUtils.isNumeric(pin) && pin.length() == 16 && pin.startsWith("0") && amount > 0) {
             sender.sendMessage(Settings.PREFIX + "Vielen Dank für deine Unterstützung §c<3");
-            sender.sendMessage(" §7Die Spende wird innerhalb der nächsten §d48 Stunden §7bearbeitet.");
+            sender.sendMessage(" §7Die Spende wird in den nächsten §d48 Stunden §7bearbeitet.");
             sender.sendMessage(" §7Bitte habe ein wenig Gedult, wir kümmern uns umgehend darum.");
             player.playSound(player.getLocation(), Sound.LEVEL_UP, Float.MAX_VALUE, Float.MIN_VALUE);
 
