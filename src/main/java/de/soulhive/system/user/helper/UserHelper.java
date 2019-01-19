@@ -15,7 +15,7 @@ public class UserHelper {
      * @return false if the sender has not enough jewel balance
      */
     public boolean handleTransaction(User sender, User receiver, int amount) {
-        if (sender.getJewels() >= amount) {
+        if (amount > 0 && sender.getJewels() >= amount) {
             sender.removeJewels(amount);
             receiver.addJewels(amount);
 
