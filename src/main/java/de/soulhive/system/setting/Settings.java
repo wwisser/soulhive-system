@@ -39,20 +39,6 @@ public final class Settings {
     public static final int SPAWN_HEIGHT = WORLD_MAIN.getSpawnLocation().getBlockY() - 20;
     public static final int VOID_HEIGHT = 50;
 
-    public static final List<Npc> NPCS = ImmutableList.of(
-        new VillagerHologramNpc(
-            new Location(WORLD_MAIN, -44.5, 113, -347.5, 45, 0),
-            player -> {
-                player.sendMessage(" ");
-                player.sendMessage("§6§lJimmy der NPC> §eIch grüße dich, " + player.getName() + "!");
-                player.sendMessage(" §eDu stehst hier vor der bekannten Feuerlotus Höhle.");
-                player.sendMessage(" §eAufgrund der Wärme wachsen dort seltene Feuerlotusblüten.");
-                player.sendMessage(" §eVielleicht hast du ja etwas Glück und schnappst dir eine.");
-                player.sendMessage(" ");
-                player.playSound(player.getLocation(), Sound.NOTE_SNARE_DRUM, Float.MAX_VALUE, Float.MAX_VALUE);
-            },
-            "§6§lFeuerlotus Höhle"
-        )
-    );
+    public static final List<Npc> NPCS = ImmutableList.of();
 
 }

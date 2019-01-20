@@ -2,8 +2,12 @@ package de.soulhive.system.service.micro;
 
 import com.google.common.collect.ImmutableList;
 import de.soulhive.system.SoulHive;
+import de.soulhive.system.npc.Npc;
+import de.soulhive.system.npc.NpcService;
+import de.soulhive.system.npc.impl.VillagerHologramNpc;
 import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
+import de.soulhive.system.service.ServiceManager;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.task.ComplexTask;
 import de.soulhive.system.task.TaskService;
@@ -29,6 +33,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static de.soulhive.system.setting.Settings.WORLD_MAIN;
+
 @FeatureService
 public class FirelotusService extends Service {
 
@@ -40,18 +46,32 @@ public class FirelotusService extends Service {
         .build();
     private static final int MAX_JEWEL_REWARD = 30;
     private static final List<Location> BLOOM_DROP_LOCATIONS = ImmutableList.of(
-        new Location(Settings.WORLD_MAIN, -63.5, 90, -335.5),
-        new Location(Settings.WORLD_MAIN, -59.5, 90, -339.5)
+        new Location(WORLD_MAIN, -63.5, 90, -335.5),
+        new Location(WORLD_MAIN, -59.5, 90, -339.5)
+    );
+    private static final Npc NPC = new VillagerHologramNpc(
+        new Location(WORLD_MAIN, -44.5, 113, -347.5, 45, 0),
+        player -> {
+            player.sendMessage(" ");
+            player.sendMessage("§6§lJimmy der NPC> §eIch grüße dich, " + player.getName() + "!");
+            player.sendMessage(" §eDu stehst hier vor der bekannten Feuerlotus Höhle.");
+            player.sendMessage(" §eAufgrund der Wärme wachsen dort seltene Feuerlotusblüten.");
+            player.sendMessage(" §eVielleicht hast du ja etwas Glück und schnappst dir eine.");
+            player.sendMessage(" ");
+            player.playSound(player.getLocation(), Sound.NOTE_SNARE_DRUM, Float.MAX_VALUE, Float.MAX_VALUE);
+        },
+        "§6§lFeuerlotus Höhle"
     );
 
     private UserService userService;
 
     @Override
     public void initialize() {
-        this.userService = SoulHive.getServiceManager().getService(UserService.class);
-        final TaskService taskService = SoulHive.getServiceManager().getService(TaskService.class);
+        final ServiceManager serviceManager = SoulHive.getServiceManager();
+        this.userService = serviceManager.getService(UserService.class);
 
-        taskService.registerTasks(new FirelotusBloomDropTask());
+        serviceManager.getService(NpcService.class).addNpc(NPC);
+        serviceManager.getService(TaskService.class).registerTasks(new FirelotusBloomDropTask());
         super.registerListener(new PlayerPickupItemListener());
     }
 
@@ -61,7 +81,7 @@ public class FirelotusService extends Service {
     }
 
     private void clearBloomDrops() {
-        Settings.WORLD_MAIN.getEntities()
+        WORLD_MAIN.getEntities()
             .stream()
             .filter(entity -> entity instanceof Item)
             .filter(entity -> ((Item) entity).getItemStack().equals(BLOOM_ITEM))
@@ -79,7 +99,7 @@ public class FirelotusService extends Service {
 
         @Override
         public void run() {
-            if (Settings.WORLD_MAIN.getPlayers()
+            if (WORLD_MAIN.getPlayers()
                 .stream()
                 .filter(Player::isOnline)
                 .filter(player -> player.getLocation().getY() < Settings.SPAWN_HEIGHT).count() < 2) {
