@@ -1,14 +1,28 @@
 package de.soulhive.system.container.template.impl;
 
+import de.soulhive.system.container.Container;
 import de.soulhive.system.container.ContainerService;
+import de.soulhive.system.container.ContainerStorageLevel;
+import de.soulhive.system.container.action.ContainerAction;
+import de.soulhive.system.container.action.impl.PurchaseContainerAction;
 import de.soulhive.system.container.template.ContainerTemplate;
+import de.soulhive.system.setting.Settings;
+import de.soulhive.system.util.PermissionUtils;
+import de.soulhive.system.util.item.ItemBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PermissionShopContainerTemplate extends ContainerTemplate {
+
+    private Map<ShopPermission, ContainerAction> purchaseActions = new HashMap<>();
 
     private ShopContainerTemplate shopContainerTemplate;
 
@@ -16,6 +30,24 @@ public class PermissionShopContainerTemplate extends ContainerTemplate {
         super(containerService);
 
         this.shopContainerTemplate = shopTemplate;
+
+        for (ShopPermission shopPermission : ShopPermission.values()) {
+            this.purchaseActions.put(
+                shopPermission,
+                new PurchaseContainerAction(
+                    player -> {
+                        PermissionUtils.addPermission(player.getName(), shopPermission.getPermission());
+                        Bukkit.broadcastMessage(
+                            Settings.PREFIX
+                                + "§f" + player.getName()
+                                + " hat sich Rechte für §f/" + shopPermission.getCommand() + " §7gekauft."
+                                + " §8=> &f/shop"
+                        );
+                    },
+                    shopPermission.getCosts()
+                )
+            );
+        }
     }
 
     // obsidian: fly (unique), hat, skull, trash, enchanter, bodysee
@@ -23,11 +55,41 @@ public class PermissionShopContainerTemplate extends ContainerTemplate {
     // diamond: stack (unique), workbench, cook
     // gold: repair, feed, heal, tpa, /tpahere
 
-    // rechte zum kaufen: workbench (2k), enchanter(2k), enderchest(3k), repair (5k)
-
     @Override
-    protected void openContainer(Player player) {
+    protected void openContainer(final Player player) {
+        final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop §0> §0§lRechte")
+            .addAction(26, ShopContainerTemplate.ITEM_BACK, this.shopContainerTemplate::openContainer)
+            .setStorageLevel(ContainerStorageLevel.STORED);
 
+        int count = 10; // incr 2
+        for (ShopPermission shopPermission : ShopPermission.values()) {
+            final boolean permission = player.hasPermission(shopPermission.getPermission());
+
+            ContainerAction action = permission
+                ? ContainerAction.NONE
+                : this.purchaseActions.get(shopPermission);
+
+            ItemStack itemStack = new ItemBuilder(shopPermission.getMaterial())
+                .name("§9§l" + shopPermission.getName())
+                .modifyLore()
+                .add("")
+                .add(
+                    permission
+                        ? "§aBereits gekauft"
+                        : "§7Preis: §d" + shopPermission.getCosts() + " Juwelen"
+                )
+                .finish()
+                .build();
+
+            builder.addAction(count, itemStack, action);
+
+            count += 2;
+        }
+
+        final Container builtContainer = builder.build();
+        this.containerService.registerContainer(builtContainer);
+
+        player.openInventory(builtContainer.getInventory());
     }
 
     @AllArgsConstructor
@@ -41,12 +103,16 @@ public class PermissionShopContainerTemplate extends ContainerTemplate {
         private Material material;
         private int costs;
 
+        public String getCommand() {
+            return this.toString().toLowerCase();
+        }
+
         public String getPermission() {
-            return "soulhive." + this.toString().toLowerCase();
+            return "soulhive." + this.getCommand();
         }
 
         public String getName() {
-            return StringUtils.capitalize(this.toString().toLowerCase());
+            return StringUtils.capitalize(this.getCommand());
         }
 
     }

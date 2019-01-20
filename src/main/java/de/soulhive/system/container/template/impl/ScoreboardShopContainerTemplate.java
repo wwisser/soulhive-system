@@ -10,6 +10,7 @@ import de.soulhive.system.container.template.ContainerTemplate;
 import de.soulhive.system.scoreboard.ScoreboardService;
 import de.soulhive.system.scoreboard.ScoreboardType;
 import de.soulhive.system.setting.Settings;
+import de.soulhive.system.util.PermissionUtils;
 import de.soulhive.system.util.item.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -36,7 +37,7 @@ public class ScoreboardShopContainerTemplate extends ContainerTemplate {
             this.purchaseActions.put(
                 type,
                 new PurchaseContainerAction(player -> {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add "  + type.getPermission());
+                    PermissionUtils.setRank(player.getName(), type.getPermission());
                     player.sendMessage(Settings.PREFIX + "Du hast dir das Scoreboard " + type.getName() + " §7gekauft und ausgewählt.");
                     scoreboardService.updateSelectedType(player, type);
                 }, type.getCosts())
