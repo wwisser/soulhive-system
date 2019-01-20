@@ -12,7 +12,6 @@ import de.soulhive.system.scoreboard.ScoreboardType;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.PermissionUtils;
 import de.soulhive.system.util.item.ItemBuilder;
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
