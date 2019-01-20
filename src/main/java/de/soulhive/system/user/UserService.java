@@ -44,6 +44,10 @@ public class UserService extends Service {
         return fetchedUser;
     }
 
+    public void saveUser(User user) {
+        this.userRepository.save(user);
+    }
+
     public void unloadUser(Player player) {
         User user = this.getUser(player);
 
