@@ -34,15 +34,10 @@ public class EntityDamageByEntityListener implements Listener {
 
         Projectile projectile = (Projectile) damager;
 
-        if (projectile.getShooter() instanceof Player) {
-            Player shooter = (Player) projectile.getShooter();
-
-            if (shooter != victim) {
-                this.combatService.setFighting(shooter);
-                this.combatService.setFighting(victim);
-            }
+        if (projectile.getShooter() instanceof Player && projectile.getShooter() != victim) {
+            this.combatService.setFighting(((Player) projectile.getShooter()));
+            this.combatService.setFighting(victim);
         }
-
     }
 
 }
