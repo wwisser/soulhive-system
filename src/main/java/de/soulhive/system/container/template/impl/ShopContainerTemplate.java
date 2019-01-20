@@ -31,7 +31,16 @@ public class ShopContainerTemplate extends ContainerTemplate {
             super.containerService,
             this
         );
+        final PermissionShopContainerTemplate permissionShopTemplate = new PermissionShopContainerTemplate(
+            super.containerService,
+            this
+        );
 
+        builder.addAction(
+            11,
+            new ItemBuilder(Material.BOOK).name("§9§lRechte").build(),
+            permissionShopTemplate::openContainer
+        );
         builder.addAction(
             13,
             new ItemBuilder(Material.EMERALD).name("§9§lRänge").build(),
