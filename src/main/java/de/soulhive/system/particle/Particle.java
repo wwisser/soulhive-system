@@ -18,4 +18,8 @@ public enum Particle {
     private Material material;
     private int costs;
 
+    public String getPermission() {
+        return "soulhive.particle." + this.toString().toLowerCase().replace("-", "");
+    }
+
 }
