@@ -1,8 +1,12 @@
 package de.soulhive.system.particle;
 
+import de.soulhive.system.SoulHive;
+import de.soulhive.system.particle.command.CommandParticle;
+import de.soulhive.system.particle.task.ParticleApplierTask;
 import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
+import de.soulhive.system.task.TaskService;
 import de.soulhive.system.util.Config;
 import org.bukkit.entity.Player;
 
@@ -12,6 +16,14 @@ import java.util.Optional;
 public class ParticleService extends Service {
 
     private Config database = new Config(Settings.CONFIG_PATH, "particles.yml");
+
+    @Override
+    public void initialize() {
+        final TaskService taskService = SoulHive.getServiceManager().getService(TaskService.class);
+
+        taskService.registerTasks(new ParticleApplierTask(this));
+        super.registerCommand("particle", new CommandParticle(this));
+    }
 
     @Override
     public void disable() {
@@ -30,6 +42,12 @@ public class ParticleService extends Service {
 
     public void setSelectedParticle(final Player player, final Particle particle) {
         this.database.set(player.getUniqueId().toString(), particle.ordinal());
+    }
+
+    public boolean hasParticle(final Player player, final Particle particleToCheck) {
+        final Optional<Particle> optParticle = this.getSelectedParticle(player);
+
+        return optParticle.filter(particle -> particle == particleToCheck).isPresent();
     }
 
 }

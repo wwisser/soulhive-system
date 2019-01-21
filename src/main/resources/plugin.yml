@@ -78,3 +78,5 @@ commands:
     aliases: [sb]
   jewelserver:
     aliases: [juwelenserver, js, jeweladmin]
+  particle:
+    aliases: [partikel, effekte, effects]
