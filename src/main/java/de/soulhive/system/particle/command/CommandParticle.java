@@ -36,6 +36,7 @@ public class CommandParticle extends CommandExecutorWrapper {
 
         final Particle[] values = Particle.values();
         final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lWähle deinen Partikel")
+            .setSize(9)
             .setStorageLevel(ContainerStorageLevel.NEW)
             .setDestroyOnClose(true);
 
