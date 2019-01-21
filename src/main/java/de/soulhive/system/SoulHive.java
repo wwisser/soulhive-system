@@ -78,7 +78,6 @@ public class SoulHive extends JavaPlugin {
             new ScoreboardService(),
             new SupplyService(),
             npcService,
-            new FirelotusService(),
             new ParticleService()
         ).forEach(serviceManager::registerService);
 
