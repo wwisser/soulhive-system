@@ -35,7 +35,16 @@ public class ShopContainerTemplate extends ContainerTemplate {
             super.containerService,
             this
         );
+        final ParticleShopContainerTemplate particleShopTemplate = new ParticleShopContainerTemplate(
+            super.containerService,
+            this
+        );
 
+        builder.addAction(
+            9,
+            new ItemBuilder(Material.BLAZE_POWDER).name("§5§lPartikel").build(),
+            particleShopTemplate::openContainer
+        );
         builder.addAction(
             11,
             new ItemBuilder(Material.BOOK).name("§9§lRechte").build(),
@@ -43,12 +52,12 @@ public class ShopContainerTemplate extends ContainerTemplate {
         );
         builder.addAction(
             13,
-            new ItemBuilder(Material.EMERALD).name("§9§lRänge").build(),
+            new ItemBuilder(Material.EMERALD).name("§a§lRänge").build(),
             rankShopTemplate::openContainer
         );
         builder.addAction(
             15,
-            new ItemBuilder(Material.SIGN).name("§9§lScoreboards").build(),
+            new ItemBuilder(Material.SIGN).name("§e§lScoreboards").build(),
             scoreboardShopTemplate::openContainer
         );
 
