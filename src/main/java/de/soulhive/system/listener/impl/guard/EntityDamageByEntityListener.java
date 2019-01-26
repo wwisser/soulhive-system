@@ -29,7 +29,7 @@ public class EntityDamageByEntityListener implements Listener {
         if (location.getBlockY() >= Settings.SPAWN_HEIGHT) {
             event.setCancelled(true);
 
-            if (damager instanceof Player) {
+            if (damager instanceof Player && !(entity instanceof ItemFrame)) {
                 ActionBar.send("§cDu darfst hier nicht kämpfen.", damager);
             }
         }
