@@ -39,6 +39,10 @@ public class ShopContainerTemplate extends ContainerTemplate {
             super.containerService,
             this
         );
+        final ChatcolorShopContainerTemplate chatcolorShopTemplate = new ChatcolorShopContainerTemplate(
+            super.containerService,
+            this
+        );
 
         builder.addAction(
             9,
@@ -59,6 +63,11 @@ public class ShopContainerTemplate extends ContainerTemplate {
             15,
             new ItemBuilder(Material.SIGN).name("§e§lScoreboards").build(),
             scoreboardShopTemplate::openContainer
+        );
+        builder.addAction(
+            17,
+            new ItemBuilder(351).data((byte) 14).name("§c§lChatfarben").build(),
+            chatcolorShopTemplate::openContainer
         );
 
         final Container builtContainer = builder.build();

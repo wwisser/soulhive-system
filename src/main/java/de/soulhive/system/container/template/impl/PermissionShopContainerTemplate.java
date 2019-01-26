@@ -61,7 +61,7 @@ public class PermissionShopContainerTemplate extends ContainerTemplate {
             .addAction(26, ShopContainerTemplate.ITEM_BACK, this.shopContainerTemplate::openContainer)
             .setStorageLevel(ContainerStorageLevel.STORED);
 
-        int count = 10; // incr 2
+        int count = 10;
         for (ShopPermission shopPermission : ShopPermission.values()) {
             final boolean permission = player.hasPermission(shopPermission.getPermission());
 

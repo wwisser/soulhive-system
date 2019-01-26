@@ -95,6 +95,15 @@ public class ChatService extends Service implements Listener {
             formattedMessage = ChatColor.translateAlternateColorCodes('&', formattedMessage);
         }
 
+        for (ChatColor chatColor : ChatColor.values()) {
+            if (sender.hasPermission("soulhive.chatcolor." + chatColor.toString().toLowerCase())) {
+                formattedMessage = formattedMessage.replaceAll(
+                    "&" + chatColor.getChar(),
+                    "§" + chatColor.getChar()
+                );
+            }
+        }
+
         return formattedMessage.replace("%", "%%");
     }
 
