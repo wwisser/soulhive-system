@@ -75,7 +75,7 @@ public class FrameshopService extends Service implements Listener {
                 ItemStack item = itemStack.clone();
 
                 item.setAmount(amount);
-                user.removeJewels(amount);
+                user.removeJewels(price);
 
                 ItemUtils.addAndDropRest(player, item);
                 player.playSound(player.getLocation(), Sound.CLICK, 1, 1);
