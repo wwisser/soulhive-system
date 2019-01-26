@@ -18,6 +18,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
+
 public class FrameshopService extends Service implements Listener {
 
     private UserService userService;
@@ -83,15 +85,14 @@ public class FrameshopService extends Service implements Listener {
     }
 
     private int getAmount(Player player, ItemStack itemStack) {
-        int amount = 0;
-        for (ItemStack item : player.getInventory().getContents()) {
-            if ((item != null) &&
-                (item.getType().equals(itemStack.getType())) &&
-                (!item.hasItemMeta()) && item.getData().getData() == itemStack.getData().getData()) {
-                amount += item.getAmount();
-            }
-        }
-        return amount;
+        return Arrays.stream(player.getInventory().getContents())
+            .filter(
+                item -> item != null
+                    && item.getType().equals(itemStack.getType())
+                    && !item.hasItemMeta()
+                    && item.getData().getData() == itemStack.getData().getData()
+            ).mapToInt(ItemStack::getAmount)
+            .sum();
     }
 
     private void removeItem(Player player, ItemStack itemStack, int amount) {
