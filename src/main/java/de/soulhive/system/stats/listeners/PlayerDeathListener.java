@@ -45,7 +45,7 @@ public class PlayerDeathListener implements Listener {
             killerUser.addJewels(5);
             killer.sendMessage(Settings.PREFIX + "Du hast §f" + victim.getName() + " §7getötet! +§f5 Juwelen");
             killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 100, 100);
-
+            killer.setExp(killer.getExp() + 50);
             victim.sendMessage(
                 Settings.PREFIX
                     + "Du wurdest von §f"
