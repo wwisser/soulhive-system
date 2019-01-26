@@ -5,6 +5,7 @@ import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.user.User;
 import de.soulhive.system.user.UserService;
+import de.soulhive.system.util.item.ItemUtils;
 import de.soulhive.system.util.nms.ActionBar;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -76,7 +77,7 @@ public class FrameshopService extends Service implements Listener {
                 item.setAmount(amount);
                 user.removeJewels(amount);
 
-                player.getInventory().addItem(item);
+                ItemUtils.addAndDropRest(player, item);
                 player.playSound(player.getLocation(), Sound.CLICK, 1, 1);
             } else {
                 ActionBar.send("§cDu hast zu wenige Juwelen.", player);
