@@ -35,9 +35,8 @@ public class RankShopContainerTemplate extends ContainerTemplate {
                     Bukkit.broadcastMessage(
                         Settings.PREFIX
                             + "§f" + player.getName()
-                            + " hat sich den Rang " + rank.getChatColor() + ChatColor.BOLD + rank.getName() + " §7gekauft."
-                            + " §8=> &f/shop"
-                    );
+                            + " §7hat sich den Rang " + rank.getChatColor() + ChatColor.BOLD + rank.getName() + " §7gekauft.");
+                    Bukkit.broadcastMessage(Settings.PREFIX + "Jetzt auch mit Juwelen einkaufen §8§l=> §d§l/shop");
                 }, rank.getCosts())
             );
         }

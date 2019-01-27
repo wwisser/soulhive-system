@@ -12,6 +12,7 @@ import de.soulhive.system.scoreboard.ScoreboardType;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.PermissionUtils;
 import de.soulhive.system.util.item.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +38,8 @@ public class ScoreboardShopContainerTemplate extends ContainerTemplate {
                 type,
                 new PurchaseContainerAction(player -> {
                     PermissionUtils.setRank(player.getName(), type.getPermission());
-                    player.sendMessage(Settings.PREFIX + "Du hast dir das Scoreboard " + type.getName() + " §7gekauft und ausgewählt.");
+                    Bukkit.broadcastMessage(Settings.PREFIX + "§f" + player.getName() + " §7hat sich das Scoreboard " + type.getName() + " §7gekauft.");
+                    Bukkit.broadcastMessage(Settings.PREFIX + "Jetzt auch mit Juwelen einkaufen §8§l=> §d§l/shop");
                     scoreboardService.updateSelectedType(player, type);
                 }, type.getCosts())
             );

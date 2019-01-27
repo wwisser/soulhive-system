@@ -40,9 +40,8 @@ public class PermissionShopContainerTemplate extends ContainerTemplate {
                         Bukkit.broadcastMessage(
                             Settings.PREFIX
                                 + "§f" + player.getName()
-                                + " hat sich Rechte für §f/" + shopPermission.getCommand() + " §7gekauft."
-                                + " §8=> &f/shop"
-                        );
+                                + " §7hat sich Rechte für §f/" + shopPermission.getCommand() + " §7gekauft.");
+                        Bukkit.broadcastMessage(Settings.PREFIX + "Jetzt auch mit Juwelen einkaufen §8§l=> §d§l/shop");
                     },
                     shopPermission.getCosts()
                 )

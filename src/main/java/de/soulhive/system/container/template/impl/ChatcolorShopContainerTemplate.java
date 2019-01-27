@@ -41,9 +41,8 @@ public class ChatcolorShopContainerTemplate extends ContainerTemplate {
                         Bukkit.broadcastMessage(
                             Settings.PREFIX
                                 + "§f" + player.getName()
-                                + " hat sich die Chatfarbe " + chatColor.getChatColor() + chatColor.getName() + " §7gekauft."
-                                + " §8=> &f/shop"
-                        );
+                                + " §7hat sich die Chatfarbe " + chatColor.getChatColor() + chatColor.getName() + " §7gekauft.");
+                        Bukkit.broadcastMessage(Settings.PREFIX + "Jetzt auch mit Juwelen einkaufen §8§l=> §d§l/shop");
                     },
                     chatColor.getCosts()
                 )

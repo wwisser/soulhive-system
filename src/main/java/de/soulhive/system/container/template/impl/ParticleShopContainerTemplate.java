@@ -12,6 +12,7 @@ import de.soulhive.system.particle.ParticleService;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.PermissionUtils;
 import de.soulhive.system.util.item.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -36,8 +37,9 @@ public class ParticleShopContainerTemplate extends ContainerTemplate {
             this.purchaseActions.put(
                 type,
                 new PurchaseContainerAction(player -> {
-                    PermissionUtils.setRank(player.getName(), type.getPermission());
-                    player.sendMessage(Settings.PREFIX + "Du hast dir den Partikel " + type.getName() + " §7gekauft und ausgewählt.");
+                    PermissionUtils.addPermission(player.getName(), type.getPermission());
+                    Bukkit.broadcastMessage(Settings.PREFIX + "§f " + player.getName() + " §7hat sich den Partikel " + type.getName() + " §7gekauft.");
+                    Bukkit.broadcastMessage(Settings.PREFIX + "Jetzt auch mit Juwelen einkaufen §8§l=> §d§l/shop");
                     particleService.setSelectedParticle(player, type);
                 }, type.getCosts())
             );
