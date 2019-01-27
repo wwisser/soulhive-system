@@ -131,7 +131,7 @@ public class ItemBuilder {
         }
         if (this.itemLore != null) {
             ItemMeta meta = item.getItemMeta();
-            meta.setLore(this.itemLore.toArray());
+            meta.setLore(this.itemLore.toList());
             item.setItemMeta(meta);
         }
         if (this.enchantments != null) {
@@ -162,7 +162,7 @@ public class ItemBuilder {
             if (item.getType().equals(Material.ENCHANTED_BOOK)) {
                 EnchantmentStorageMeta storageMeta = (EnchantmentStorageMeta) item.getItemMeta();
                 this.enchantmentStorage.forEach((enchantment, level)
-                        -> storageMeta.addStoredEnchant(enchantment, level, true));
+                    -> storageMeta.addStoredEnchant(enchantment, level, true));
                 item.setItemMeta(storageMeta);
             }
         }
@@ -216,13 +216,21 @@ public class ItemBuilder {
             this.clear();
 
             for (String line : lines) {
-                add(line);
+                this.add(line);
             }
 
             return this;
         }
 
-        public List<String> toArray() {
+        public ItemLore add(String[] lines) {
+            for (String line : lines) {
+                this.add(line);
+            }
+
+            return this;
+        }
+
+        public List<String> toList() {
             return this.lore;
         }
 
