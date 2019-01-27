@@ -4,7 +4,9 @@ import com.google.common.collect.ImmutableList;
 import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
+import de.soulhive.system.setting.Settings;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -76,6 +78,9 @@ public class CommandRepair extends CommandExecutorWrapper {
                 itemStack.setDurability((short) 0);
             }
         }
+
+        player.sendMessage(Settings.PREFIX + "Deine Items wurden repariert.");
+        player.playSound(player.getLocation(), Sound.ANVIL_USE, 1, 1);
     }
 
 }
