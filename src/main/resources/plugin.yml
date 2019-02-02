@@ -80,3 +80,5 @@ commands:
     aliases: [juwelenserver, js, jeweladmin]
   particle:
     aliases: [partikel, effekte, effects]
+  peace:
+    aliases: [friede, frieden]

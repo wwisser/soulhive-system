@@ -1,6 +1,7 @@
 package de.soulhive.system.peace;
 
 import de.soulhive.system.peace.command.CommandPeace;
+import de.soulhive.system.peace.listener.EntityDamageByEntityListener;
 import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
@@ -23,6 +24,7 @@ public class PeaceService extends Service {
         this.invites = new HashMap<>();
 
         super.registerCommand("peace", new CommandPeace(this));
+        super.registerListener(new EntityDamageByEntityListener(this));
     }
 
     @Override
