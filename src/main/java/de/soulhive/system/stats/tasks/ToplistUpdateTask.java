@@ -44,7 +44,7 @@ public class ToplistUpdateTask extends BukkitRunnable implements ComplexTask {
         labelSign.update();
 
         Map<String, ? super Number> topList = this.sort(toplistContext.getData());
-        Location currentHead = new Location(Settings.WORLD_MAIN, -50, 185, POSITION_Z_START);
+        Location currentHead = new Location(Settings.WORLD_MAIN, -46, 185, POSITION_Z_START);
         int count = 0;
 
         for (Map.Entry<String, ? super Number> entry : topList.entrySet()) {
