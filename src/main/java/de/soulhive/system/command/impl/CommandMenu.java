@@ -94,6 +94,7 @@ public class CommandMenu extends CommandExecutorWrapper {
                 .add("")
                 .add("§7Lagere deine Items und baue mit Freunden.")
                 .add("§7Inselname: §f" + this.aSkyBlockAPI.getIslandName(sender.getUniqueId()))
+                .add("§7Level: §f" + this.aSkyBlockAPI.getLongIslandLevel(sender.getUniqueId()))
                 .finish()
                 .build(),
             player -> player.performCommand("is go")

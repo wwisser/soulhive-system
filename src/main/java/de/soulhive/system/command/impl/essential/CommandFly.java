@@ -21,7 +21,7 @@ public class CommandFly extends CommandExecutorWrapper {
         player.sendMessage(
             Settings.PREFIX
                 + "Dein Flugmodus wurde §f"
-                + (flying ? "aktiviert" : "deaktiviert")
+                + (flying ? "deaktiviert" : "aktiviert")
                 + "§7."
         );
 
