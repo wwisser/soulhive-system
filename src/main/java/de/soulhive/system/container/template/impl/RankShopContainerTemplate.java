@@ -60,6 +60,9 @@ public class RankShopContainerTemplate extends ContainerTemplate {
                 .name("§7Rang " + rank.getChatColor() + "§l" + rank.getName())
                 .modifyLore()
                 .add("")
+                .add(PremiumRank.PERMISSIONS_DEFAULT)
+                .add(rank.getPermissions())
+                .add("")
                 .add(
                     permission
                         ? "§aBereits gekauft"

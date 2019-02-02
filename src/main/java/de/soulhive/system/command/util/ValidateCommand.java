@@ -50,7 +50,7 @@ public class ValidateCommand {
 
     public Player target(String target, CommandSender sender) throws CommandException {
         final VanishService vanishService = SoulHive.getServiceManager().getService(VanishService.class);
-        Player targetPlayer = Bukkit.getPlayer(target);
+        final Player targetPlayer = Bukkit.getPlayer(target);
 
         if (targetPlayer == null
             || !targetPlayer.isOnline()
@@ -59,7 +59,7 @@ public class ValidateCommand {
         }
 
         if (targetPlayer == sender) {
-            throw new CommandException("§cDu darfst nicht mit dir selbst interagieren!");
+            throw new SelfInteractionException();
         }
 
         return targetPlayer;

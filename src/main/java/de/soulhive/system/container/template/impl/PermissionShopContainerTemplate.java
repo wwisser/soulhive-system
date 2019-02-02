@@ -49,11 +49,6 @@ public class PermissionShopContainerTemplate extends ContainerTemplate {
         }
     }
 
-    // obsidian: fly (unique), hat, skull, trash, enchanter, bodysee
-    // emerald: invsee (unique), enderchest, bottle, fill
-    // diamond: stack (unique), workbench, cook
-    // gold: repair, feed, heal, tpa, /tpahere
-
     @Override
     protected void openContainer(final Player player) {
         final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop §0> §0§lRechte")
