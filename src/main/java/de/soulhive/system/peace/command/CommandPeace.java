@@ -44,7 +44,7 @@ public class CommandPeace extends CommandExecutorWrapper {
             }
 
             for (String peaceUuid : peaceList) {
-                player.sendMessage(" §8- §f" + this.userService.getUserByUuid(peaceUuid));
+                player.sendMessage(" §8- §f" + this.userService.getUserByUuid(peaceUuid).getName());
             }
 
             player.sendMessage(" §7Schließe/Beende Frieden mit §f/friede <Name>");
@@ -72,6 +72,13 @@ public class CommandPeace extends CommandExecutorWrapper {
                     throw new TargetNotFoundException(user.getName());
                 }
 
+                if (this.peaceService.hasInvite(uuid, user.getUuid())) {
+                    this.peaceService.removeInvite(uuid, target.getUniqueId().toString());
+                    this.peaceService.setPeace(uuid, target.getUniqueId().toString());
+                    Bukkit.broadcastMessage(Settings.PREFIX + "§f" + player.getName() + " §7hat mit §f" + target.getName() + " §7Frieden geschlossen.");
+                    return;
+                }
+
                 this.peaceService.setInvite(user.getUuid(), uuid);
                 player.sendMessage(Settings.PREFIX + "Du hast §f" + target.getName() + " §7Frieden angeboten.");
                 target.sendMessage(Settings.PREFIX + "§f" + player.getName() + " §7bietet dir Frieden an!");
@@ -80,10 +87,9 @@ public class CommandPeace extends CommandExecutorWrapper {
         } else if (args[0].equalsIgnoreCase("accept")) {
             final Player target = ValidateCommand.target(args[1], sender);
 
-            if (this.peaceService.hasInvite(player.getName(), target.getName())) {
-                this.peaceService.removeInvite(player.getName(), target.getName());
+            if (this.peaceService.hasInvite(uuid, target.getUniqueId().toString())) {
+                this.peaceService.removeInvite(uuid, target.getUniqueId().toString());
                 this.peaceService.setPeace(uuid, target.getUniqueId().toString());
-                this.peaceService.setPeace(target.getUniqueId().toString(), uuid);
                 Bukkit.broadcastMessage(Settings.PREFIX + "§f" + player.getName() + " §7hat mit §f" + target.getName() + " §7Frieden geschlossen.");
             } else {
                 player.sendMessage(Settings.PREFIX + "§cDu hast keine Anfrage von §f" + target.getName() + " §cbekommen.");

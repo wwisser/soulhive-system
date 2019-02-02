@@ -21,7 +21,8 @@ public class CombatService extends Service {
 
     private static final long COMBAT_TIME = 8000;
     private static final String[] ALLOWED_COMMANDS = {
-        "msg", "report", "vote", "buy", "teamchat", "tc", "spec", "spectator", "stats", "friede"
+        "/msg", "/report", "/vote", "/buy", "/teamchat", "/tc",
+        "/spec", "/spectator", "/stats", "/friede", "/frieden", "/stack"
     };
 
     private Map<Player, Long> fightTimestamps = new HashMap<>();
