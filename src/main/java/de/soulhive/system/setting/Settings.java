@@ -34,7 +34,7 @@ public final class Settings {
     private static final World WORLD_SKYBLOCK_NETHER = Bukkit.getWorld("ASkyBlock_nether");
 
     public static final Location LOCATION_SPAWN = new Location(WORLD_MAIN, -56.5, 183, -351.5, 0, 0);
-    public static final Location LOCATION_ITEMSHOP = new Location(WORLD_MAIN, -71.5, 169, -349.5, 90, 0);
+    public static final Location LOCATION_ITEMSHOP = new Location(WORLD_MAIN, -71.5, 169, -349.5, -90, 0);
 
     public static final List<World> SKYBLOCK_WORLDS = ImmutableList.of(WORLD_SKYBLOCK, WORLD_SKYBLOCK_NETHER);
 

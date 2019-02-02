@@ -23,7 +23,7 @@ public class ToplistUpdateTask extends BukkitRunnable implements ComplexTask {
 
     private static final int POSITION_Z_START = -355;
     private static final int HEAD_AMOUNT = 5;
-    private static final Location LABEL_LOCATION = new Location(Settings.WORLD_MAIN, -51, 186, -353);
+    private static final Location LABEL_LOCATION = new Location(Settings.WORLD_MAIN, -47, 186, -353);
 
     private final ToplistContext[] toplistContexts;
     private int currentIndex = 0;
