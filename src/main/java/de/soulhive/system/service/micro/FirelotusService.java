@@ -44,7 +44,7 @@ public class FirelotusService extends Service {
         .name(BLOOM_NAME)
         .enchant(Enchantment.LUCK, 6)
         .build();
-    private static final int MAX_JEWEL_REWARD = 30;
+    private static final int MAX_JEWEL_REWARD = 4;
     private static final List<Location> BLOOM_DROP_LOCATIONS = ImmutableList.of(
         new Location(WORLD_MAIN, -63.5, 90, -335.5),
         new Location(WORLD_MAIN, -59.5, 90, -339.5)
@@ -84,13 +84,22 @@ public class FirelotusService extends Service {
         WORLD_MAIN.getEntities()
             .stream()
             .filter(entity -> entity instanceof Item)
-            .filter(entity -> ((Item) entity).getItemStack().equals(BLOOM_ITEM))
+            .filter(entity -> {
+                final Item item = (Item) entity;
+                final ItemStack itemStack = item.getItemStack();
+
+                if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasDisplayName()) {
+                    return itemStack.getItemMeta().getDisplayName().equals(BLOOM_NAME);
+                }
+
+                return false;
+            })
             .forEach(Entity::remove);
     }
 
     private class FirelotusBloomDropTask extends BukkitRunnable implements ComplexTask {
 
-        private static final long PERIOD = 20L * 10;
+        private static final long PERIOD = 20L * 5;
 
         @Override
         public void setup(JavaPlugin plugin) {
@@ -108,12 +117,12 @@ public class FirelotusService extends Service {
 
             final ThreadLocalRandom random = ThreadLocalRandom.current();
 
-            if (random.nextInt(100) < 5) {
+            if (random.nextInt(100) < 20) {
                 FirelotusService.this.clearBloomDrops();
 
                 final Location location = BLOOM_DROP_LOCATIONS.get(
                     random.nextInt(BLOOM_DROP_LOCATIONS.size())
-                ).clone().add(random.nextInt(5), random.nextInt(5) + 0.3, random.nextInt(5));
+                ).clone().add(random.nextInt(2), random.nextInt(2) + 0.3, random.nextInt(2));
 
                 location.getWorld().dropItem(location, BLOOM_ITEM);
                 ParticleUtils.play(location, EnumParticle.VILLAGER_ANGRY, 0, 0, 0, 0, 0);
@@ -134,6 +143,7 @@ public class FirelotusService extends Service {
             }
 
             event.getItem().remove();
+            event.setCancelled(true);
 
             final User user = FirelotusService.this.userService.getUser(player);
             final int amount = ThreadLocalRandom.current().nextInt(MAX_JEWEL_REWARD) + 1;
