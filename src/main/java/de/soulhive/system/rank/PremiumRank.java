@@ -14,7 +14,7 @@ public enum PremiumRank {
     // diamond: stack (unique), workbench, cook
     // gold: repair, feed, heal, tpa, /tpahere
 
-    GOLD("gold", 10000, Material.GOLD_INGOT, "§6", "§8► §6/repair", "§8► §6/feed", "§8► §6/heal", "§8► §6/tpa, /tpahere"),
+    GOLD("gold", 10000, Material.GOLD_INGOT, "§6", "§8► §6Kit Gold", "§8► §6/repair", "§8► §6/feed", "§8► §6/heal", "§8► §6/tpa, /tpahere"),
 
     DIAMOND("diamond", 20000, Material.DIAMOND, "§b"),
 

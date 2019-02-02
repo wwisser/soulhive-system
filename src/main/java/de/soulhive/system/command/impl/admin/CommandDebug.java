@@ -14,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -31,7 +32,8 @@ public class CommandDebug extends CommandExecutorWrapper {
             npcService.addNpc(
                 new VillagerHologramNpc(
                     player.getLocation(), clicker -> clicker.sendMessage("§bClick!"),
-                    "§c§lDebug-NPC"
+                    "§c§lDebug-NPC",
+                    Villager.Profession.BLACKSMITH.ordinal()
                 )
             );
         }

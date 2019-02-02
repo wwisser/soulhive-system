@@ -82,3 +82,4 @@ commands:
     aliases: [partikel, effekte, effects]
   peace:
     aliases: [friede, frieden]
+  menu:

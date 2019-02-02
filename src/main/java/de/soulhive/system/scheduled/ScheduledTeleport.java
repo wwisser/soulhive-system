@@ -6,6 +6,7 @@ import de.soulhive.system.task.ComplexTask;
 import de.soulhive.system.task.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -16,6 +17,15 @@ import java.util.function.BiConsumer;
 
 @RequiredArgsConstructor
 public class ScheduledTeleport {
+
+    public static final BiConsumer<Player, Boolean> RESULT = (player, success) -> {
+        if (success) {
+            player.sendMessage(Settings.PREFIX + "Du wurdest erfolgreich teleportiert.");
+            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+        } else {
+            player.sendMessage(Settings.PREFIX + "§cDu hast dich bewegt - Teleportation abgebrochen.");
+        }
+    };
 
     private static final int SECOND_IN_TICKS = 20;
 

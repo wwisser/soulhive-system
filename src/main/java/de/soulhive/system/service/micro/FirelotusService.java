@@ -23,6 +23,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -60,7 +61,8 @@ public class FirelotusService extends Service {
             player.sendMessage(" ");
             player.playSound(player.getLocation(), Sound.NOTE_SNARE_DRUM, Float.MAX_VALUE, Float.MAX_VALUE);
         },
-        "§6§lFeuerlotus Höhle"
+        "§6§lFeuerlotus Höhle",
+        Villager.Profession.PRIEST.ordinal()
     );
 
     private UserService userService;

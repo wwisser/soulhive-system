@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.entity.Villager;
 
 import java.util.List;
 
@@ -33,12 +34,20 @@ public final class Settings {
     private static final World WORLD_SKYBLOCK_NETHER = Bukkit.getWorld("ASkyBlock_nether");
 
     public static final Location LOCATION_SPAWN = new Location(WORLD_MAIN, -56.5, 183, -351.5, 0, 0);
+    public static final Location LOCATION_ITEMSHOP = new Location(WORLD_MAIN, -71.5, 169, -349.5, 90, 0);
 
     public static final List<World> SKYBLOCK_WORLDS = ImmutableList.of(WORLD_SKYBLOCK, WORLD_SKYBLOCK_NETHER);
 
     public static final int SPAWN_HEIGHT = WORLD_MAIN.getSpawnLocation().getBlockY() - 20;
     public static final int VOID_HEIGHT = 50;
 
-    public static final List<Npc> NPCS = ImmutableList.of();
+    public static final List<Npc> NPCS = ImmutableList.of(
+        new VillagerHologramNpc(
+            new Location(WORLD_MAIN, -51.5, 183, -340.5, 150, 0),
+            player -> player.performCommand("menu"),
+            "§9§lMenü",
+            Villager.Profession.BUTCHER.ordinal()
+        )
+    );
 
 }

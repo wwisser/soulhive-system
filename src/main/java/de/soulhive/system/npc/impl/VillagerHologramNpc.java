@@ -2,6 +2,7 @@ package de.soulhive.system.npc.impl;
 
 import de.soulhive.system.npc.HologramNpc;
 import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
@@ -19,11 +20,18 @@ public class VillagerHologramNpc extends EntityVillager implements HologramNpc {
     private Consumer<Player> clickAction;
     private String hologramName;
 
-    public VillagerHologramNpc(final Location location, final Consumer<Player> clickAction, final String hologramName) {
+    public VillagerHologramNpc(
+        final Location location,
+        final Consumer<Player> clickAction,
+        final String hologramName,
+        final int profession
+    ) {
         super(((CraftWorld) location.getWorld()).getHandle());
         this.location = location;
         this.clickAction = clickAction;
         this.hologramName = hologramName;
+
+        super.setProfession(profession);
     }
 
     @Override

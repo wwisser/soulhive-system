@@ -18,15 +18,11 @@ public class CommandSpawn extends CommandExecutorWrapper {
     private static final String MESSAGE_SUCCESS = Settings.PREFIX + "Du wurdest zum §fSpawn §7teleportiert.";
     private static final Location TARGET_LOCATION = Settings.LOCATION_SPAWN;
     private static final int SECONDS = 3;
-    private static final BiConsumer<Player, Boolean> RESULT = (player, success) -> {
-        if (success) {
-            player.sendMessage(MESSAGE_SUCCESS);
-            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-        } else {
-            player.sendMessage(Settings.PREFIX + "§cDu hast dich bewegt - Teleportation abgebrochen.");
-        }
-    };
-    private static final ScheduledTeleport SCHEDULED_TELEPORT = new ScheduledTeleport(TARGET_LOCATION, SECONDS, RESULT);
+    private static final ScheduledTeleport SCHEDULED_TELEPORT = new ScheduledTeleport(
+        TARGET_LOCATION,
+        SECONDS,
+        ScheduledTeleport.RESULT
+    );
 
     @Override
     public void process(CommandSender sender, String label, String[] args) throws CommandException {
