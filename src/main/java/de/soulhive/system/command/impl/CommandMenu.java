@@ -1,5 +1,6 @@
 package de.soulhive.system.command.impl;
 
+import com.wasteofplastic.askyblock.ASkyBlockAPI;
 import de.soulhive.system.SoulHive;
 import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
@@ -9,7 +10,10 @@ import de.soulhive.system.container.ContainerService;
 import de.soulhive.system.container.ContainerStorageLevel;
 import de.soulhive.system.scheduled.AlreadyInTeleportException;
 import de.soulhive.system.scheduled.ScheduledTeleport;
+import de.soulhive.system.service.ServiceManager;
 import de.soulhive.system.setting.Settings;
+import de.soulhive.system.user.User;
+import de.soulhive.system.user.UserService;
 import de.soulhive.system.util.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -17,11 +21,21 @@ import org.bukkit.entity.Player;
 
 public class CommandMenu extends CommandExecutorWrapper {
 
-    private Container container;
+    private ContainerService containerService;
+    private UserService userService;
+    private ASkyBlockAPI aSkyBlockAPI;
 
     @Override
     public void initialize() {
-        final ContainerService service = SoulHive.getServiceManager().getService(ContainerService.class);
+        final ServiceManager serviceManager = SoulHive.getServiceManager();
+
+        this.containerService = serviceManager.getService(ContainerService.class);
+        this.userService = serviceManager.getService(UserService.class);
+        this.aSkyBlockAPI = ASkyBlockAPI.getInstance();
+    }
+
+    public void process(CommandSender commandSender, String label, String[] args) throws CommandException {
+        final Player sender = ValidateCommand.onlyPlayer(commandSender);
 
         final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lMenü §0| /menu")
             .setStorageLevel(ContainerStorageLevel.STORED)
@@ -30,22 +44,29 @@ public class CommandMenu extends CommandExecutorWrapper {
 
         builder.addAction(
             12,
-            new ItemBuilder(Material.IRON_SWORD).glow().name("§b§lItemshop").build(),
-            player -> {
-                if (player.hasPermission(Settings.PERMISSION_ADMIN)) {
-                    player.teleport(Settings.LOCATION_ITEMSHOP);
+            new ItemBuilder(Material.IRON_SWORD)
+                .glow()
+                .name("§b§lItemshop")
+                .modifyLore()
+                .add("")
+                .add("§7Kaufe oder verkaufe Items.")
+                .finish()
+                .build(),
+            clicker -> {
+                if (clicker.hasPermission(Settings.PERMISSION_ADMIN)) {
+                    clicker.teleport(Settings.LOCATION_ITEMSHOP);
                 } else {
                     try {
                         new ScheduledTeleport(
                             Settings.LOCATION_ITEMSHOP,
                             3,
                             ScheduledTeleport.RESULT
-                        ).process(player);
-                        player.sendMessage(
+                        ).process(clicker);
+                        clicker.sendMessage(
                             Settings.PREFIX + "Du wirst in §f3 §7Sekunden teleportiert. Bewege dich nicht."
                         );
                     } catch (AlreadyInTeleportException e) {
-                        player.sendMessage(Settings.PREFIX + "§cDu wirst bereits teleportiert.");
+                        clicker.sendMessage(Settings.PREFIX + "§cDu wirst bereits teleportiert.");
                     }
                 }
             }
@@ -54,56 +75,104 @@ public class CommandMenu extends CommandExecutorWrapper {
 
         builder.addAction(
             10,
-            new ItemBuilder(Material.BLAZE_POWDER).glow().name("§5§lPartikel").build(),
-            player -> player.performCommand("scoreboards")
+            new ItemBuilder(Material.BLAZE_POWDER)
+                .glow()
+                .name("§5§lPartikel §7(§5/partikel§7)")
+                .modifyLore()
+                .add("")
+                .add("§7Wechsle deine Partikel.")
+                .finish()
+                .build(),
+            player -> player.performCommand("partikel")
         );
         builder.addAction(
             14,
-            new ItemBuilder(Material.GRASS).glow().name("§e§lDeine Insel").build(),
+            new ItemBuilder(this.aSkyBlockAPI.hasIsland(sender.getUniqueId()) ? Material.GRASS : Material.MYCEL)
+                .glow()
+                .name("§e§lDeine Insel §7(§e/is§7)")
+                .modifyLore()
+                .add("")
+                .add("§7Lagere deine Items und baue mit Freunden.")
+                .add("§7Inselname: §f" + this.aSkyBlockAPI.getIslandName(sender.getUniqueId()))
+                .finish()
+                .build(),
             player -> player.performCommand("is go")
         );
 
         builder.addAction(
             16,
-            new ItemBuilder(Material.BOOK).glow().name("§a§lShop").build(),
+            new ItemBuilder(Material.BOOK)
+                .glow()
+                .name("§a§lShop §7(§a/shop§7)")
+                .modifyLore()
+                .add("")
+                .add("§7Kaufe dir Ränge, Rechte und vieles mehr.")
+                .finish()
+                .build(),
             player -> player.performCommand("shop")
         );
 
         builder.addAction(
             19,
-            new ItemBuilder(Material.PRISMARINE_SHARD).glow().name("§6§lAuktionshaus").build(),
+            new ItemBuilder(Material.PRISMARINE_SHARD)
+                .glow()
+                .name("§6§lAuktionshaus §7(§6/ah§7)")
+                .modifyLore()
+                .add("")
+                .add("§7Kaufe und verkaufe Items unter Spielern.")
+                .finish()
+                .build(),
             player -> player.performCommand("ah")
         );
 
+        final User user = this.userService.getUser(sender);
+
         builder.addAction(
             21,
-            new ItemBuilder(Material.EMERALD).glow().name("§d§lJuwelen").build(),
-            player -> player.performCommand("juwelen")
+            new ItemBuilder(Material.EMERALD)
+                .glow()
+                .name("§d§lJuwelen §7(§d/juwelen§7)")
+                .modifyLore()
+                .add("")
+                .add("§7Du besitzt aktuell §d" + user.getJewels() + " §7Juwelen.")
+                .finish()
+                .build(),
+            player -> {
+                player.performCommand("juwelen");
+                player.closeInventory();
+            }
         );
 
         builder.addAction(
             23,
-            new ItemBuilder(Material.CHEST).glow().name("§3§lKits").build(),
+            new ItemBuilder(Material.CHEST)
+                .name("§3§lKits §7(§3/kit§7)")
+                .modifyLore()
+                .add("")
+                .add("§7Hole dir dein tägliches Equip ab.")
+                .finish()
+                .build(),
             player -> player.performCommand("kit")
         );
 
         builder.addAction(
             25,
-            new ItemBuilder(Material.SIGN).glow().name("§2§lScoreboards").build(),
-            player -> player.performCommand("scoreboards")
+            new ItemBuilder(Material.SIGN)
+                .glow()
+                .name("§2§lScoreboards §7(§2/scoreboard§7)")
+                .modifyLore()
+                .add("")
+                .add("§7Wechsle deine Scoreboardwerte.")
+                .finish()
+                .build(),
+            player -> player.performCommand("scoreboard")
         );
 
 
         final Container builtContainer = builder.build();
 
-        service.registerContainer(builtContainer);
-        this.container = builtContainer;
-    }
-
-    public void process(CommandSender sender, String label, String[] args) throws CommandException {
-        final Player player = ValidateCommand.onlyPlayer(sender);
-
-        player.openInventory(this.container.getInventory());
+        this.containerService.registerContainer(builtContainer);
+        sender.openInventory(builtContainer.getInventory());
     }
 
 }
