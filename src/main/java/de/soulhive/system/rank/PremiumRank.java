@@ -9,18 +9,13 @@ import org.bukkit.Material;
 @ToString
 public enum PremiumRank {
 
-    // obsidian: fly (unique), hat, skull, trash, enchanter, bodysee
-    // emerald: invsee (unique), enderchest, bottle, fill
-    // diamond: stack (unique), workbench, cook
-    // gold: repair, feed, heal, tpa, /tpahere
+    GOLD("gold", 10000, Material.GOLD_INGOT, "§6", "§8► §6Kit Gold", "§8► §6/repair", "§8► §6/feed", "§8► §6/heal", "§8► §6/tpa", "§8► §6/tpahere"),
 
-    GOLD("gold", 10000, Material.GOLD_INGOT, "§6", "§8► §6Kit Gold", "§8► §6/repair", "§8► §6/feed", "§8► §6/heal", "§8► §6/tpa, /tpahere"),
+    DIAMOND("diamond", 20000, Material.DIAMOND, "§b", "§8► §bKit Diamond", "§8► §b/stack", "/workbench", "§8► §b/cook"),
 
-    DIAMOND("diamond", 20000, Material.DIAMOND, "§b"),
+    EMERALD("emerald", 30000, Material.EMERALD, "§a", "§8► §aKit Emerald", "§8► §a/invsee", "§8► §a/enderchest", "§8► §a/bottle", "§8► §a/fill"),
 
-    EMERALD("emerald", 30000, Material.EMERALD, "§a"),
-
-    OBSIDIAN("obsidian", 50000, Material.OBSIDIAN, "§5");
+    OBSIDIAN("obsidian", 50000, Material.OBSIDIAN, "§5", "§8► §5Kit Obsidian", "§8► §5/fly", "§8► §5/hat", "§8► §5/skull", "§8► §5/trash", "§8► §5/enchanter", "§8► §5/bodysee");
 
     public static final String[] PERMISSIONS_DEFAULT = {
         "§8► §7Prefix im Chat und Tab",
