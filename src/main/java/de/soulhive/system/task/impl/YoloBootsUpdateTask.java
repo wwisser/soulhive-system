@@ -1,5 +1,7 @@
 package de.soulhive.system.task.impl;
 
+import de.soulhive.system.SoulHive;
+import de.soulhive.system.particle.ParticleService;
 import de.soulhive.system.task.ComplexTask;
 import de.soulhive.system.util.nms.ParticleUtils;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -17,8 +19,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class YoloBootsUpdateTask extends BukkitRunnable implements ComplexTask {
 
+    private ParticleService particleService;
+
     @Override
     public void setup(JavaPlugin plugin) {
+        this.particleService = SoulHive.getServiceManager().getService(ParticleService.class);
         super.runTaskTimer(plugin, 0L, 2L);
     }
 
@@ -31,7 +36,10 @@ public class YoloBootsUpdateTask extends BukkitRunnable implements ComplexTask {
                 && player.getInventory().getBoots().getItemMeta().getDisplayName() != null
                 && player.getInventory().getBoots().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.AQUA + "YOLO-Boots")
             ) {
-                ParticleUtils.play(player.getLocation(), EnumParticle.FIREWORKS_SPARK, 0, 0, 0, 0, 0);
+                if (!this.particleService.getSelectedParticle(player).isPresent()) {
+                    ParticleUtils.play(player.getLocation(), EnumParticle.FIREWORKS_SPARK, 0, 0, 0, 0, 0);
+                }
+
                 final ItemStack boots = new ItemStack(Material.LEATHER_BOOTS, 1);
                 final LeatherArmorMeta bootsMeta = (LeatherArmorMeta) boots.getItemMeta();
 

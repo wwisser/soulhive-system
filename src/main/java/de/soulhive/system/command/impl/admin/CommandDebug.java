@@ -7,6 +7,7 @@ import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.npc.NpcService;
 import de.soulhive.system.npc.impl.VillagerHologramNpc;
 import de.soulhive.system.setting.Settings;
+import de.soulhive.system.util.item.YoloBootsItemFactory;
 import de.soulhive.system.util.nms.ParticleUtils;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Material;
@@ -66,6 +67,10 @@ public class CommandDebug extends CommandExecutorWrapper {
                 .stream()
                 .filter(entity -> entity instanceof ArmorStand)
                 .forEach(Entity::remove);
+        }
+
+        if (this.checkArg(args, "yolo")) {
+            player.getInventory().addItem(YoloBootsItemFactory.createYoloBootsItem());
         }
 
         if (this.checkArg(args, "ce")) {
