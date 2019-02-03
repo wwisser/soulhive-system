@@ -1,6 +1,8 @@
 package de.soulhive.system.kit;
 
 import de.soulhive.system.kit.command.CommandKit;
+import de.soulhive.system.kit.listener.PlayerDeathListener;
+import de.soulhive.system.kit.listener.PlayerRespawnListener;
 import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
@@ -16,6 +18,10 @@ public class KitService extends Service {
     @Override
     public void initialize() {
         super.registerCommand("kit", new CommandKit(this));
+        super.registerListeners(
+            new PlayerRespawnListener(),
+            new PlayerDeathListener()
+        );
     }
 
     @Override
