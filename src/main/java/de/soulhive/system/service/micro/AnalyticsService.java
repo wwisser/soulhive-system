@@ -10,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -71,24 +70,23 @@ public class AnalyticsService extends Service {
             this.analyticsService.setProperty(LABEL_JOINS, String.valueOf(joinsDaily), false);
             this.analyticsService.setProperty(LABEL_JOINS, String.valueOf(joinsMonthly), true);
 
+            final int size = Bukkit.getOnlinePlayers().size();
 
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    final int size = Bukkit.getOnlinePlayers().size();
+            System.out.println(size);
 
-                    final int maxMonthly = Integer.valueOf(EventListenerHolder.this.analyticsService.getProperty(LABEL_MAXPLAYERS, true));
-                    final int maxDaily = Integer.valueOf(EventListenerHolder.this.analyticsService.getProperty(LABEL_MAXPLAYERS, false));
+            final int maxMonthly = Integer.valueOf(EventListenerHolder.this.analyticsService.getProperty(LABEL_MAXPLAYERS, true));
+            final int maxDaily = Integer.valueOf(EventListenerHolder.this.analyticsService.getProperty(LABEL_MAXPLAYERS, false));
 
-                    if (size > maxMonthly) {
-                        EventListenerHolder.this.analyticsService.setProperty(LABEL_MAXPLAYERS, String.valueOf(maxMonthly), true);
+            System.out.println(maxMonthly);
+            System.out.println(maxDaily);
 
-                    }
-                    if (size > maxDaily) {
-                        EventListenerHolder.this.analyticsService.setProperty(LABEL_MAXPLAYERS, String.valueOf(maxDaily), false);
-                    }
-                }
-            }.runTaskLater(SoulHive.getPlugin(), 20L);
+            if (size > maxMonthly) {
+                EventListenerHolder.this.analyticsService.setProperty(LABEL_MAXPLAYERS, String.valueOf(size), true);
+
+            }
+            if (size > maxDaily) {
+                EventListenerHolder.this.analyticsService.setProperty(LABEL_MAXPLAYERS, String.valueOf(size), false);
+            }
 
             if (event.getPlayer().hasPlayedBefore()) {
                 return;
@@ -121,7 +119,7 @@ public class AnalyticsService extends Service {
             final String command = event.getMessage().replace("/", "").split(" ")[0] + ".";
 
             int commandDaily = Integer.valueOf(this.analyticsService.getProperty(LABEL_COMMANDS + command, false));
-            int commandMonthly = Integer.valueOf(this.analyticsService.getProperty(LABEL_COMMANDS  + command, true));
+            int commandMonthly = Integer.valueOf(this.analyticsService.getProperty(LABEL_COMMANDS + command, true));
 
             commandDaily++;
             commandMonthly++;
