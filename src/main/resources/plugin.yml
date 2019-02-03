@@ -1,7 +1,7 @@
 name: SoulHive-System
 version: 2.0-SNAPSHOT
 main: de.soulhive.system.SoulHive
-depend: [Vault, ProtocolLib, ASkyBlock, HolographicDisplays]
+depend: [Vault, Votifier, ProtocolLib, ASkyBlock, HolographicDisplays]
 description: The official SoulHive system.
 author: dieser1dude
 commands:
@@ -84,3 +84,5 @@ commands:
     aliases: [friede, frieden]
   menu:
   kickall:
+  vote:
+  fakevote:

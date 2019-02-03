@@ -26,6 +26,7 @@ import de.soulhive.system.user.UserService;
 import de.soulhive.system.util.ReflectUtils;
 import de.soulhive.system.vanish.VanishService;
 import de.soulhive.system.vault.JewelEconomy;
+import de.soulhive.system.vote.VoteService;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.ServicePriority;
@@ -80,7 +81,8 @@ public class SoulHive extends JavaPlugin {
             new SupplyService(),
             npcService,
             new ParticleService(),
-            new PeaceService()
+            new PeaceService(),
+            new VoteService()
         ).forEach(serviceManager::registerService);
 
         ReflectUtils.getPacketObjects("de.soulhive.system.service.micro", Service.class)
