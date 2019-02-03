@@ -35,7 +35,7 @@ public class CommandJewelserver extends CommandExecutorWrapper {
         }
 
         final User user = this.userService.getUserByName(args[1]);
-        final int amount = ValidateCommand.amount(args[2]);
+        final int amount = ValidateCommand.number(args[2]);
         boolean silent = args.length > 3 && args[3].equalsIgnoreCase("-s");
 
         if (user == null) {

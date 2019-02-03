@@ -20,17 +20,37 @@ public class ValidateCommand {
         }
     }
 
-    public int amount(String argument) throws CommandException {
+    /**
+     * Must be a value over 0.
+     */
+    public int amount(String argument) throws InvalidAmountException {
         try {
             final int amount = Integer.parseInt(argument);
 
             if (amount > 0) {
                 return amount;
             } else {
-                throw new CommandException("§c'" + argument + "' ist keine gültige Zahl.");
+                throw new InvalidAmountException(argument);
             }
         } catch (NumberFormatException e) {
-            throw new CommandException("§c'" + argument + "' ist keine gültige Zahl.");
+            throw new InvalidAmountException(argument);
+        }
+    }
+
+    /**
+     * Must be a positive value.
+     */
+    public int number(String argument) throws InvalidAmountException {
+        try {
+            final int amount = Integer.parseInt(argument);
+
+            if (amount > -1) {
+                return amount;
+            } else {
+                throw new InvalidAmountException(argument);
+            }
+        } catch (NumberFormatException e) {
+            throw new InvalidAmountException(argument);
         }
     }
 

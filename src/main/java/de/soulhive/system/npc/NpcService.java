@@ -71,7 +71,7 @@ public class NpcService extends Service {
 
         final Location location = npc.getLocation();
 
-        npc.getEntity().setPosition(location.getX(), location.getY(), location.getZ());
+        npc.getEntity().setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
         npc.getEntity().world.addEntity(npc.getEntity());
 
         if (npc instanceof HologramNpc) {
