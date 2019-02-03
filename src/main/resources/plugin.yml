@@ -88,3 +88,4 @@ commands:
   fakevote:
   kit:
     aliases: [kits, eq, equip]
+  disco:
