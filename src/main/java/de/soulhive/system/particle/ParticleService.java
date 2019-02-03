@@ -44,6 +44,10 @@ public class ParticleService extends Service {
         this.database.set(player.getUniqueId().toString(), particle.ordinal());
     }
 
+    public void disableParticles(final Player player) {
+        this.database.set(player.getUniqueId().toString(), null);
+    }
+
     public boolean hasParticle(final Player player, final Particle particleToCheck) {
         final Optional<Particle> optParticle = this.getSelectedParticle(player);
 

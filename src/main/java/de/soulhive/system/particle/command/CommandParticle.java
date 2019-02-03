@@ -36,7 +36,7 @@ public class CommandParticle extends CommandExecutorWrapper {
 
         final Particle[] values = Particle.values();
         final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lWähle deinen Partikel")
-            .setSize(9)
+            .setSize(2 * 9)
             .setStorageLevel(ContainerStorageLevel.NEW)
             .setDestroyOnClose(true);
 
@@ -88,6 +88,12 @@ public class CommandParticle extends CommandExecutorWrapper {
             }
             count++;
         }
+
+        builder.addAction(17, new ItemBuilder(Material.BARRIER).name("§cPartikel deaktivieren").build(), clicker -> {
+            this.particleService.disableParticles(clicker);
+            clicker.closeInventory();
+            clicker.sendMessage(Settings.PREFIX + "§cDu hast deine Partikel deaktiviert.");
+        });
 
         final Container builtContainer = builder.build();
 

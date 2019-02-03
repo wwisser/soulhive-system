@@ -23,12 +23,15 @@ public class YoloBootsUpdateTask extends BukkitRunnable implements ComplexTask {
 
     @Override
     public void setup(JavaPlugin plugin) {
-        this.particleService = SoulHive.getServiceManager().getService(ParticleService.class);
-        super.runTaskTimer(plugin, 0L, 2L);
+        super.runTaskTimer(plugin, 10L, 2L);
     }
 
     @Override
     public void run() {
+        if (this.particleService == null) {
+            this.particleService = SoulHive.getServiceManager().getService(ParticleService.class);
+        }
+
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.getInventory().getBoots() != null
                 && player.getInventory().getBoots().getType() == Material.LEATHER_BOOTS
