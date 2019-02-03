@@ -83,3 +83,4 @@ commands:
   peace:
     aliases: [friede, frieden]
   menu:
+  kickall:
