@@ -67,11 +67,10 @@ public class VoteService extends Service {
             Bukkit.broadcastMessage("§8§m---------------------------------------------");
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("§8➥ §7Der Spieler §9" + player.getName() + " §7hat gevotet!");
-            Bukkit.broadcastMessage("§8➥ §7Seine Belohnung (§6§lEVENT §6" + this.votedCount + "§8/§6" + VOTE_MAX + "):");
-            Bukkit.broadcastMessage("    §8- §360 Level");
+            Bukkit.broadcastMessage("§8➥ §7Seine Belohnung (§6§lEVENT §6" + this.votedCount + "§8/§6" + VOTE_MAX + "§7):");
+            Bukkit.broadcastMessage("    §8- §360 Level §7+ §d50 Juwelen");
             Bukkit.broadcastMessage("    §8- §36 Stunden Auto Equip Lvl. II");
             Bukkit.broadcastMessage("    §8- §61x OP-Goldapfel");
-            Bukkit.broadcastMessage("    §8- §d50 Juwelen");
             Bukkit.broadcastMessage("§8➥ §7Du willst auch eine Belohnung? §8§l=> §f/vote");
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("§8§m---------------------------------------------");

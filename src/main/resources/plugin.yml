@@ -86,3 +86,5 @@ commands:
   kickall:
   vote:
   fakevote:
+  kit:
+    aliases: [kits, eq, equip]
