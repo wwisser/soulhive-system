@@ -5,6 +5,7 @@ import de.soulhive.system.service.Service;
 import de.soulhive.system.user.User;
 import de.soulhive.system.user.UserService;
 import de.soulhive.system.util.item.ItemUtils;
+import de.soulhive.system.util.item.YoloBootsItemFactory;
 import de.soulhive.system.vote.commands.CommandFakevote;
 import de.soulhive.system.vote.commands.CommandVote;
 import de.soulhive.system.vote.listener.VotifierListener;
@@ -70,7 +71,7 @@ public class VoteService extends Service {
             Bukkit.broadcastMessage("§8➥ §7Seine Belohnung (§6§lEVENT §6" + this.votedCount + "§8/§6" + VOTE_MAX + "§7):");
             Bukkit.broadcastMessage("    §8- §360 Level §7+ §d50 Juwelen");
             Bukkit.broadcastMessage("    §8- §36 Stunden Auto Equip Lvl. II");
-            Bukkit.broadcastMessage("    §8- §61x OP-Goldapfel");
+            Bukkit.broadcastMessage("    §8- §61x OP-Goldapfel §7+ §bYOLO-Boots");
             Bukkit.broadcastMessage("§8➥ §7Du willst auch eine Belohnung? §8§l=> §f/vote");
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("§8§m---------------------------------------------");
@@ -79,6 +80,7 @@ public class VoteService extends Service {
             player.setLevel(player.getLevel() + 60);
             player.playSound(player.getLocation(), Sound.LEVEL_UP, Float.MAX_VALUE, Float.MAX_VALUE);
             ItemUtils.addAndDropRest(player, new ItemStack(322, 1, (short) 1));
+            ItemUtils.addAndDropRest(player, YoloBootsItemFactory.createYoloBootsItem());
             user.addJewels(50);
 
             if (this.votedCount >= VOTE_MAX) {
