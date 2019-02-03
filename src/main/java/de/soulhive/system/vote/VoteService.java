@@ -18,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class VoteService extends Service {
 
@@ -41,7 +42,7 @@ public class VoteService extends Service {
             public void run() {
                 VoteService.this.enableVoteEvent();
             }
-        }.runTaskLater(SoulHive.getPlugin(), 20L * 60 * 5);
+        }.runTaskLater(SoulHive.getPlugin(), 20L * 60);
     }
 
     public void handleVote(final Player player) {
@@ -65,13 +66,17 @@ public class VoteService extends Service {
             user.addJewels(25);
         } else {
             this.votedCount++;
+
+            final boolean yoloBoots = ThreadLocalRandom.current().nextBoolean();
+            final String reward = yoloBoots ? "§bYOLO-Boots" : "§61x OP-Goldapfel";
+
             Bukkit.broadcastMessage("§8§m---------------------------------------------");
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("§8➥ §7Der Spieler §9" + player.getName() + " §7hat gevotet!");
             Bukkit.broadcastMessage("§8➥ §7Seine Belohnung (§6§lEVENT §6" + this.votedCount + "§8/§6" + VOTE_MAX + "§7):");
             Bukkit.broadcastMessage("    §8- §360 Level §7+ §d50 Juwelen");
             Bukkit.broadcastMessage("    §8- §36 Stunden Auto Equip Lvl. II");
-            Bukkit.broadcastMessage("    §8- §61x OP-Goldapfel §7+ §bYOLO-Boots");
+            Bukkit.broadcastMessage("    §8- " + reward);
             Bukkit.broadcastMessage("§8➥ §7Du willst auch eine Belohnung? §8§l=> §f/vote");
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("§8§m---------------------------------------------");
@@ -79,8 +84,13 @@ public class VoteService extends Service {
             this.voteTimeStamps.put(player.getUniqueId(), System.currentTimeMillis() + (1000L * 60 * 60 * 6));
             player.setLevel(player.getLevel() + 60);
             player.playSound(player.getLocation(), Sound.LEVEL_UP, Float.MAX_VALUE, Float.MAX_VALUE);
-            ItemUtils.addAndDropRest(player, new ItemStack(322, 1, (short) 1));
-            ItemUtils.addAndDropRest(player, YoloBootsItemFactory.createYoloBootsItem());
+
+            if (yoloBoots) {
+                ItemUtils.addAndDropRest(player, YoloBootsItemFactory.createYoloBootsItem());
+            } else {
+                ItemUtils.addAndDropRest(player, new ItemStack(322, 1, (short) 1));
+
+            }
             user.addJewels(50);
 
             if (this.votedCount >= VOTE_MAX) {
