@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Villager;
 
 import java.util.List;
@@ -44,6 +45,7 @@ public final class Settings {
     public static final List<Npc> NPCS = ImmutableList.of(
         new VillagerHologramNpc(
             new Location(WORLD_MAIN, -51.5, 183, -340.5, 150, 0),
+            BlockFace.NORTH,
             player -> player.performCommand("menu"),
             "§9§lMenü",
             Villager.Profession.BUTCHER.ordinal()

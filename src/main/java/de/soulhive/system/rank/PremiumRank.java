@@ -11,7 +11,7 @@ public enum PremiumRank {
 
     GOLD("gold", 10000, Material.GOLD_INGOT, "§6", "§8► §6Kit Gold", "§8► §6/repair", "§8► §6/feed", "§8► §6/heal", "§8► §6/tpa", "§8► §6/tpahere"),
 
-    DIAMOND("diamond", 20000, Material.DIAMOND, "§b", "§8► §bKit Diamond", "§8► §b/stack", "/workbench", "§8► §b/cook"),
+    DIAMOND("diamond", 20000, Material.DIAMOND, "§b", "§8► §bKit Diamond", "§8► §b/stack", "§8► §b/workbench", "§8► §b/cook"),
 
     EMERALD("emerald", 30000, Material.EMERALD, "§a", "§8► §aKit Emerald", "§8► §a/invsee", "§8► §a/enderchest", "§8► §a/bottle", "§8► §a/fill"),
 

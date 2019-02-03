@@ -10,6 +10,7 @@ import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.nms.ParticleUtils;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -31,7 +32,9 @@ public class CommandDebug extends CommandExecutorWrapper {
 
             npcService.addNpc(
                 new VillagerHologramNpc(
-                    player.getLocation(), clicker -> clicker.sendMessage("§bClick!"),
+                    player.getLocation(),
+                    BlockFace.NORTH,
+                    clicker -> clicker.sendMessage("§bClick!"),
                     "§c§lDebug-NPC",
                     Villager.Profession.BLACKSMITH.ordinal()
                 )

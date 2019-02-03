@@ -6,13 +6,17 @@ import de.soulhive.system.npc.listener.PlayerInteractAtEntityListener;
 import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.util.ReflectUtils;
+import jdk.nashorn.internal.ir.EmptyNode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftVillager;
 import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,12 +71,13 @@ public class NpcService extends Service {
             ).clear();
 
             insentient.goalSelector.a(0, new PathfinderGoalFloat(insentient));
+            insentient.goalSelector.a(10, new EntityDirectionPathfinderGoal(insentient, npc.getBlockFace()));
         }
 
         final Location location = npc.getLocation();
 
-        npc.getEntity().setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
         npc.getEntity().world.addEntity(npc.getEntity());
+        npc.getEntity().setPosition(location.getX(), location.getY(), location.getZ());
 
         if (npc instanceof HologramNpc) {
             this.registerHologram(((HologramNpc) npc));

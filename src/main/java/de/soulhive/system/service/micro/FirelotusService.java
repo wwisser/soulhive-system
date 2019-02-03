@@ -19,6 +19,7 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -52,6 +53,7 @@ public class FirelotusService extends Service {
     );
     private static final Npc NPC = new VillagerHologramNpc(
         new Location(WORLD_MAIN, -44.5, 113, -347.5, 45, 0),
+        BlockFace.SOUTH,
         player -> {
             player.sendMessage(" ");
             player.sendMessage("§6§lJimmy der NPC> §eIch grüße dich, " + player.getName() + "!");

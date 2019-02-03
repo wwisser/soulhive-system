@@ -2,8 +2,8 @@ package de.soulhive.system.npc.impl;
 
 import de.soulhive.system.npc.HologramNpc;
 import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.EntityEffect;
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
 
@@ -17,19 +17,26 @@ public class VillagerHologramNpc extends EntityVillager implements HologramNpc {
     private static final double HOLOGRAM_HEIGHT = 2.35;
 
     private Location location;
+    private BlockFace blockFace;
     private Consumer<Player> clickAction;
     private String hologramName;
 
     public VillagerHologramNpc(
         final Location location,
+        final BlockFace blockFace,
         final Consumer<Player> clickAction,
         final String hologramName,
         final int profession
     ) {
         super(((CraftWorld) location.getWorld()).getHandle());
         this.location = location;
+        this.blockFace = blockFace;
         this.clickAction = clickAction;
         this.hologramName = hologramName;
+        super.ai = false;
+
+        super.setPosition(location.getX(), location.getY(), location.getZ());
+        super.setYawPitch(location.getYaw(), location.getPitch());
 
         super.setProfession(profession);
     }
@@ -60,6 +67,11 @@ public class VillagerHologramNpc extends EntityVillager implements HologramNpc {
     @Override
     public Location getLocation() {
         return this.location;
+    }
+
+    @Override
+    public BlockFace getBlockFace() {
+        return this.blockFace;
     }
 
     @Override
