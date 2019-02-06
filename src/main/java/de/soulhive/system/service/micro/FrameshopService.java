@@ -7,8 +7,8 @@ import de.soulhive.system.user.User;
 import de.soulhive.system.user.UserService;
 import de.soulhive.system.util.item.ItemUtils;
 import de.soulhive.system.util.nms.ActionBar;
-import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -43,12 +43,13 @@ public class FrameshopService extends Service implements Listener {
         }
 
         event.setCancelled(true);
-        final Sign sign = (Sign) event.getRightClicked().getLocation().add(0, 1, 0).getBlock().getState();
+        final BlockState state = event.getRightClicked().getLocation().add(0, 1, 0).getBlock().getState();
 
-        if (sign == null) {
+        if (!(state instanceof Sign)) {
             return;
         }
 
+        final Sign sign = (Sign) state;
         int amount = Integer.valueOf(sign.getLine(2).split(" ")[0]);
         int price = Integer.valueOf(sign.getLine(3).split(" ")[1]);
         ItemStack itemStack = ((ItemFrame) event.getRightClicked()).getItem();
