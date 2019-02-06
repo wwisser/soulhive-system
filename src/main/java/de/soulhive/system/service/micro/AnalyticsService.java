@@ -50,9 +50,12 @@ public class AnalyticsService extends Service {
         String timeLabel = monthly ? LABEL_MONTLY : LABEL_DAILY;
         String timeKey = monthly ? FORMAT_MONTHLY.format(date) : FORMAT_DAILY.format(date);
 
-        return this.database.contains(timeLabel + label + timeKey)
-            ? this.database.getString(timeLabel + label + timeKey)
-            : "0";
+        if (!this.database.contains(timeLabel + label + timeKey)) {
+            this.database.set(timeLabel + label + timeKey, "0");
+            this.database.saveFile();
+        }
+
+        return this.database.getString(timeLabel + label + timeKey);
     }
 
     private class EventListenerHolder implements Listener {
