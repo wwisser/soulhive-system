@@ -69,21 +69,13 @@ public class AnalyticsService extends Service {
             int joinsDaily = Integer.valueOf(this.analyticsService.getProperty(LABEL_JOINS, false));
             int joinsMonthly = Integer.valueOf(this.analyticsService.getProperty(LABEL_JOINS, true));
 
-            joinsDaily++;
-            joinsMonthly++;
-
-            this.analyticsService.setProperty(LABEL_JOINS, String.valueOf(joinsDaily), false);
-            this.analyticsService.setProperty(LABEL_JOINS, String.valueOf(joinsMonthly), true);
+            this.analyticsService.setProperty(LABEL_JOINS, String.valueOf(++joinsDaily), false);
+            this.analyticsService.setProperty(LABEL_JOINS, String.valueOf(++joinsMonthly), true);
 
             final int size = Bukkit.getOnlinePlayers().size();
 
-            System.out.println(size);
-
             final int maxMonthly = Integer.valueOf(EventListenerHolder.this.analyticsService.getProperty(LABEL_MAXPLAYERS, true));
             final int maxDaily = Integer.valueOf(EventListenerHolder.this.analyticsService.getProperty(LABEL_MAXPLAYERS, false));
-
-            System.out.println(maxMonthly);
-            System.out.println(maxDaily);
 
             if (size > maxMonthly) {
                 EventListenerHolder.this.analyticsService.setProperty(LABEL_MAXPLAYERS, String.valueOf(size), true);
@@ -100,11 +92,8 @@ public class AnalyticsService extends Service {
             int newbiesDaily = Integer.valueOf(this.analyticsService.getProperty(LABEL_NEWBIES, false));
             int newbiesMonthly = Integer.valueOf(this.analyticsService.getProperty(LABEL_NEWBIES, true));
 
-            newbiesDaily++;
-            newbiesMonthly++;
-
-            this.analyticsService.setProperty(LABEL_NEWBIES, String.valueOf(newbiesDaily), false);
-            this.analyticsService.setProperty(LABEL_NEWBIES, String.valueOf(newbiesMonthly), true);
+            this.analyticsService.setProperty(LABEL_NEWBIES, String.valueOf(++newbiesDaily), false);
+            this.analyticsService.setProperty(LABEL_NEWBIES, String.valueOf(++newbiesMonthly), true);
         }
 
         @EventHandler
@@ -115,11 +104,8 @@ public class AnalyticsService extends Service {
             int newbiesDaily = Integer.valueOf(this.analyticsService.getProperty(label, false));
             int newbiesMonthly = Integer.valueOf(this.analyticsService.getProperty(label, true));
 
-            newbiesDaily++;
-            newbiesMonthly++;
-
-            this.analyticsService.setProperty(label, String.valueOf(newbiesDaily), false);
-            this.analyticsService.setProperty(label, String.valueOf(newbiesMonthly), true);
+            this.analyticsService.setProperty(label, String.valueOf(++newbiesDaily), false);
+            this.analyticsService.setProperty(label, String.valueOf(++newbiesMonthly), true);
         }
 
         @EventHandler
@@ -127,11 +113,8 @@ public class AnalyticsService extends Service {
             int votesDaily = Integer.valueOf(this.analyticsService.getProperty(LABEL_VOTES, false));
             int votesMonthly = Integer.valueOf(this.analyticsService.getProperty(LABEL_VOTES, true));
 
-            votesDaily++;
-            votesMonthly++;
-
-            this.analyticsService.setProperty(LABEL_VOTES, String.valueOf(votesDaily), false);
-            this.analyticsService.setProperty(LABEL_VOTES, String.valueOf(votesMonthly), true);
+            this.analyticsService.setProperty(LABEL_VOTES, String.valueOf(++votesDaily), false);
+            this.analyticsService.setProperty(LABEL_VOTES, String.valueOf(++votesMonthly), true);
         }
 
         @EventHandler
@@ -141,11 +124,8 @@ public class AnalyticsService extends Service {
             int commandDaily = Integer.valueOf(this.analyticsService.getProperty(LABEL_COMMANDS + command, false));
             int commandMonthly = Integer.valueOf(this.analyticsService.getProperty(LABEL_COMMANDS + command, true));
 
-            commandDaily++;
-            commandMonthly++;
-
-            this.analyticsService.setProperty(LABEL_COMMANDS + command, String.valueOf(commandDaily), false);
-            this.analyticsService.setProperty(LABEL_COMMANDS + command, String.valueOf(commandMonthly), true);
+            this.analyticsService.setProperty(LABEL_COMMANDS + command, String.valueOf(++commandDaily), false);
+            this.analyticsService.setProperty(LABEL_COMMANDS + command, String.valueOf(++commandMonthly), true);
         }
 
     }
