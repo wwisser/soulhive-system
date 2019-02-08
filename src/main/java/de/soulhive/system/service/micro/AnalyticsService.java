@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,7 @@ public class AnalyticsService extends Service {
     private static final String LABEL_NEWBIES = "newbies.";
     private static final String LABEL_VOTES = "votes.";
     private static final String LABEL_MAXPLAYERS = "maxplayers.";
+    private static final String LABEL_HOSTNAME = "hostname.";
 
     private static final String LABEL_MONTLY = "monthly.";
     private static final String LABEL_DAILY = "daily.";
@@ -103,6 +105,21 @@ public class AnalyticsService extends Service {
 
             this.analyticsService.setProperty(LABEL_NEWBIES, String.valueOf(newbiesDaily), false);
             this.analyticsService.setProperty(LABEL_NEWBIES, String.valueOf(newbiesMonthly), true);
+        }
+
+        @EventHandler
+        public void onPlayerLoginEvent(PlayerLoginEvent event) {
+            final String hostname = event.getHostname().toLowerCase().split(":")[0];
+            final String label = LABEL_HOSTNAME + hostname + ".";
+
+            int newbiesDaily = Integer.valueOf(this.analyticsService.getProperty(label, false));
+            int newbiesMonthly = Integer.valueOf(this.analyticsService.getProperty(label, true));
+
+            newbiesDaily++;
+            newbiesMonthly++;
+
+            this.analyticsService.setProperty(label, String.valueOf(newbiesDaily), false);
+            this.analyticsService.setProperty(label, String.valueOf(newbiesMonthly), true);
         }
 
         @EventHandler
