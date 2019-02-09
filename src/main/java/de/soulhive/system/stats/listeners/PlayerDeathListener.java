@@ -41,8 +41,11 @@ public class PlayerDeathListener implements Listener {
         if (killer != null) {
             User killerUser = userService.getUser(killer);
 
-            killerUser.addKill();
-            killerUser.addJewels(5);
+            if (killerUser != null) {
+                killerUser.addKill();
+                killerUser.addJewels(5);
+            }
+
             killer.sendMessage(Settings.PREFIX + "Du hast §f" + victim.getName() + " §7getötet! +§f5 Juwelen");
             killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 100, 100);
             killer.setLevel(killer.getLevel() + 1);
