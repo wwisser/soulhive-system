@@ -97,7 +97,7 @@ public class CommandMenu extends CommandExecutorWrapper {
                 .add("§7Level: §f" + this.aSkyBlockAPI.getLongIslandLevel(sender.getUniqueId()))
                 .finish()
                 .build(),
-            player -> player.performCommand("is go")
+            player -> player.performCommand("is")
         );
 
         builder.addAction(

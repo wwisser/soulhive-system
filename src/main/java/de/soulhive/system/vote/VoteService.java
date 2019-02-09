@@ -112,7 +112,7 @@ public class VoteService extends Service {
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage("§8➥ §9§lVote-Event §7gestartet!");
         Bukkit.broadcastMessage("§8➥ §7Die nächsten §f" + VOTE_MAX + " §7Spieler");
-        Bukkit.broadcastMessage("§8➥ §7erhalten einen §fVote-Zusatz§7!");
+        Bukkit.broadcastMessage("§8➥ §7erhalten einen §fVote-Zusatz§7! §8=> §6§l/VOTE");
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage("§8§m---------------------------------------------");
     }
