@@ -19,6 +19,7 @@ public class PlayerDeathListener implements Listener {
             .stream()
             .filter(itemStack -> itemStack.hasItemMeta()
                 && itemStack.getItemMeta().hasDisplayName()
+                && !itemStack.getItemMeta().hasEnchants()
                 && Arrays.asList("§2§lAutoKit Lvl. I", "§6§lAutoKit Lvl. II")
                 .contains(itemStack.getItemMeta().getDisplayName())
             )

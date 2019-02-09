@@ -46,7 +46,10 @@ public class CommandScoreboard extends CommandExecutorWrapper {
                 ItemStack itemStack = new ItemBuilder(type.getMaterial())
                     .name(type.getName())
                     .modifyLore()
-                    .add("§c")
+                    .add("§r")
+                    .add("§7Eigenschaften:")
+                    .add(type.getProperties())
+                    .add("§r")
                     .add("§cBereits ausgewählt.")
                     .finish()
                     .build();
@@ -60,7 +63,10 @@ public class CommandScoreboard extends CommandExecutorWrapper {
                 ItemStack itemStack = new ItemBuilder(type.getMaterial())
                     .name(type.getName())
                     .modifyLore()
-                    .add("§c")
+                    .add("§r")
+                    .add("§7Eigenschaften:")
+                    .add(type.getProperties())
+                    .add("§r")
                     .add("§7Klicke, um dieses Scoreboard auszuwählen.")
                     .finish()
                     .build();

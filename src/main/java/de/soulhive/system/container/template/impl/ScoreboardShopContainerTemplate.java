@@ -59,6 +59,9 @@ public class ScoreboardShopContainerTemplate extends ContainerTemplate {
 
             final ItemStack item = new ItemBuilder(type.getMaterial()).name(type.getName()).modifyLore()
                 .add("§r")
+                .add("§7Eigenschaften:")
+                .add(type.getProperties())
+                .add("§r")
                 .add(hasPermission ? "§aBereits gekauft" : "§7Preis: §d" + type.getCosts() + " Juwelen")
                 .finish()
                 .build();
