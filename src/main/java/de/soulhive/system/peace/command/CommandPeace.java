@@ -79,6 +79,11 @@ public class CommandPeace extends CommandExecutorWrapper {
                     return;
                 }
 
+                if (this.peaceService.hasInvite(user.getUuid(), uuid)) {
+                    player.sendMessage(Settings.PREFIX + "§cDu hast diesem Spieler bereits Frieden angeboten.");
+                    return;
+                }
+
                 this.peaceService.setInvite(user.getUuid(), uuid);
                 player.sendMessage(Settings.PREFIX + "Du hast §f" + target.getName() + " §7Frieden angeboten.");
                 target.sendMessage(Settings.PREFIX + "§f" + player.getName() + " §7bietet dir Frieden an!");
