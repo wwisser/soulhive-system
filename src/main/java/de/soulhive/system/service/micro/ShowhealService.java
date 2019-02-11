@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -17,7 +18,7 @@ public class ShowhealService extends Service implements Listener {
         super.registerListener(this);
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onEntityDamageByEntity(final EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Projectile) {
             final Projectile bullet = (Projectile) event.getDamager();
