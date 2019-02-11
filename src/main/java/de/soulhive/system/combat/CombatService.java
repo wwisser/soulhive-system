@@ -22,7 +22,10 @@ public class CombatService extends Service {
     private static final long COMBAT_TIME = 8000;
     private static final String[] ALLOWED_COMMANDS = {
         "/msg", "/report", "/vote", "/buy", "/teamchat", "/tc",
-        "/spec", "/spectator", "/stats", "/friede", "/frieden", "/stack"
+        "/spec", "/spectator", "/stats", "/friede", "/frieden", "/stack", "/kit"
+    };
+    private static final String[] INSTANT_TELEPORT_COMMANDS  = {
+        "/is", "/tpa", "/tpaccept", "/tpahere",
     };
 
     private Map<Player, Long> fightTimestamps = new HashMap<>();
@@ -78,6 +81,12 @@ public class CombatService extends Service {
     public boolean isCommandAllowed(String command) {
         return Arrays
             .stream(ALLOWED_COMMANDS)
+            .anyMatch(allowedCommand -> allowedCommand.startsWith(command.toLowerCase()));
+    }
+
+    public boolean isCommandTeleportable(String command) {
+        return Arrays
+            .stream(INSTANT_TELEPORT_COMMANDS)
             .anyMatch(allowedCommand -> allowedCommand.startsWith(command.toLowerCase()));
     }
 
