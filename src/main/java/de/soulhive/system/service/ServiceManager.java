@@ -71,7 +71,7 @@ public class ServiceManager {
     }
 
     public List<Service> getServices() {
-        return Collections.unmodifiableList(this.services);
+        return new ArrayList<>(this.services);
     }
 
     public List<Service> getFeatures() {
