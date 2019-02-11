@@ -9,6 +9,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -70,7 +71,11 @@ public class ServiceManager {
     }
 
     public List<Service> getServices() {
-        return new ArrayList<>(this.services);
+        return Collections.unmodifiableList(this.services);
+    }
+
+    public List<Service> getFeatures() {
+        return Collections.unmodifiableList(this.featureServices);
     }
 
 }
