@@ -99,7 +99,7 @@ public class AnalyticsService extends Service {
         @EventHandler
         public void onPlayerLoginEvent(PlayerLoginEvent event) {
             final String hostname = event.getHostname().toLowerCase().split(":")[0];
-            final String label = (LABEL_HOSTNAME + hostname).replace(".", "*") + ".";
+            final String label = LABEL_HOSTNAME + hostname.replace(".", "*") + ".";
 
             int newbiesDaily = Integer.valueOf(this.analyticsService.getProperty(label, false));
             int newbiesMonthly = Integer.valueOf(this.analyticsService.getProperty(label, true));
@@ -119,7 +119,7 @@ public class AnalyticsService extends Service {
 
         @EventHandler
         public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-            final String command = event.getMessage().replace("/", "").split(" ")[0] + ".";
+            final String command = event.getMessage().toLowerCase().replace("/", "").split(" ")[0] + ".";
 
             int commandDaily = Integer.valueOf(this.analyticsService.getProperty(LABEL_COMMANDS + command, false));
             int commandMonthly = Integer.valueOf(this.analyticsService.getProperty(LABEL_COMMANDS + command, true));
