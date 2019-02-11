@@ -11,6 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 @AllArgsConstructor
 public class PlayerDeathListener implements Listener {
@@ -48,6 +50,7 @@ public class PlayerDeathListener implements Listener {
 
             killer.sendMessage(Settings.PREFIX + "Du hast §f" + victim.getName() + " §7getötet! +§f5 Juwelen");
             killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 100, 100);
+            killer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 10, 5));
             killer.setLevel(killer.getLevel() + 1);
             victim.sendMessage(
                 Settings.PREFIX

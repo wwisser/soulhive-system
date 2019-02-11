@@ -25,7 +25,7 @@ public class PlayerJoinListener implements Listener {
                 .filter(onlinePlayer -> onlinePlayer != player)
                 .forEach(onlinePlayer -> onlinePlayer.sendMessage(
                     Settings.PREFIX
-                        + "§7Herzlich Willkommen auf SoulHive," +
+                        + "§7Willkommen auf SoulHive," +
                         " §f" + player.getName() + "§7! "
                         + "§8[§f#§l" + Bukkit.getOfflinePlayers().length + "§8]"
                 ));
