@@ -37,6 +37,7 @@ public final class Settings {
 
     public static final Location LOCATION_SPAWN = new Location(WORLD_MAIN, -53.5, 183, -351.5, 0, 0);
     public static final Location LOCATION_ITEMSHOP = new Location(WORLD_MAIN, -71.5, 169, -349.5, -90, 0);
+    public static final Location LOCATION_CPS = new Location(Settings.WORLD_MAIN, -57.5, 183, -360.5, -45, 0);
 
     public static final List<World> SKYBLOCK_WORLDS = ImmutableList.of(WORLD_SKYBLOCK, WORLD_SKYBLOCK_NETHER);
 
