@@ -29,4 +29,24 @@ public class TextComponentUtils {
         return textComponent;
     }
 
+    public TextComponent createSuggestionComponent(String message, String hover, String command) {
+        TextComponent textComponent = new TextComponent();
+
+        textComponent.setText(message);
+        textComponent.setHoverEvent(
+            new HoverEvent(
+                HoverEvent.Action.SHOW_TEXT,
+                new ComponentBuilder(hover).create()
+            )
+        );
+        textComponent.setClickEvent(
+            new ClickEvent(
+                ClickEvent.Action.SUGGEST_COMMAND,
+                command
+            )
+        );
+
+        return textComponent;
+    }
+
 }

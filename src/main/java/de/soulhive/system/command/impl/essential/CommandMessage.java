@@ -3,12 +3,14 @@ package de.soulhive.system.command.impl.essential;
 import de.soulhive.system.SoulHive;
 import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
+import de.soulhive.system.command.exception.impl.InvalidArgsException;
 import de.soulhive.system.command.exception.impl.TargetNotFoundException;
 import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.delay.DelayConfiguration;
 import de.soulhive.system.delay.DelayService;
 import de.soulhive.system.service.micro.SpyCommandService;
 import de.soulhive.system.setting.Settings;
+import de.soulhive.system.util.TextComponentUtils;
 import de.soulhive.system.vanish.VanishService;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -72,6 +74,8 @@ public class CommandMessage extends CommandExecutorWrapper {
             }
 
             return;
+        } else if (args.length == 1) {
+            throw new InvalidArgsException(USAGE);
         }
 
         if (args.length > 1) {
@@ -94,8 +98,22 @@ public class CommandMessage extends CommandExecutorWrapper {
     }
 
     private void sendMessage(Player sender, Player target, String message) {
-        target.sendMessage(Settings.PREFIX + "§aNachricht von §f" + sender.getName() + "§a: §f§o" + message);
-        sender.sendMessage(Settings.PREFIX + "§aNachricht an §f" + target.getName() + "§a: §f§o" + message);
+        final String messageSender = Settings.PREFIX + "§aNachricht an §f" + target.getName() + "§a: §f§o" + message;
+        final String messageTarget = Settings.PREFIX + "§aNachricht von §f" + sender.getName() + "§a: §f§o" + message;
+
+        sender.spigot().sendMessage(
+            TextComponentUtils.createSuggestionComponent(
+                messageSender,
+                "§8[§6» " + target.getName() + " antworten§8]", "/msg " + target.getName() + " "
+            )
+        );
+
+        target.spigot().sendMessage(
+            TextComponentUtils.createSuggestionComponent(
+                messageTarget,
+                "§8[§6» " + sender.getName() + " antworten§8]", "/msg " + sender.getName() + " "
+            )
+        );
 
         this.lastReplies.put(sender.getUniqueId(), target.getUniqueId());
         this.lastReplies.put(target.getUniqueId(), sender.getUniqueId());
