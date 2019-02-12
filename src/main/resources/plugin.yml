@@ -89,3 +89,5 @@ commands:
   kit:
     aliases: [kits, eq, equip]
   disco:
+  team:
+    aliases: [staff]

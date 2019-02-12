@@ -99,13 +99,13 @@ public class AnalyticsService extends Service {
         @EventHandler
         public void onPlayerLoginEvent(PlayerLoginEvent event) {
             final String hostname = event.getHostname().toLowerCase().split(":")[0];
-            final String label = LABEL_HOSTNAME + hostname.replace(".", "*") + ".";
+            final String label = hostname.replace(".", "*") + ".";
 
             int newbiesDaily = Integer.valueOf(this.analyticsService.getProperty(label, false));
             int newbiesMonthly = Integer.valueOf(this.analyticsService.getProperty(label, true));
 
-            this.analyticsService.setProperty(label, String.valueOf(++newbiesDaily), false);
-            this.analyticsService.setProperty(label, String.valueOf(++newbiesMonthly), true);
+            this.analyticsService.setProperty(LABEL_HOSTNAME + label, String.valueOf(++newbiesDaily), false);
+            this.analyticsService.setProperty(LABEL_HOSTNAME + label, String.valueOf(++newbiesMonthly), true);
         }
 
         @EventHandler
