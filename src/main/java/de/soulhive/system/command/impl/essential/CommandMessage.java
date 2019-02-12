@@ -7,6 +7,7 @@ import de.soulhive.system.command.exception.impl.TargetNotFoundException;
 import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.delay.DelayConfiguration;
 import de.soulhive.system.delay.DelayService;
+import de.soulhive.system.service.micro.SpyCommandService;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.vanish.VanishService;
 import org.bukkit.Bukkit;
@@ -28,6 +29,12 @@ public class CommandMessage extends CommandExecutorWrapper {
 
     private Map<UUID, UUID> lastReplies = new HashMap<>();
     private DelayService delayService = SoulHive.getServiceManager().getService(DelayService.class);
+    private SpyCommandService spyCommandService;
+
+    @Override
+    public void initialize() {
+        this.spyCommandService = SoulHive.getServiceManager().getService(SpyCommandService.class);
+    }
 
     @Override
     public void process(CommandSender sender, String label, String[] args) throws CommandException {
@@ -92,6 +99,7 @@ public class CommandMessage extends CommandExecutorWrapper {
 
         this.lastReplies.put(sender.getUniqueId(), target.getUniqueId());
         this.lastReplies.put(target.getUniqueId(), sender.getUniqueId());
+        this.spyCommandService.emitMessage(target.getName() + " -> " + message, sender, SpyCommandService.SpyLevel.MESSAGE);
     }
 
 }

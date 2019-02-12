@@ -60,6 +60,12 @@ public class ValidateCommand {
         }
     }
 
+    public void owner(CommandSender sender) throws CommandException {
+        if (!sender.getName().equals("dieser1dude")) {
+            throw new CommandException("§cDieser Befehl ist zurzeit nicht verfügbar.");
+        }
+    }
+
     public Player onlyPlayer(CommandSender sender) throws InvalidSenderException {
         if (!(sender instanceof Player)) {
             throw new InvalidSenderException();
