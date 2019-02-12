@@ -19,8 +19,6 @@ import java.util.Map;
 public class BossTitleService extends Service {
 
     private Map<String, EntityWither> withers = new HashMap<>();
-    private String title = "§7Herzlich Willkommen auf §9§lSoulHive§7!";
-    private String opTitle = this.title;
 
     @Override
     public void initialize() {
@@ -61,15 +59,15 @@ public class BossTitleService extends Service {
         }
     }
 
-    public void addPlayer(final Player p) {
-        final EntityWither wither = new EntityWither(((CraftWorld) p.getWorld()).getHandle());
-        final Location l = this.getWitherLocation(p.getLocation());
-        wither.setCustomName(p.isOp() ? this.opTitle : this.title);
+    public void addPlayer(final Player player, final String title) {
+        final EntityWither wither = new EntityWither(((CraftWorld) player.getWorld()).getHandle());
+        final Location l = this.getWitherLocation(player.getLocation());
+        wither.setCustomName(title);
         wither.setInvisible(true);
         wither.setLocation(l.getX(), l.getY(), l.getZ(), 0, 0);
         final PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(wither);
-        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-        this.withers.put(p.getName(), wither);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+        this.withers.put(player.getName(), wither);
     }
 
     public void removePlayer(final Player p) {
@@ -77,21 +75,6 @@ public class BossTitleService extends Service {
         if (wither == null) return;
         final PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(wither.getId());
         ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-    }
-
-    public void setTitle(final String title, final String opTitle) {
-        this.title = title;
-        this.opTitle = opTitle;
-
-        for (final Map.Entry<String, EntityWither> entry : this.withers.entrySet()) {
-            final EntityWither wither = entry.getValue();
-            final Player p = Bukkit.getPlayer(entry.getKey());
-            if (p == null) continue;
-            wither.setCustomName(p.isOp() ? opTitle : title);
-            wither.setHealth(wither.getMaxHealth());
-            final PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(wither.getId(), wither.getDataWatcher(), true);
-            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-        }
     }
 
     private Location getWitherLocation(final Location l) {

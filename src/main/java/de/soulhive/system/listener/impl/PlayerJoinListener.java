@@ -52,7 +52,7 @@ public class PlayerJoinListener implements Listener {
                 titleService.removePlayer(player);
             }
         }.runTaskLater(SoulHive.getPlugin(), 20L * 15);
-        titleService.addPlayer(player);
+        titleService.addPlayer(player, "§7Herzlich Willkommen auf §9§lSoulHive§7!");
     }
 
 }

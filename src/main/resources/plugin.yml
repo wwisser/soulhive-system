@@ -92,3 +92,5 @@ commands:
   team:
     aliases: [staff]
   spy:
+  pvp:
+  bossbar:
