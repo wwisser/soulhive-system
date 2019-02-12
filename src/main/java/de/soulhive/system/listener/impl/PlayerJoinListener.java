@@ -1,5 +1,7 @@
 package de.soulhive.system.listener.impl;
 
+import de.soulhive.system.SoulHive;
+import de.soulhive.system.service.micro.BossTitleService;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.FontUtils;
 import org.bukkit.Bukkit;
@@ -8,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerJoinListener implements Listener {
 
@@ -40,6 +43,16 @@ public class PlayerJoinListener implements Listener {
         FontUtils.sendCenteredMessage(player, "§f/menu§8, §f/is§8, §f/kit§8, §f/vote");
         player.sendMessage("");
         FontUtils.sendCenteredMessage(player, "§8§m---------------------------------------------");
+
+        final BossTitleService titleService = SoulHive.getServiceManager().getService(BossTitleService.class);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                titleService.removePlayer(player);
+            }
+        }.runTaskLater(SoulHive.getPlugin(), 20L * 15);
+        titleService.addPlayer(player);
     }
 
 }
