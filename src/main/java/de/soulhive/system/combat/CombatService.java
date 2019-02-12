@@ -53,6 +53,8 @@ public class CombatService extends Service {
 
         if (!this.isFighting(player)) {
             player.sendMessage(Settings.PREFIX + "§cDu bist jetzt im Kampf, bitte logge dich §c§nnicht§c aus.");
+            player.setFlying(false);
+            player.setAllowFlight(false);
         }
         this.fightTimestamps.put(player, System.currentTimeMillis() + COMBAT_TIME);
     }

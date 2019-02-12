@@ -16,6 +16,15 @@ public class CommandFly extends CommandExecutorWrapper {
         Player player = ValidateCommand.onlyPlayer(sender);
         boolean flying = player.isFlying();
 
+        if (!player.hasPermission(Settings.PERMISSION_TEAM)
+            && player.getWorld().equals(Settings.WORLD_MAIN)
+            && player.getLocation().getBlockY() < Settings.SPAWN_HEIGHT) {
+            player.sendMessage(Settings.PREFIX + "§cDu darfst im PvP-Bereich kein Fly verwenden.");
+            player.setFlying(false);
+            player.setAllowFlight(false);
+            return;
+        }
+
         player.setAllowFlight(!flying);
         player.setFlying(!flying);
         player.sendMessage(

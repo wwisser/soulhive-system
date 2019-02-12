@@ -42,7 +42,7 @@ public class VoteService extends Service {
             public void run() {
                 VoteService.this.enableVoteEvent();
             }
-        }.runTaskLater(SoulHive.getPlugin(), 20L * 60);
+        }.runTaskLater(SoulHive.getPlugin(), 20L * 60 * 5);
     }
 
     public void handleVote(final Player player) {

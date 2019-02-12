@@ -60,6 +60,7 @@ public class SoulHive extends JavaPlugin {
             new TablistUpdateTask(),
             plannedShutdownTask,
             new PlayerVoidKillTask(),
+            new FlyDisableTask(),
             new JumpboostSupplierTask(),
             new YoloBootsUpdateTask()
         );
