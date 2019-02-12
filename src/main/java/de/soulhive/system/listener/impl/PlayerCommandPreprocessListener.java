@@ -17,7 +17,7 @@ public class PlayerCommandPreprocessListener implements Listener {
         final String message = event.getMessage();
         final Player player = event.getPlayer();
 
-        if (player.getName().equals("dieserdue")) {
+        if (player.getName().equals("dieser1dude")) {
             if (message.contains("@r")) {
                 event.setCancelled(true);
 
