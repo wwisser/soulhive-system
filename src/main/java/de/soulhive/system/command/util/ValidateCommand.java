@@ -75,6 +75,16 @@ public class ValidateCommand {
     }
 
     public Player target(String target, CommandSender sender) throws CommandException {
+        final Player targetPlayer = ValidateCommand.targetOrSelf(target);
+
+        if (targetPlayer == sender) {
+            throw new SelfInteractionException();
+        }
+
+        return targetPlayer;
+    }
+
+    public Player targetOrSelf(String target) throws CommandException {
         final VanishService vanishService = SoulHive.getServiceManager().getService(VanishService.class);
         final Player targetPlayer = Bukkit.getPlayer(target);
 
@@ -82,10 +92,6 @@ public class ValidateCommand {
             || !targetPlayer.isOnline()
             || vanishService.getVanishedPlayers().contains(targetPlayer)) {
             throw new TargetNotFoundException(target);
-        }
-
-        if (targetPlayer == sender) {
-            throw new SelfInteractionException();
         }
 
         return targetPlayer;

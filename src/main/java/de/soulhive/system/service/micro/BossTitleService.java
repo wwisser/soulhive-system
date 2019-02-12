@@ -70,15 +70,15 @@ public class BossTitleService extends Service {
         this.withers.put(player.getName(), wither);
     }
 
-    public void removePlayer(final Player p) {
-        final EntityWither wither = this.withers.remove(p.getName());
+    public void removePlayer(final Player player) {
+        final EntityWither wither = this.withers.remove(player.getName());
         if (wither == null) return;
         final PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(wither.getId());
-        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
     }
 
-    private Location getWitherLocation(final Location l) {
-        return l.add(l.getDirection().multiply(60));
+    private Location getWitherLocation(final Location location) {
+        return location.add(location.getDirection().multiply(60));
     }
 
 }

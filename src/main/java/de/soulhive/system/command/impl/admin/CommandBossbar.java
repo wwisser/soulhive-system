@@ -25,8 +25,8 @@ public class CommandBossbar extends CommandExecutorWrapper {
         ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         ValidateCommand.minArgs(2, args, "/bossbar <player> <message> [seconds]");
 
-        final Player target = ValidateCommand.target(args[0], sender);
-        String message = ChatColor.translateAlternateColorCodes('&', args[1]);
+        final Player target = ValidateCommand.targetOrSelf(args[0]);
+        String message = ChatColor.translateAlternateColorCodes('&', args[1]).replace("_", " ");
 
         this.bossTitleService.addPlayer(target, message);
 
