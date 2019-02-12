@@ -22,7 +22,7 @@ public class CommandSpeed extends CommandExecutorWrapper {
 
     @Override
     public void process(CommandSender sender, String label, String[] args) throws CommandException {
-        ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
+        ValidateCommand.permission(sender, "soulhive.speed");
         Player player = ValidateCommand.onlyPlayer(sender);
 
         ValidateCommand.minArgs(1, args, USAGE);
