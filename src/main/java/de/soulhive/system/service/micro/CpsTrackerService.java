@@ -7,6 +7,7 @@ import de.soulhive.system.delay.DelayConfiguration;
 import de.soulhive.system.delay.DelayService;
 import de.soulhive.system.npc.NpcService;
 import de.soulhive.system.npc.impl.ZombieHologramNpc;
+import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.service.ServiceManager;
 import de.soulhive.system.setting.Settings;
@@ -25,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiConsumer;
 
+@FeatureService
 public class CpsTrackerService extends Service {
 
     private static final DelayConfiguration DELAY_CONFIGURATION = new DelayConfiguration(

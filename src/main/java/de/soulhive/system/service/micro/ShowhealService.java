@@ -27,6 +27,10 @@ public class ShowhealService extends Service implements Listener {
                 final Player victim = (Player) event.getEntity();
                 final Player damager = (Player) bullet.getShooter();
 
+                if (victim.equals(damager)) {
+                    return;
+                }
+
                 String message = this.getHealth(victim);
                 ChatColor prefix;
 
@@ -45,9 +49,14 @@ public class ShowhealService extends Service implements Listener {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
             final Player victim = (Player) event.getEntity();
             final Player damager = (Player) event.getDamager();
-            String message = this.getHealth(victim);
 
+            if (victim.equals(damager)) {
+                return;
+            }
+
+            String message = this.getHealth(victim);
             ChatColor prefix;
+
             if (message.length() > 7) {
                 prefix = ChatColor.GREEN;
             } else if (message.length() > 4) {
