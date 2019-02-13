@@ -16,14 +16,14 @@ import org.bukkit.EntityEffect;
 import org.bukkit.Sound;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class CpsTrackerService extends Service {
 
@@ -33,14 +33,13 @@ public class CpsTrackerService extends Service {
     );
 
     private Map<Player, Integer> clicks = new ConcurrentHashMap<>();
+    private List<Hologram> holograms = new CopyOnWriteArrayList<>();
     private DelayService delayService;
 
     @Override
     public void initialize() {
         final ServiceManager serviceManager = SoulHive.getServiceManager();
-
         this.delayService = serviceManager.getService(DelayService.class);
-
         final NpcService npcService = serviceManager.getService(NpcService.class);
 
         npcService.addNpc(new ZombieHologramNpc(
@@ -50,6 +49,11 @@ public class CpsTrackerService extends Service {
             new CpsClickAction(),
             "§6§lCPS"
         ));
+    }
+
+    @Override
+    public void disable() {
+        this.holograms.forEach(Hologram::delete);
     }
 
     private class CpsClickAction implements BiConsumer<Player, CraftEntity> {
@@ -78,6 +82,8 @@ public class CpsTrackerService extends Service {
 
                             Hologram hologram = HologramsAPI.createHologram(SoulHive.getPlugin(), Settings.LOCATION_CPS);
                             hologram.appendTextLine("§c" + player.getName() + " §8- §a" + cps + " CPS");
+
+                            CpsTrackerService.this.holograms.add(hologram);
 
                             new HologramAppearanceTask(hologram.getLocation().clone().add(0, 1.5, 0), hologram)
                                 .runTaskTimer(SoulHive.getPlugin(), 0, 3);
