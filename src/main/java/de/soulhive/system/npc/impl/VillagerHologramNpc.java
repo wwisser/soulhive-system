@@ -94,4 +94,9 @@ public class VillagerHologramNpc extends EntityVillager implements HologramNpc {
         return HOLOGRAM_HEIGHT;
     }
 
+    @Override
+    protected String z() {
+        return "";
+    }
+
 }

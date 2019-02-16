@@ -105,4 +105,10 @@ public class ZombieHologramNpc extends EntityZombie implements HologramNpc {
         return HOLOGRAM_HEIGHT;
     }
 
+    @Override
+    protected String z() {
+        return "";
+    }
+
+
 }
