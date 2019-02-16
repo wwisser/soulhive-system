@@ -27,8 +27,6 @@ import de.soulhive.system.vault.JewelEconomy;
 import de.soulhive.system.vote.VoteService;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -44,8 +42,6 @@ public class SoulHive extends JavaPlugin {
         SoulHive.plugin = this;
         ServiceManager serviceManager = new ServiceManager(this);
         SoulHive.serviceManager = serviceManager;
-
-        Settings.WORLD_MAIN.getEntities().stream().filter(entity -> entity instanceof LivingEntity).forEach(Entity::remove);
 
         final TaskService taskService = new TaskService(this);
         final PlannedShutdownTask plannedShutdownTask = new PlannedShutdownTask();
