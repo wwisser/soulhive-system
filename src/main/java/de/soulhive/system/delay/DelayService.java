@@ -10,8 +10,8 @@ import java.util.function.Consumer;
 
 public class DelayService extends Service {
 
-    private List<DelayConfiguration> configurations = new LinkedList<>();
-    private Map<UUID, Map<Integer, Long>> delays = new HashMap<>();
+    private Map<DelayConfiguration, UUID> configurations = new HashMap<>();
+    private Map<UUID, Map<UUID, Long>> delays = new HashMap<>();
 
     public void handleDelay(Player player, DelayConfiguration configuration, Consumer<Player> action) {
         this.handle(player, configuration, action, false);
@@ -24,9 +24,8 @@ public class DelayService extends Service {
     private void handle(Player player, DelayConfiguration configuration, Consumer<Player> action, boolean inverted) {
         UUID uuid = player.getUniqueId();
 
-        if (!this.configurations.contains(configuration)) {
-
-            this.configurations.add(configuration);
+        if (!this.configurations.containsKey(configuration)) {
+            this.configurations.put(configuration, UUID.randomUUID());
             if (!inverted) {
                 action.accept(player);
             }
@@ -42,11 +41,11 @@ public class DelayService extends Service {
             return;
         }
 
-        int configIndex = this.configurations.indexOf(configuration);
-        Map<Integer, Long> delayEntry = this.delays.getOrDefault(uuid, new HashMap<>());
+        final UUID configUuid = this.configurations.get(configuration);
+        Map<UUID, Long> delayEntry = this.delays.getOrDefault(uuid, new HashMap<>());
 
-        if (delayEntry.containsKey(configIndex)) {
-            long endTimeStamp = delayEntry.get(configIndex);
+        if (delayEntry.containsKey(configUuid)) {
+            long endTimeStamp = delayEntry.get(configUuid);
 
             if (System.currentTimeMillis() >= endTimeStamp) {
                 if (!inverted) {
@@ -69,10 +68,10 @@ public class DelayService extends Service {
     }
 
     private void addDelay(UUID uuid, DelayConfiguration delayConfiguration) {
-        Map<Integer, Long> delayEntry = this.delays.getOrDefault(uuid, new HashMap<>());
+        Map<UUID, Long> delayEntry = this.delays.getOrDefault(uuid, new HashMap<>());
 
         delayEntry.put(
-            this.configurations.indexOf(delayConfiguration),
+            this.configurations.get(delayConfiguration),
             System.currentTimeMillis() + delayConfiguration.getTime()
         );
 
