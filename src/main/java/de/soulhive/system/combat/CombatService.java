@@ -25,7 +25,7 @@ public class CombatService extends Service {
         "/spec", "/spectator", "/stats", "/friede", "/frieden", "/stack", "/kit"
     };
     private static final String[] INSTANT_TELEPORT_COMMANDS  = {
-        "/is", "/tpa", "/tpaccept", "/tpahere",
+        "/is", "/tpa", "/tpaccept", "/tpahere", "/top", "/soulhive:top", "/askyblock:is", "/soulhive:tpaccept",
     };
 
     private Map<Player, Long> fightTimestamps = new HashMap<>();
