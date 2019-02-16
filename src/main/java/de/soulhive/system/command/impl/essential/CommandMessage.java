@@ -30,12 +30,13 @@ public class CommandMessage extends CommandExecutorWrapper {
     private static final String USAGE = "/msg <target> <message>";
 
     private Map<UUID, UUID> lastReplies = new HashMap<>();
-    private DelayService delayService = SoulHive.getServiceManager().getService(DelayService.class);
+    private DelayService delayService;
     private SpyCommandService spyCommandService;
 
     @Override
     public void initialize() {
         this.spyCommandService = SoulHive.getServiceManager().getService(SpyCommandService.class);
+        this.delayService = SoulHive.getServiceManager().getService(DelayService.class);
     }
 
     @Override
@@ -44,7 +45,6 @@ public class CommandMessage extends CommandExecutorWrapper {
 
         ValidateCommand.minArgs(1, args, USAGE);
         Player player = ValidateCommand.onlyPlayer(sender);
-
 
         if (label.toLowerCase().startsWith("r")) {
             UUID uuid = this.lastReplies.get(player.getUniqueId());
@@ -87,13 +87,7 @@ public class CommandMessage extends CommandExecutorWrapper {
                 throw new TargetNotFoundException(target.getName());
             }
 
-            if (sender.hasPermission(Settings.PERMISSION_TEAM)) {
-                this.sendMessage(player, target, message);
-            } else {
-                this.delayService.handleDelay(player, DELAY_CONFIGURATION, messageSender ->
-                    this.sendMessage(player, target, message)
-                );
-            }
+            this.sendMessage(player, target, message);
         }
     }
 

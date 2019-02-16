@@ -19,27 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RankShopContainerTemplate extends ContainerTemplate {
-
-    private Map<PremiumRank, ContainerAction> purchaseActions = new HashMap<>();
     private ShopContainerTemplate shopContainerTemplate;
 
     RankShopContainerTemplate(final ContainerService containerService, final ShopContainerTemplate shopTemplate) {
         super(containerService);
 
         this.shopContainerTemplate = shopTemplate;
-        for (PremiumRank rank : PremiumRank.values()) {
-            this.purchaseActions.put(
-                rank,
-                new PurchaseContainerAction(player -> {
-                    PermissionUtils.setRank(player.getName(), rank.getGroupName());
-                    Bukkit.broadcastMessage(
-                        Settings.PREFIX
-                            + "§f" + player.getName()
-                            + " §7hat sich den Rang " + rank.getChatColor() + ChatColor.BOLD + rank.getName() + " §7gekauft.");
-                    Bukkit.broadcastMessage(Settings.PREFIX + "Jetzt auch mit Juwelen einkaufen §8§l=> §d§l/shop");
-                }, rank.getCosts())
-            );
-        }
     }
 
     @Override
@@ -54,7 +39,14 @@ public class RankShopContainerTemplate extends ContainerTemplate {
 
             ContainerAction action = permission
                 ? ContainerAction.NONE
-                : this.purchaseActions.get(rank);
+                : new PurchaseContainerAction(clicker -> {
+                PermissionUtils.setRank(player.getName(), rank.getGroupName());
+                Bukkit.broadcastMessage(
+                    Settings.PREFIX
+                        + "§f" + player.getName()
+                        + " §7hat sich den Rang " + rank.getChatColor() + ChatColor.BOLD + rank.getName() + " §7gekauft.");
+                Bukkit.broadcastMessage(Settings.PREFIX + "Jetzt auch mit Juwelen einkaufen §8§l=> §d§l/shop");
+            }, PremiumRank.getCurrentCosts(player, rank));
 
             ItemStack itemStack = new ItemBuilder(rank.getMaterial())
                 .name("§7Rang " + rank.getChatColor() + "§l" + rank.getName())

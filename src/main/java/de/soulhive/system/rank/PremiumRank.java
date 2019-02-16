@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 @Getter
 @ToString
@@ -41,6 +42,36 @@ public enum PremiumRank {
 
     public String getPermission() {
         return "soulhive." + this.groupName;
+    }
+
+    public static PremiumRank getRank(final Player player) {
+        for (int i = PremiumRank.values().length - 1; i >= 0; i--) {
+            final PremiumRank rank = PremiumRank.values()[i];
+
+            if (player.hasPermission(rank.getPermission())) {
+                return rank;
+            }
+        }
+
+        return null;
+    }
+
+    public static int getCurrentCosts(final Player player, final PremiumRank premiumRank) {
+        if (player.hasPermission("soulhive.obsidian")) {
+            return 0;
+        }
+
+        final PremiumRank rank = PremiumRank.getRank(player);
+
+        if (rank == null) {
+            return premiumRank.costs;
+        }
+
+        if (premiumRank.getCosts() <= rank.getCosts()) {
+            return 0;
+        }
+
+        return premiumRank.getCosts() - rank.getCosts();
     }
 
 }

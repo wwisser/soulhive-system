@@ -32,9 +32,7 @@ public class EntityDamageListener implements Listener {
             && event.getCause() == EntityDamageEvent.DamageCause.VOID
             && Settings.SKYBLOCK_WORLDS.contains(entity.getWorld())) {
             event.setCancelled(true);
-            Location homeLocation = this.aSkyBlockApi.getHomeLocation(entity.getUniqueId());
-
-            entity.teleport(homeLocation);
+            entity.teleport(Settings.LOCATION_SPAWN);
             entity.sendMessage(Settings.PREFIX + "Das war aber knapp! Pass nächstes Mal besser auf.");
         }
     }

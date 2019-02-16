@@ -37,7 +37,7 @@ public class ScoreboardShopContainerTemplate extends ContainerTemplate {
             this.purchaseActions.put(
                 type,
                 new PurchaseContainerAction(player -> {
-                    PermissionUtils.setRank(player.getName(), type.getPermission());
+                    PermissionUtils.addPermission(player.getName(), type.getPermission());
                     Bukkit.broadcastMessage(Settings.PREFIX + "§f" + player.getName() + " §7hat sich das Scoreboard " + type.getName() + " §7gekauft.");
                     Bukkit.broadcastMessage(Settings.PREFIX + "Jetzt auch mit Juwelen einkaufen §8§l=> §d§l/shop");
                     scoreboardService.updateSelectedType(player, type);

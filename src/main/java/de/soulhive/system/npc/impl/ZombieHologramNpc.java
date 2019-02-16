@@ -1,6 +1,7 @@
 package de.soulhive.system.npc.impl;
 
 import de.soulhive.system.npc.HologramNpc;
+import lombok.SneakyThrows;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
@@ -56,6 +57,10 @@ public class ZombieHologramNpc extends EntityZombie implements HologramNpc {
 
     @Override
     public boolean damageEntity(final DamageSource damageSource, final float f) {
+        if (damageSource.getEntity() == null) {
+            return false;
+        }
+
         final CraftEntity bukkitEntity = damageSource.getEntity().getBukkitEntity();
 
         if (bukkitEntity instanceof CraftPlayer) {
