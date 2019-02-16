@@ -13,8 +13,8 @@ import de.soulhive.system.peace.PeaceService;
 import de.soulhive.system.scoreboard.ScoreboardService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.service.ServiceManager;
-import de.soulhive.system.service.micro.FirelotusService;
 import de.soulhive.system.setting.Settings;
+import de.soulhive.system.special.SpecialItemMerchantService;
 import de.soulhive.system.stats.StatsService;
 import de.soulhive.system.supply.SupplyService;
 import de.soulhive.system.task.impl.*;
@@ -83,7 +83,8 @@ public class SoulHive extends JavaPlugin {
             new ParticleService(),
             new PeaceService(),
             new VoteService(),
-            new KitService()
+            new KitService(),
+            new SpecialItemMerchantService()
         ).forEach(serviceManager::registerService);
 
         ReflectUtils.getPacketObjects("de.soulhive.system.service.micro", Service.class)

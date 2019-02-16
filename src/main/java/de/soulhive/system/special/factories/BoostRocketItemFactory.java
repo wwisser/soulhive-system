@@ -1,5 +1,6 @@
 package de.soulhive.system.special.factories;
 
+import de.soulhive.system.SoulHive;
 import de.soulhive.system.special.SpecialItemFactory;
 import de.soulhive.system.util.item.ItemBuilder;
 import de.soulhive.system.util.nms.ParticleUtils;
@@ -9,6 +10,9 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class BoostRocketItemFactory implements SpecialItemFactory {
 
@@ -19,11 +23,11 @@ public class BoostRocketItemFactory implements SpecialItemFactory {
 
     @Override
     public ItemStack createItem(final Player player) {
-        return new ItemBuilder(Material.MAGMA_CREAM)
+        return new ItemBuilder(MATERIAL)
             .name(TITLE)
             .modifyLore()
             .add("§f")
-            .add("§7Von " + player.getName())
+            .add("§7von " + player.getName())
             .finish()
             .build();
     }
@@ -38,14 +42,26 @@ public class BoostRocketItemFactory implements SpecialItemFactory {
         player.getPlayer().setVelocity(player.getVelocity().setY(1.0));
         player.playSound(player.getLocation(), Sound.FIREWORK_LAUNCH, 1, 1);
 
-        double count = 1.3;
-        for (double i = 0; i < count; i++) {
-            ParticleUtils.play(
-                player.getLocation().clone().add(0, (i * -1), 0),
-                EnumParticle.FIREWORKS_SPARK,
-                0, 0, 0, 0, 0
-            );
-        }
+        new BukkitRunnable() {
+
+            int ticks = 0;
+
+            @Override
+            public void run() {
+                if (this.ticks >= 20) {
+                    super.cancel();
+                    return;
+                }
+
+                ParticleUtils.play(
+                    player.getLocation(),
+                    EnumParticle.FIREWORKS_SPARK,
+                    0, 0, 0, 0, 0
+                );
+
+                this.ticks++;
+            }
+        }.runTaskTimer(SoulHive.getPlugin(), 0L, 1L);
     }
 
     @Override
@@ -59,7 +75,7 @@ public class BoostRocketItemFactory implements SpecialItemFactory {
 
     @Override
     public String getUniqueName() {
-        return "BoostRocket";
+        return "Rocketboost";
     }
 
     @Override

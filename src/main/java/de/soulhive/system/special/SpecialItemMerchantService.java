@@ -30,15 +30,14 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @FeatureService
-public class SpecialItemService extends Service implements Listener {
+public class SpecialItemMerchantService extends Service implements Listener {
 
     private static final Location NPC_LOCATION = new Location(Settings.WORLD_MAIN, -62.5, 183, -347);
     private static final SpecialItemFactory ITEM_FACTORY = new BoostRocketItemFactory();
     private static final DelayConfiguration DELAY_CONFIGURATION = new DelayConfiguration(
-        "§cDu darfst dieses Item nur alle 5 Sekunden verwenden.",
+        null,
         ITEM_FACTORY.getDelay()
     );
 
@@ -58,23 +57,23 @@ public class SpecialItemService extends Service implements Listener {
             NPC_LOCATION,
             BlockFace.EAST,
             clicker -> {
-                final User user = SpecialItemService.this.userService.getUser(clicker);
+                final User user = SpecialItemMerchantService.this.userService.getUser(clicker);
 
-                if (SpecialItemService.this.boughtItem(clicker)) {
-                    clicker.sendMessage("§a§lHändler> §cIch habe mein Item schonmal verkauft. Verschwinde.");
+                if (SpecialItemMerchantService.this.boughtItem(clicker)) {
+                    clicker.sendMessage("§a§lHändler> §cIch verkaufe meine Items nur einmal.");
                     clicker.playSound(clicker.getLocation(), Sound.VILLAGER_NO, 1, 1);
                     return;
                 }
 
                 if (user.getJewels() < ITEM_FACTORY.getCosts()) {
-                    clicker.sendMessage("§a§lHändler> §cDu kannst dir mein Angebot sowieso nicht leisten. Verschwinde.");
+                    clicker.sendMessage("§a§lHändler> §cDu kannst dir mein Angebot sowieso nicht leisten.");
                     clicker.playSound(clicker.getLocation(), Sound.VILLAGER_NO, 1, 1);
                     return;
                 }
 
-                clicker.sendMessage("§a§lHändler> §7Nur für kurze Zeit: §c§l" + ITEM_FACTORY.getUniqueName());
+                clicker.sendMessage("§a§lHändler> §7Nur für kurze Zeit: §c§l" + ITEM_FACTORY.getUniqueName() + " §7(§d" + ITEM_FACTORY.getCosts() + " §7Juwelen)");
                 clicker.spigot().sendMessage(TextComponentUtils.createClickableComponent(
-                    " §a§lKlicke hier§7, um das Item für §d" + ITEM_FACTORY.getCosts() + " §7Juwelen zu kaufen.",
+                    "§a§lHändler> §6[KLICKE HIER]§7, um das Item zu kaufen.",
                     "§c§l" + ITEM_FACTORY.getUniqueName() + " §7für §d" + ITEM_FACTORY.getCosts() + " §7Juwelen kaufen",
                     "/purchaseitem referrer=npc"
                 ));
@@ -91,6 +90,13 @@ public class SpecialItemService extends Service implements Listener {
         final ItemStack itemInHand = player.getItemInHand();
 
         if (itemInHand != null && ITEM_FACTORY.shouldExecute(itemInHand, event.getAction())) {
+            event.setCancelled(true);
+
+            if (player.hasPermission(Settings.PERMISSION_ADMIN)) {
+                ITEM_FACTORY.execute(player);
+                return;
+            }
+
             this.delayService.handleDelay(player, DELAY_CONFIGURATION, ITEM_FACTORY::execute);
         }
     }
@@ -99,11 +105,11 @@ public class SpecialItemService extends Service implements Listener {
 
         @Override
         public void process(CommandSender sender, String label, String[] args) throws CommandException {
-            if (args.length > 1 && args[0].equals("referrer=npc")) {
+            if (args.length == 1 && args[0].equals("referrer=npc")) {
                 final Player player = ValidateCommand.onlyPlayer(sender);
-                final User user = SpecialItemService.this.userService.getUser(player);
+                final User user = SpecialItemMerchantService.this.userService.getUser(player);
 
-                if (SpecialItemService.this.boughtItem(player)) {
+                if (SpecialItemMerchantService.this.boughtItem(player)) {
                     return;
                 }
 
@@ -112,7 +118,7 @@ public class SpecialItemService extends Service implements Listener {
                     ItemUtils.addAndDropRest(player, ITEM_FACTORY.createItem(player));
                     player.sendMessage("§a§lHändler> §7Viel Spaß mit deinem Item.");
                     player.playSound(player.getLocation(), Sound.VILLAGER_YES, 1, 1);
-                    SpecialItemService.this.setBought(player);
+                    SpecialItemMerchantService.this.setBought(player);
                 }
             } else {
                 sender.sendMessage(Settings.PREFIX + "§cUnbekannter Befehl. Vertippt?");
@@ -140,6 +146,7 @@ public class SpecialItemService extends Service implements Listener {
 
         boughtList.add(player.getUniqueId().toString());
         this.database.set(ITEM_FACTORY.getDatabaseEntry(), boughtList);
+        this.database.saveFile();
     }
 
 }
