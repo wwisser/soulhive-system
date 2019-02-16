@@ -42,7 +42,7 @@ public class EntityDamageByEntityListener implements Listener {
                 Player shooter = (Player) projectile.getShooter();
 
                 if (shooter != victim &&
-                    this.peaceService.hasPeace(victim.getUniqueId().toString(), damager.getUniqueId().toString())) {
+                    this.peaceService.hasPeace(victim.getUniqueId().toString(), shooter.getUniqueId().toString())) {
                     event.setCancelled(true);
                     ActionBar.send("§cDu hast mit " + victim.getName() + " Frieden geschlossen.", shooter);
                 }
