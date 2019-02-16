@@ -14,7 +14,7 @@ public class CommandFly extends CommandExecutorWrapper {
     public void process(CommandSender sender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(sender, "soulhive.fly");
         Player player = ValidateCommand.onlyPlayer(sender);
-        boolean flying = player.isFlying();
+        boolean allowed = player.getAllowFlight();
 
         if (!player.hasPermission(Settings.PERMISSION_TEAM)
             && player.getWorld().equals(Settings.WORLD_MAIN)
@@ -25,16 +25,16 @@ public class CommandFly extends CommandExecutorWrapper {
             return;
         }
 
-        player.setAllowFlight(!flying);
-        player.setFlying(!flying);
+        player.setAllowFlight(!allowed);
+        player.setFlying(!allowed);
         player.sendMessage(
             Settings.PREFIX
                 + "Dein Flugmodus wurde §f"
-                + (flying ? "deaktiviert" : "aktiviert")
+                + (allowed ? "deaktiviert" : "aktiviert")
                 + "§7."
         );
 
-        if (!flying) {
+        if (!allowed) {
             player.playSound(player.getLocation(), Sound.ENDERDRAGON_WINGS, 1, 1);
         }
     }
