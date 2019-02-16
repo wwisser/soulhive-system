@@ -12,7 +12,9 @@ public class PlayerDeathListener implements Listener {
         final Player player = event.getEntity();
 
         if (player.hasPermission("soulhive.keeplevel")) {
-            player.setLevel(player.getLevel());
+            final int level = player.getLevel();
+
+            player.setLevel(level);
         }
     }
 

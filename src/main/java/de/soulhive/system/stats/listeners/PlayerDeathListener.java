@@ -1,8 +1,12 @@
 package de.soulhive.system.stats.listeners;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import de.soulhive.system.SoulHive;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.stats.StatsService;
 import de.soulhive.system.stats.tasks.PlayerRespawnTask;
+import de.soulhive.system.task.impl.HologramAppearanceTask;
 import de.soulhive.system.user.User;
 import de.soulhive.system.user.UserService;
 import lombok.AllArgsConstructor;
@@ -36,8 +40,9 @@ public class PlayerDeathListener implements Listener {
 
         this.statsService.getTaskService().registerTasks(new PlayerRespawnTask(victim));
 
-        if (killer == null) {
+        if (killer == null && this.statsService.getLastHits().containsKey(victim)) {
             killer = this.statsService.getLastHits().get(victim);
+            this.statsService.getLastHits().remove(victim);
         }
 
         if (killer != null) {
@@ -60,6 +65,11 @@ public class PlayerDeathListener implements Listener {
                     + this.formatHealth(killer.getHealth())
                     + " ❤ §7getötet."
             );
+
+            final Hologram hologram = HologramsAPI.createHologram(SoulHive.getPlugin(), victim.getLocation());
+            hologram.appendTextLine("§9§lKILL §8» §f" + victim.getName());
+
+            new HologramAppearanceTask(hologram.getLocation(), hologram).runTaskTimer(SoulHive.getPlugin(), 0, 3);
         }
 
         this.statsService.getLastHits().remove(victim);

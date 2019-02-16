@@ -86,7 +86,16 @@ public class KitService extends Service {
     }
 
     public void setRecieved(final Player player) {
-        this.database.set(player.getUniqueId().toString(), System.currentTimeMillis() + (60000 * 60 * 12));
+        long time = 60000 * 60 * 12;
+
+        if (player.hasPermission("soulhive.obsidian")
+            || player.hasPermission("soulhive.emerald")
+            || player.hasPermission("soulhive.diamond")
+            || player.hasPermission("soulhive.gold")) {
+            time = 60000 * 60 * 24 * 7;
+        }
+
+        this.database.set(player.getUniqueId().toString(), System.currentTimeMillis() + time);
     }
 
     public String getTimeRemaining(final Player player) {
