@@ -18,7 +18,7 @@ public class HologramAppearanceTask extends BukkitRunnable {
     @Override
     public void run() {
         this.count += 0.01;
-        if (this.count < 0.75) {
+        if (this.count < 0.3) {
             this.hologram.teleport(this.location.add(0, this.count, 0));
             this.location.getWorld().playEffect(this.location.add(0, this.count, 0), Effect.WITCH_MAGIC, 10);
         } else {

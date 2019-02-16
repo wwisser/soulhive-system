@@ -30,7 +30,7 @@ import java.util.function.BiConsumer;
 public class CpsTrackerService extends Service {
 
     private static final DelayConfiguration DELAY_CONFIGURATION = new DelayConfiguration(
-      null,
+        null,
         10000
     );
 
@@ -47,7 +47,8 @@ public class CpsTrackerService extends Service {
         npcService.addNpc(new ZombieHologramNpc(
             Settings.LOCATION_CPS,
             BlockFace.SOUTH_EAST,
-            player -> {},
+            player -> {
+            },
             new CpsClickAction(),
             "§6§lCPS"
         ));
@@ -65,29 +66,43 @@ public class CpsTrackerService extends Service {
         @Override
         public void accept(final Player player, final CraftEntity craftZombie) {
             if (this.clicks.containsKey(player)) {
-                new Title("§a" + String.valueOf(this.clicks.get(player))).send(player);
+                final int clicks = CpsClickAction.this.clicks.get(player);
+                final String cps = CpsTrackerService.this.calculateCps(clicks);
+
+                new Title(
+                    "§a" + clicks + " clicks",
+                    "§b" + cps + " clicks/s",
+                    0, 3, 0
+                ).send(player);
+
                 this.clicks.put(player, this.clicks.get(player) + 1);
                 craftZombie.playEffect(EntityEffect.HURT);
                 player.playSound(craftZombie.getLocation(), Sound.HURT_FLESH, 0.5F, 0.7F);
             } else {
                 CpsTrackerService.this.delayService.handleDelay(player, DELAY_CONFIGURATION, clicker -> {
+                    final String cps = CpsTrackerService.this.calculateCps(1);
+
                     craftZombie.playEffect(EntityEffect.HURT);
                     player.getWorld().playSound(craftZombie.getLocation(), Sound.HURT_FLESH, 0.1F, 0.1F);
                     this.clicks.put(player, 1);
-                    new Title("§a" + String.valueOf(this.clicks.get(player))).send(player);
+
+                    new Title(
+                        "§a1 click",
+                        "§b" + cps + " clicks/s"
+                        , 0 , 3, 0
+                    ).send(player);
+
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            String cps = String.valueOf(
-                                Math.round(((double) CpsClickAction.this.clicks.get(player) / 5) * 100.0D) / 100.0D
-                            );
+                            final String cps = CpsTrackerService.this.calculateCps(CpsClickAction.this.clicks.get(player));
 
                             Hologram hologram = HologramsAPI.createHologram(SoulHive.getPlugin(), Settings.LOCATION_CPS);
-                            hologram.appendTextLine("§c" + player.getName() + " §8- §a" + cps + " CPS");
+                            hologram.appendTextLine("§b" + cps + " §7clicks/s von §b" + player.getName());
 
                             CpsTrackerService.this.holograms.add(hologram);
 
-                            new HologramAppearanceTask(hologram.getLocation().clone().add(0, 1.5, 0), hologram)
+                            new HologramAppearanceTask(hologram.getLocation().clone().add(0, 2, 0), hologram)
                                 .runTaskTimer(SoulHive.getPlugin(), 0, 3);
 
                             player.sendMessage(Settings.PREFIX + "Du hast §f" + cps + " §7Klicks pro Sekunde erreicht.");
@@ -98,6 +113,10 @@ public class CpsTrackerService extends Service {
             }
         }
 
+    }
+
+    private String calculateCps(final int clicks) {
+        return String.valueOf(Math.round(((double) clicks / 5) * 100.0D) / 100.0D);
     }
 
 }
