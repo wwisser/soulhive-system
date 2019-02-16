@@ -4,6 +4,7 @@ import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.setting.Settings;
+import de.soulhive.system.util.item.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -23,7 +24,7 @@ public class CommandGiveall extends CommandExecutorWrapper {
             .stream()
             .filter(players -> players != player)
             .forEach(players -> {
-                players.getInventory().addItem(itemStack);
+                ItemUtils.addAndDropRest(player, itemStack);
                 players.playSound(players.getLocation(), Sound.HORSE_SADDLE, 1, 1);
             });
 
