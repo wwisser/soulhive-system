@@ -10,6 +10,7 @@ import de.soulhive.system.vote.commands.CommandFakevote;
 import de.soulhive.system.vote.commands.CommandVote;
 import de.soulhive.system.vote.listener.VotifierListener;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -23,6 +24,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public class VoteService extends Service {
 
     private static final int VOTE_MAX = 3;
+    private static final ItemStack[] VOTE_EQUIP = {
+        new ItemStack(Material.DIAMOND_SWORD),
+        new ItemStack(Material.DIAMOND_HELMET),
+        new ItemStack(Material.DIAMOND_CHESTPLATE),
+        new ItemStack(Material.DIAMOND_LEGGINGS),
+        new ItemStack(Material.DIAMOND_BOOTS),
+    };
 
     private UserService userService;
     private boolean event = false;
@@ -53,9 +61,9 @@ public class VoteService extends Service {
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("§8➥ §7Der Spieler §9" + player.getName() + " §7hat gevotet!");
             Bukkit.broadcastMessage("§8➥ §7Seine Belohnung:");
-            Bukkit.broadcastMessage("    §8- §330 Level");
+            Bukkit.broadcastMessage("    §8- §330 Level §7+ §d25 Juwelen");
             Bukkit.broadcastMessage("    §8- §33 Stunden Auto Equip Lvl. II");
-            Bukkit.broadcastMessage("    §8- §d25 Juwelen");
+            Bukkit.broadcastMessage("    §8- §3Diamantenausrüstung");
             Bukkit.broadcastMessage("§8➥ §7Du willst auch eine Belohnung? §8§l=> §f/vote");
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("§8§m---------------------------------------------");
@@ -74,8 +82,8 @@ public class VoteService extends Service {
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("§8➥ §7Der Spieler §9" + player.getName() + " §7hat gevotet!");
             Bukkit.broadcastMessage("§8➥ §7Seine Belohnung (§6§lEVENT §6" + this.votedCount + "§8/§6" + VOTE_MAX + "§7):");
-            Bukkit.broadcastMessage("    §8- §360 Level §7+ §d50 Juwelen");
-            Bukkit.broadcastMessage("    §8- §36 Stunden Auto Equip Lvl. II");
+            Bukkit.broadcastMessage("    §8- §660 Level §7+ §d50 Juwelen §7+ §6Equip");
+            Bukkit.broadcastMessage("    §8- §66 Stunden Auto Equip Lvl. II");
             Bukkit.broadcastMessage("    §8- " + reward);
             Bukkit.broadcastMessage("§8➥ §7Du willst auch eine Belohnung? §8§l=> §f/vote");
             Bukkit.broadcastMessage("");
@@ -97,6 +105,8 @@ public class VoteService extends Service {
                 this.disableVoteEvent();
             }
         }
+
+        ItemUtils.addAndDropRest(player, VOTE_EQUIP);
     }
 
     public boolean hasEventKit(final Player player) {
