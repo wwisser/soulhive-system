@@ -75,7 +75,7 @@ public class VoteService extends Service {
         } else {
             this.votedCount++;
 
-            final boolean yoloBoots = ThreadLocalRandom.current().nextBoolean();
+            final boolean yoloBoots = ThreadLocalRandom.current().nextInt(100) > 10;
             final String reward = yoloBoots ? "§bYOLO-Boots" : "§61x OP-Goldapfel";
 
             Bukkit.broadcastMessage("§8§m---------------------------------------------");
