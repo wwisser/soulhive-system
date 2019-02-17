@@ -66,7 +66,7 @@ public class SpecialItemMerchantService extends Service implements Listener {
                 }
 
                 if (user.getJewels() < ITEM_FACTORY.getCosts()) {
-                    clicker.sendMessage("§a§lHändler> §cDu kannst dir mein Angebot sowieso nicht leisten.");
+                    clicker.sendMessage("§a§lHändler> §cIch verkaufe dir mein Item für " + ITEM_FACTORY.getCosts() + " Juwelen.");
                     clicker.playSound(clicker.getLocation(), Sound.VILLAGER_NO, 1, 1);
                     return;
                 }

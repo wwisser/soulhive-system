@@ -15,10 +15,12 @@ import org.bukkit.entity.Player;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class ZombieHologramNpc extends EntityZombie implements HologramNpc {
+public class ZombieHologramNpc extends EntityVillager implements HologramNpc {
 
-    private static final int ENTITY_TYPE_ID = 54;
-    private static final String ENTITY_NAME = "Zombie";
+    /*private static final int ENTITY_TYPE_ID = 54;
+    private static final String ENTITY_NAME = "Zombie";*/
+    private static final int ENTITY_TYPE_ID = 120;
+    private static final String ENTITY_NAME = "Villager";
 
     private static final double HOLOGRAM_HEIGHT = 2.35;
 

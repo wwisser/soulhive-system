@@ -48,7 +48,7 @@ public class DelayService extends Service {
         Map<UUID, Long> delayEntry = this.delays.getOrDefault(uuid, new HashMap<>());
 
         if (delayEntry.containsKey(configUuid)) {
-            long endTimeStamp = delayEntry.get(configUuid);
+            long endTimeStamp = delayEntry.getOrDefault(configUuid, System.currentTimeMillis());
 
             if (System.currentTimeMillis() >= endTimeStamp) {
                 if (!inverted) {
@@ -56,22 +56,30 @@ public class DelayService extends Service {
                 }
                 this.addDelay(uuid, configuration);
                 return false;
-            } else if (configuration.getMessage() != null) {
-                long pendingTime = endTimeStamp - System.currentTimeMillis();
-                String formattedTime = MillisecondsConverter.convertToString(pendingTime);
-
+            } else {
                 if (!inverted) {
-                    player.sendMessage(
-                        Settings.PREFIX + "§c" + configuration.getMessage().replace("%time", formattedTime)
-                    );
+                    if (configuration.getMessage() != null) {
+                        long pendingTime = endTimeStamp - System.currentTimeMillis();
+                        String formattedTime = MillisecondsConverter.convertToString(pendingTime);
+                        player.sendMessage(
+                            Settings.PREFIX + "§c" + configuration.getMessage().replace("%time", formattedTime)
+                        );
+                    }
                 } else {
                     action.accept(player);
                 }
                 return true;
             }
-        }
+        } else {
+            delayEntry.put(configUuid, System.currentTimeMillis() + configuration.getTime());
+            this.delays.put(uuid, delayEntry);
 
-        return false;
+            if (!inverted) {
+                action.accept(player);
+            }
+
+            return false;
+        }
     }
 
     private void addDelay(UUID uuid, DelayConfiguration delayConfiguration) {

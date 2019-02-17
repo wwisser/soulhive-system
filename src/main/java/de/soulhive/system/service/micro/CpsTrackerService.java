@@ -42,21 +42,15 @@ public class CpsTrackerService extends Service {
     public void initialize() {
         final ServiceManager serviceManager = SoulHive.getServiceManager();
         this.delayService = serviceManager.getService(DelayService.class);
+        final NpcService npcService = serviceManager.getService(NpcService.class);
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                final NpcService npcService = serviceManager.getService(NpcService.class);
-
-                npcService.addNpc(new ZombieHologramNpc(
-                    Settings.LOCATION_CPS,
-                    BlockFace.SOUTH_EAST,
-                    player -> player.sendMessage( "§6§lCPS> §7Schlage mich, um deine Klicks pro Sekunde zu messen."),
-                    new CpsClickAction(),
-                    "§6§lCPS"
-                ));
-            }
-        }.runTaskLater(SoulHive.getPlugin(), 20L * 5);
+        npcService.addNpc(new ZombieHologramNpc(
+            Settings.LOCATION_CPS,
+            BlockFace.SOUTH_EAST,
+            player -> player.sendMessage("§6§lCPS> §7Schlage mich, um deine Klicks pro Sekunde zu messen."),
+            new CpsClickAction(),
+            "§6§lCPS"
+        ));
     }
 
     @Override
