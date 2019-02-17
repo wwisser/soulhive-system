@@ -1,5 +1,6 @@
 package de.soulhive.system.vault;
 
+import de.soulhive.system.user.User;
 import de.soulhive.system.user.UserService;
 import lombok.AllArgsConstructor;
 import net.milkbowl.vault.economy.Economy;
@@ -124,7 +125,9 @@ public class JewelEconomy implements Economy {
             return new EconomyResponse(0, balance, EconomyResponse.ResponseType.FAILURE, "Insufficient funds");
         }
 
-        this.userService.getUserByName(playerName).removeJewels(iAmount);
+        final User user = this.userService.getUserByName(playerName);
+        user.removeJewels(iAmount);
+        this.userService.saveUser(user);
 
         return new EconomyResponse(iAmount, this.getBalance(playerName), EconomyResponse.ResponseType.SUCCESS, "");
     }
@@ -152,7 +155,10 @@ public class JewelEconomy implements Economy {
             return new EconomyResponse(0, this.getBalance(playerName), EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
         }
 
-        this.userService.getUserByName(playerName).addJewels(intAmount);
+        final User user = this.userService.getUserByName(playerName);
+        user.addJewels(intAmount);
+        this.userService.saveUser(user);
+
         return new EconomyResponse(intAmount, this.getBalance(playerName), EconomyResponse.ResponseType.SUCCESS, "");
     }
 
