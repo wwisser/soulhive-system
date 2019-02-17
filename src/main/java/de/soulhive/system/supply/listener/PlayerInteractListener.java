@@ -44,7 +44,7 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
-            this.delayService.handleDelayInverted(
+            boolean delayed = this.delayService.handleDelayInverted(
                 player,
                 DELAY_CONFIGURATION,
                 delayedPlayer -> {
@@ -54,7 +54,7 @@ public class PlayerInteractListener implements Listener {
                 }
             );
 
-            if (event.isCancelled()) {
+            if (delayed) {
                 return;
             }
 

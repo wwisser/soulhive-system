@@ -52,12 +52,12 @@ public class ChatService extends Service implements Listener {
             return;
         }
 
-        this.delayService.handleDelayInverted(player, DELAY_CONFIGURATION, sender -> {
+        final boolean delayed = this.delayService.handleDelayInverted(player, DELAY_CONFIGURATION, sender -> {
             event.setCancelled(true);
             sender.sendMessage(Settings.PREFIX + "§cDu schreibst zu schnell.");
         });
 
-        if (event.isCancelled() || message.length() <= MESSAGE_LENGTH_IGNORE_REPEAT) {
+        if (delayed || message.length() <= MESSAGE_LENGTH_IGNORE_REPEAT) {
             return;
         }
 

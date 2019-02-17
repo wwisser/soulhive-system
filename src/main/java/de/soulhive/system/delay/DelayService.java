@@ -13,15 +13,18 @@ public class DelayService extends Service {
     private Map<DelayConfiguration, UUID> configurations = new HashMap<>();
     private Map<UUID, Map<UUID, Long>> delays = new HashMap<>();
 
-    public void handleDelay(Player player, DelayConfiguration configuration, Consumer<Player> action) {
-        this.handle(player, configuration, action, false);
+    public boolean handleDelay(Player player, DelayConfiguration configuration, Consumer<Player> action) {
+        return this.handle(player, configuration, action, false);
     }
 
-    public void handleDelayInverted(Player player, DelayConfiguration configuration, Consumer<Player> action) {
-        this.handle(player, configuration, action, true);
+    public boolean handleDelayInverted(Player player, DelayConfiguration configuration, Consumer<Player> action) {
+        return this.handle(player, configuration, action, true);
     }
 
-    private void handle(Player player, DelayConfiguration configuration, Consumer<Player> action, boolean inverted) {
+    /**
+     * @return true if is delayed
+     */
+    private boolean handle(Player player, DelayConfiguration configuration, Consumer<Player> action, boolean inverted) {
         UUID uuid = player.getUniqueId();
 
         if (!this.configurations.containsKey(configuration)) {
@@ -30,7 +33,7 @@ public class DelayService extends Service {
                 action.accept(player);
             }
             this.addDelay(uuid, configuration);
-            return;
+            return false;
         }
 
         if (!this.delays.containsKey(uuid)) {
@@ -38,7 +41,7 @@ public class DelayService extends Service {
                 action.accept(player);
             }
             this.addDelay(uuid, configuration);
-            return;
+            return false;
         }
 
         final UUID configUuid = this.configurations.get(configuration);
@@ -52,6 +55,7 @@ public class DelayService extends Service {
                     action.accept(player);
                 }
                 this.addDelay(uuid, configuration);
+                return false;
             } else if (configuration.getMessage() != null) {
                 long pendingTime = endTimeStamp - System.currentTimeMillis();
                 String formattedTime = MillisecondsConverter.convertToString(pendingTime);
@@ -63,8 +67,11 @@ public class DelayService extends Service {
                 } else {
                     action.accept(player);
                 }
+                return true;
             }
         }
+
+        return false;
     }
 
     private void addDelay(UUID uuid, DelayConfiguration delayConfiguration) {
