@@ -23,7 +23,9 @@ public class PlayerCommandPreprocessListener implements Listener {
             player.sendMessage(Settings.PREFIX + "§cDu darfst diesen Befehl im Kampf nicht verwenden.");
         }
 
-        if (this.combatService.isCommandTeleportable(command) && player.getLocation().getBlockY() < Settings.SPAWN_HEIGHT) {
+        if (this.combatService.isCommandTeleportable(command)
+            && player.getWorld().equals(Settings.WORLD_MAIN)
+            && player.getLocation().getBlockY() < Settings.SPAWN_HEIGHT) {
             event.setCancelled(true);
             player.sendMessage(Settings.PREFIX + "§cDu darfst diesen Befehl hier nicht verwenden.");
         }
