@@ -13,9 +13,11 @@ public class EnchantItemListener implements Listener {
     public void onEnchantItem(EnchantItemEvent event) {
         Player player = event.getEnchanter();
         ItemStack item = event.getItem();
-        int levelCosts = (player.getLevel() - event.getExpLevelCost()) + (event.whichButton() + 1);
 
-        event.setExpLevelCost(levelCosts);
+        event.getEnchanter().setLevel(
+            event.getEnchanter().getLevel() - event.getExpLevelCost() + (event.whichButton() + 1)
+        );
+        event.setExpLevelCost(0);
 
         if (item.getAmount() > item.getMaxStackSize()) {
             event.setCancelled(true);
