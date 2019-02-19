@@ -5,6 +5,7 @@ import de.soulhive.system.kit.command.CommandKit;
 import de.soulhive.system.kit.listener.PlayerDeathListener;
 import de.soulhive.system.kit.listener.PlayerJoinListener;
 import de.soulhive.system.kit.listener.PlayerRespawnListener;
+import de.soulhive.system.rank.PremiumRank;
 import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
@@ -86,13 +87,10 @@ public class KitService extends Service {
     }
 
     public void setRecieved(final Player player) {
-        long time = 60000 * 60 * 12;
+        long time = 60000 * 60 * 24;
 
-        if (player.hasPermission("soulhive.obsidian")
-            || player.hasPermission("soulhive.emerald")
-            || player.hasPermission("soulhive.diamond")
-            || player.hasPermission("soulhive.gold")) {
-            time = 60000 * 60 * 24 * 7;
+        if (PremiumRank.getRank(player) != null) {
+            time = 60000 * 60 * 24 * 2;
         }
 
         this.database.set(player.getUniqueId().toString(), System.currentTimeMillis() + time);

@@ -1,5 +1,7 @@
 package de.soulhive.system;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import de.soulhive.system.combat.CombatService;
 import de.soulhive.system.command.CommandService;
 import de.soulhive.system.container.ContainerService;
@@ -94,6 +96,7 @@ public class SoulHive extends JavaPlugin {
     @Override
     public void onDisable() {
         SoulHive.serviceManager.getServices().forEach(SoulHive.serviceManager::unregisterService);
+        HologramsAPI.getHolograms(this).forEach(Hologram::delete);
     }
 
 }
