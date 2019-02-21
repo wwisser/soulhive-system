@@ -6,6 +6,7 @@ import de.soulhive.system.combat.CombatService;
 import de.soulhive.system.command.CommandService;
 import de.soulhive.system.container.ContainerService;
 import de.soulhive.system.delay.DelayService;
+import de.soulhive.system.ip.IpResolverService;
 import de.soulhive.system.kit.KitService;
 import de.soulhive.system.listener.ListenerService;
 import de.soulhive.system.motd.MotdService;
@@ -86,7 +87,8 @@ public class SoulHive extends JavaPlugin {
             new PeaceService(),
             new VoteService(),
             new KitService(),
-            new SpecialItemMerchantService()
+            new SpecialItemMerchantService(),
+            new IpResolverService()
         ).forEach(serviceManager::registerService);
 
         ReflectUtils.getPacketObjects("de.soulhive.system.service.micro", Service.class)
