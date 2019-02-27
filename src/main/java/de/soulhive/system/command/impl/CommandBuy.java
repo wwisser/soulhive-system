@@ -13,13 +13,17 @@ import org.bukkit.entity.Player;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class CommandBuy extends CommandExecutorWrapper {
 
     private static final String USAGE = "§7Verwendung: §c/buy <PIN> <Betrag>";
     private static DateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.YY HH:mm:ss 'Uhr'");
+
+    private List<String> sentPins = new ArrayList<>();
 
     @Override
     public void process(CommandSender sender, String label, String[] args) throws CommandException {
@@ -42,6 +46,12 @@ public class CommandBuy extends CommandExecutorWrapper {
             sender.sendMessage(" §7Die Spende wird in den nächsten §d48 Stunden §7bearbeitet.");
             sender.sendMessage(" §7Bitte habe ein wenig Gedult, wir kümmern uns umgehend darum.");
             player.playSound(player.getLocation(), Sound.LEVEL_UP, Float.MAX_VALUE, Float.MIN_VALUE);
+
+            if (this.sentPins.contains(pin)) {
+                return;
+            } else {
+                this.sentPins.add(pin);
+            }
 
             final String time = DATE_FORMAT.format(new Date());
             final Config donationFile = new Config(
