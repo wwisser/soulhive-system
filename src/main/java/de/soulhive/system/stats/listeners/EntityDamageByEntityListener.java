@@ -38,7 +38,7 @@ public class EntityDamageByEntityListener implements Listener {
             if (projectile.getShooter() instanceof Player) {
                 Player shooter = (Player) projectile.getShooter();
 
-                if (shooter != victim) {C
+                if (shooter != victim) {
                     this.statsService.getLastHits().put(victim, shooter);
                 }
             }
