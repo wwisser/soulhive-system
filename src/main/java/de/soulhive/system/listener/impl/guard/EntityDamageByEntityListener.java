@@ -20,13 +20,14 @@ public class EntityDamageByEntityListener implements Listener {
 
         Location location = damager.getLocation();
 
-        if (damager instanceof Projectile) {
-            if (((Projectile) damager).getShooter() instanceof Player) {
-                location = ((Player) ((Projectile) damager).getShooter()).getLocation();
-            }
+        if (damager instanceof Projectile && ((Projectile) damager).getShooter() instanceof Player) {
+            Player shooter = (Player) ((Projectile) damager).getShooter();
+
+            location = shooter.getLocation();
+            damager = shooter;
         }
 
-        if (location.getBlockY() >= Settings.SPAWN_HEIGHT) {
+        if (location.getBlockY() >= Settings.SPAWN_HEIGHT || entity.getLocation().getBlockY() >= Settings.SPAWN_HEIGHT) {
             event.setCancelled(true);
 
             if (damager instanceof Player && !(entity instanceof ItemFrame)) {
