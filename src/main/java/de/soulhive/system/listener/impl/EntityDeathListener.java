@@ -21,8 +21,8 @@ public class EntityDeathListener implements Listener {
         List<ItemStack> drops = event.getDrops();
 
         drops.clear();
-        if (ThreadLocalRandom.current().nextInt(100) < 15) {
-            drops.add(new ItemStack(Material.GOLD_INGOT));
+        if (ThreadLocalRandom.current().nextInt(100) < 20) {
+            drops.add(new ItemStack(Material.GOLD_NUGGET));
         }
     }
 
