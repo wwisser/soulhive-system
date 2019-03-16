@@ -1,4 +1,4 @@
-package de.soulhive.system.clan.serializer.file;
+package de.soulhive.system.clan.serializer.impl;
 
 import de.soulhive.system.clan.models.Clan;
 import de.soulhive.system.clan.models.ClanMember;

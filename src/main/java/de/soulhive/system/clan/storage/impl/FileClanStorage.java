@@ -2,7 +2,7 @@ package de.soulhive.system.clan.storage.impl;
 
 import de.soulhive.system.clan.models.Clan;
 import de.soulhive.system.clan.models.ClanMember;
-import de.soulhive.system.clan.serializer.file.FileClanDeserializer;
+import de.soulhive.system.clan.serializer.impl.FileClanDeserializer;
 import de.soulhive.system.clan.storage.DatabaseClanStorage;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.Config;
