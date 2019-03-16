@@ -1,6 +1,8 @@
 package de.soulhive.system.clan.models;
 
 
+import lombok.Setter;
+
 import java.util.List;
 
 public class Clan {
@@ -11,7 +13,7 @@ public class Clan {
     private List<String> members;
     private int kills;
     private int deaths;
-    private int bankJewels;
+    @Setter private int bankJewels;
     private long created;
 
     public Clan(
@@ -32,6 +34,26 @@ public class Clan {
         this.deaths = deaths;
         this.bankJewels = bankJewels;
         this.created = created;
+    }
+
+    public void addKill() {
+        this.kills++;
+    }
+
+    public void addDeath() {
+        this.deaths++;
+    }
+
+    public void addJewels(final int jewels) {
+        this.bankJewels += jewels;
+    }
+
+    public void removeJewels(final int jewels) {
+        if (jewels > this.bankJewels) {
+            this.bankJewels = 0;
+        } else {
+            this.bankJewels -= jewels;
+        }
     }
 
     public String getName() {

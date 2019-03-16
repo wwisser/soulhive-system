@@ -8,6 +8,7 @@ import de.soulhive.system.clan.models.ClanMapper;
 import de.soulhive.system.clan.models.ClanMember;
 import de.soulhive.system.clan.storage.ClanStorage;
 import de.soulhive.system.clan.storage.DatabaseClanStorage;
+import lombok.Getter;
 import lombok.SneakyThrows;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class LocalClanStorage implements ClanStorage {
 
-    private LoadingCache<String, ClanMapper> cache;
+    @Getter private LoadingCache<String, ClanMapper> cache;
     private DatabaseClanStorage databaseClanStorage;
 
     public LocalClanStorage(DatabaseClanStorage databaseClanStorage) {

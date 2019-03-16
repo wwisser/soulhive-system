@@ -22,6 +22,14 @@ public class ClanMember {
     @Nullable private Long joined;
     @Nullable private Boolean moderator;
 
+    public void addKill() {
+        this.kills++;
+    }
+
+    public void addDeath() {
+        this.deaths++;
+    }
+
     public boolean isOnline() {
         Player player = Bukkit.getPlayer(UUID.fromString(this.uuid));
         VanishService vanishService = SoulHive.getServiceManager().getService(VanishService.class);
