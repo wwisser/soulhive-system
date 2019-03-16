@@ -33,10 +33,11 @@ public class PlayerInteractListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        final Action interactAction = event.getAction();
 
         if (event.getClickedBlock() != null && !Settings.SKYBLOCK_WORLDS.contains(player.getWorld())) {
             CANCELLED_ACTIONS.forEach((action, materials) -> {
-                if (event.getAction() == action
+                if (interactAction == action
                     && materials.contains(event.getClickedBlock().getType())
                     && !player.hasPermission(Settings.PERMISSION_BUILD)) {
                     ActionBar.send("§cDu darfst damit nicht interagieren.", player);
@@ -45,6 +46,14 @@ public class PlayerInteractListener implements Listener {
                     event.getClickedBlock().setData((byte) 0);
                 }
             });
+        }
+
+        if (!player.hasPermission(Settings.PERMISSION_BUILD)
+            && !Settings.SKYBLOCK_WORLDS.contains(player.getWorld())
+            && interactAction.toString().startsWith("RIGHT_CLICK")
+            && player.getItemInHand() != null
+            && player.getItemInHand().getType().toString().contains("BUCKET")) {
+            event.setCancelled(true);
         }
     }
 

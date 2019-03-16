@@ -17,32 +17,30 @@ public class EntityDamageByEntityListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getEntity().getWorld().equals(Settings.WORLD_MAIN)) {
-            if (!(event.getEntity() instanceof Player)) {
-                return;
-            }
+        if (!event.getEntity().getWorld().equals(Settings.WORLD_MAIN) || !(event.getEntity() instanceof Player)) {
+            return;
+        }
+        Entity damager = event.getDamager();
+        Player victim = (Player) event.getEntity();
 
-            Entity damager = event.getDamager();
-            Player victim = (Player) event.getEntity();
+        if (damager instanceof Player && damager != victim) {
+            this.statsService.getLastHits().put(victim, (Player) damager);
+        }
 
-            if (damager instanceof Player) {
-                this.statsService.getLastHits().put(victim, (Player) damager);
-            }
+        if (!(damager instanceof Projectile)) {
+            return;
+        }
 
-            if (!(damager instanceof Projectile)) {
-                return;
-            }
+        Projectile projectile = (Projectile) damager;
 
-            Projectile projectile = (Projectile) damager;
+        if (projectile.getShooter() instanceof Player) {
+            Player shooter = (Player) projectile.getShooter();
 
-            if (projectile.getShooter() instanceof Player) {
-                Player shooter = (Player) projectile.getShooter();
-
-                if (shooter != victim) {
-                    this.statsService.getLastHits().put(victim, shooter);
-                }
+            if (shooter != victim) {
+                this.statsService.getLastHits().put(victim, shooter);
             }
         }
+
     }
 
 }

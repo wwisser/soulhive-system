@@ -24,7 +24,7 @@ public class CommandGiveall extends CommandExecutorWrapper {
             .stream()
             .filter(players -> players != player)
             .forEach(players -> {
-                ItemUtils.addAndDropRest(player, itemStack);
+                ItemUtils.addAndDropRest(players, itemStack);
                 players.playSound(players.getLocation(), Sound.HORSE_SADDLE, 1, 1);
             });
 

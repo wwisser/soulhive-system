@@ -45,7 +45,7 @@ public class PlayerDeathListener implements Listener {
             this.statsService.getLastHits().remove(victim);
         }
 
-        if (killer != null) {
+        if (killer != null && killer != victim) {
             User killerUser = userService.getUser(killer);
 
             if (killerUser != null) {

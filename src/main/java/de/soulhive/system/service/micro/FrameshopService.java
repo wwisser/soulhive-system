@@ -55,8 +55,12 @@ public class FrameshopService extends Service implements Listener {
         ItemStack itemStack = ((ItemFrame) event.getRightClicked()).getItem();
 
         if (player.isSneaking() && amount != 64) {
+            if (amount > 1) {
+                price = (price / amount) * 64;
+            } else {
+                price *= 64;
+            }
             amount = 64;
-            price = price * 64;
         }
 
         final User user = this.userService.getUser(player);
