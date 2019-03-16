@@ -8,6 +8,7 @@ import de.soulhive.system.util.FontUtils;
 import de.soulhive.system.vanish.VanishService;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.PermissionUser;
@@ -47,7 +48,7 @@ public class CommandTeam extends CommandExecutorWrapper {
 
             for (PermissionUser permissionUser : this.permissionManager.getGroup(group).getUsers()) {
                 final String name = permissionUser.getName();
-                coloredUsers.add((Bukkit.getPlayer(name) != null && !this.vanishService.getVanishedPlayers().contains(Bukkit.getPlayer(name)) ? "§a" : "§c") + name);
+                coloredUsers.add(this.isOnline(name) ? "§a" : "§c" + name);
             }
 
             groupUsers.put(group, coloredUsers);
@@ -62,6 +63,15 @@ public class CommandTeam extends CommandExecutorWrapper {
 
         sender.sendMessage("");
         sender.sendMessage("§8§m---------------------------------------------");
+    }
+
+    private boolean isOnline(final String name) {
+        Player player = Bukkit.getPlayer(name);
+
+        return player != null
+            && player.isOnline()
+            && player.getName().equals(name)
+            && !this.vanishService.getVanishedPlayers().contains(player);
     }
 
 }
