@@ -30,6 +30,10 @@ public class ClanMember {
         this.deaths++;
     }
 
+    public boolean isOwner() {
+        return this.clan.getOwner().equals(uuid);
+    }
+
     public boolean isOnline() {
         Player player = Bukkit.getPlayer(UUID.fromString(this.uuid));
         VanishService vanishService = SoulHive.getServiceManager().getService(VanishService.class);

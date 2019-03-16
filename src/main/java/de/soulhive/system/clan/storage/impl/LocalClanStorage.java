@@ -48,6 +48,10 @@ public class LocalClanStorage implements ClanStorage {
         return this.cache.get(uuid).getClan();
     }
 
+    public void addClanSet(Clan clan, ClanMember clanMember) {
+        this.cache.put(clanMember.getUuid(), new ClanMapper(clan, clanMember));
+    }
+
     @Override
     @SneakyThrows
     public ClanMember getClanMember(String uuid) {

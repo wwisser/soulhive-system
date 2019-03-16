@@ -1,5 +1,6 @@
 package de.soulhive.system.clan;
 
+import de.soulhive.system.clan.commands.CommandClan;
 import de.soulhive.system.clan.listener.AsyncPlayerChatListener;
 import de.soulhive.system.clan.listener.EntityDamageByEntityListener;
 import de.soulhive.system.clan.listener.PlayerDeathListener;
@@ -30,6 +31,7 @@ public class ClanService extends Service {
             new EntityDamageByEntityListener(this),
             new de.soulhive.system.clan.listener.protection.EntityDamageByEntityListener(this)
         );
+        super.registerCommand("clan", new CommandClan(this));
     }
 
     @Override
