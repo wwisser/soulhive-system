@@ -7,6 +7,8 @@ public interface DatabaseClanStorage extends ClanStorage {
 
     void saveClan(Clan clan);
 
+    void deleteClan(Clan clan);
+
     void saveClanMember(ClanMember clanMember);
 
 }

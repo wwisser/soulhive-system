@@ -4,6 +4,7 @@ import de.soulhive.system.SoulHive;
 import de.soulhive.system.vanish.VanishService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -17,12 +18,9 @@ public class ClanMember {
     private String uuid;
     private int kills;
     private int deaths;
-    @Nullable private Long joined;
     @Nullable private Clan clan;
-
-    public boolean hasClan() {
-        return this.clan != null;
-    }
+    @Nullable private Long joined;
+    @Nullable private Boolean moderator;
 
     public boolean isOnline() {
         Player player = Bukkit.getPlayer(UUID.fromString(this.uuid));

@@ -1,35 +1,69 @@
 package de.soulhive.system.clan.storage.impl;
 
-import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import de.soulhive.system.clan.models.Clan;
+import de.soulhive.system.clan.models.ClanMapper;
 import de.soulhive.system.clan.models.ClanMember;
 import de.soulhive.system.clan.storage.ClanStorage;
 import de.soulhive.system.clan.storage.DatabaseClanStorage;
+import lombok.SneakyThrows;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
 
 public class LocalClanStorage implements ClanStorage {
 
-    private Cache<String, ClanMember> memberCache;
+    private LoadingCache<String, ClanMapper> cache;
     private DatabaseClanStorage databaseClanStorage;
 
     public LocalClanStorage(DatabaseClanStorage databaseClanStorage) {
         this.databaseClanStorage = databaseClanStorage;
-        this.memberCache = CacheBuilder.newBuilder().build(new ClanMemberLoader());
+        this.cache = CacheBuilder.newBuilder().build(new ClanLoader());
     }
 
-    private class ClanMemberLoader extends CacheLoader<String, ClanMember> {
+    public void saveAndUnload(ClanMember clanMember) {
+        this.databaseClanStorage.saveClanMember(clanMember);
+        this.cache.asMap().remove(clanMember.getUuid());
+    }
+
+    public void saveClanMember(ClanMember clanMember) {
+        this.databaseClanStorage.saveClanMember(clanMember);
+    }
+
+    public void saveClan(Clan clan) {
+        this.databaseClanStorage.saveClan(clan);
+    }
+
+    @Override
+    public List<Clan> getClans() {
+        return this.databaseClanStorage.getClans();
+    }
+
+    @Override
+    @SneakyThrows
+    public Clan getClan(String uuid) {
+        return this.cache.get(uuid).getClan();
+    }
+
+    @Override
+    @SneakyThrows
+    public ClanMember getClanMember(String uuid) {
+        return this.cache.get(uuid).getClanMember();
+    }
+
+    private class ClanLoader extends CacheLoader<String, ClanMapper> {
 
         private DatabaseClanStorage databaseClanStorage = LocalClanStorage.this.databaseClanStorage;
 
         @Override
         @ParametersAreNonnullByDefault
-        public ClanMember load(String uuid) {
+        public ClanMapper load(String uuid) {
+            ClanMember clanMember = this.databaseClanStorage.getClanMember(uuid);
+            Clan clan = clanMember.getClan();
 
-            this.databaseClanStorage.getClan(uuid);
-
-            return null;
+            return new ClanMapper(clan, clanMember);
         }
 
     }

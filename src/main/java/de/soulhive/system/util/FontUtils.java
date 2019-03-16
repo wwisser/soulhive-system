@@ -151,13 +151,9 @@ public enum FontUtils {
         for (char c : message.toCharArray()) {
             if (c == '§') {
                 previousCode = true;
-                continue;
-            } else if (previousCode == true) {
+            } else if (previousCode) {
                 previousCode = false;
-                if (c == 'l' || c == 'L') {
-                    isBold = true;
-                    continue;
-                } else isBold = false;
+                isBold = c == 'l' || c == 'L';
             } else {
                 FontUtils dFI = FontUtils.getDefaultFontInfo(c);
                 messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength();
