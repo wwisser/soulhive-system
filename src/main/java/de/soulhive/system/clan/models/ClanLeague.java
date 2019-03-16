@@ -12,7 +12,7 @@ public enum ClanLeague {
     BRONZE("Bronze", ChatColor.RED, 100, 150, 200, 250, 299),
     SILVER("Silber", ChatColor.GRAY, 300, 400, 500, 575, 599),
     TITAN("Titan", ChatColor.BLUE, 600, 700, 800, 900, 999),
-    SAPPHIRE("Saphir", ChatColor.RED, 1000, 1500, 2000, 2500, 2999),
+    SAPPHIRE("Saphir", ChatColor.DARK_RED, 1000, 1500, 2000, 2500, 2999),
     JEWEL("Juwelen", ChatColor.LIGHT_PURPLE, 3000, 4000, 5000, 6000, 7000);
 
     private String name;

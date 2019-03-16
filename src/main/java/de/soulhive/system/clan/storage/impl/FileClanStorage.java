@@ -8,6 +8,7 @@ import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.Config;
 import org.bukkit.configuration.ConfigurationSection;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,6 +22,10 @@ public class FileClanStorage implements DatabaseClanStorage {
     public List<Clan> getClans() {
         ConfigurationSection section = this.yamlFile.getFileConfiguration().getConfigurationSection("clans");
 
+        if (section == null || section.getKeys(false) == null) {
+            return Collections.emptyList();
+        }
+
         return section.getKeys(false)
             .stream()
             .map(section::getConfigurationSection)
@@ -30,12 +35,10 @@ public class FileClanStorage implements DatabaseClanStorage {
 
     @Override
     public Clan getClan(String uuid) {
-        Optional<Clan> clanOptional = this.getClans()
+        return this.getClans()
             .stream()
             .filter(clan -> clan.getMembers().contains(uuid))
-            .findFirst();
-
-        return clanOptional.orElse(null);
+            .collect(Collectors.toList()).get(0);
     }
 
     @Override
@@ -53,6 +56,10 @@ public class FileClanStorage implements DatabaseClanStorage {
 
     @Override
     public void saveClan(Clan clan) {
+        if (clan == null) {
+            return;
+        }
+
         String path = "clans." + clan.getTag() + ".";
 
         this.yamlFile.set(path + "name", clan.getName());
@@ -78,6 +85,10 @@ public class FileClanStorage implements DatabaseClanStorage {
 
     @Override
     public void saveClanMember(ClanMember clanMember) {
+        if (clanMember == null) {
+            return;
+        }
+
         String path = "users." + clanMember.getUuid() + ".";
 
         if (clanMember.getClan() != null) {

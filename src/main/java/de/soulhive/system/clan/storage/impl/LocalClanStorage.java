@@ -66,7 +66,12 @@ public class LocalClanStorage implements ClanStorage {
         @ParametersAreNonnullByDefault
         public ClanMapper load(String uuid) {
             ClanMember clanMember = this.databaseClanStorage.getClanMember(uuid);
-            Clan clan = clanMember.getClan();
+
+            Clan clan = null;
+
+            if (clanMember != null) {
+                clan = clanMember.getClan();
+            }
 
             return new ClanMapper(clan, clanMember);
         }

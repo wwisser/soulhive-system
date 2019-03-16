@@ -14,7 +14,7 @@ public class FileClanDeserializer implements ClanDeserializer<ConfigurationSecti
         String tag = section.getString("tag");
         String name = section.getString("name");
         String owner = section.getString("owner");
-        List<String> members = section.getStringList("members");
+        List<String> members = section.getStringList("member");
         int kills = section.getInt("kills");
         int deaths = section.getInt("deaths");
         int jewels = section.getInt("jewels");

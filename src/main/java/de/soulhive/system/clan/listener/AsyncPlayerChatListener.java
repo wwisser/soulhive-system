@@ -48,7 +48,7 @@ public class AsyncPlayerChatListener implements Listener {
             chatTag = chatColor + clan.getTag() + " " + RomanNumerals.toRoman(info.getLevel()) + " §8* ";
         }
 
-        event.setMessage(chatTag + event.getMessage());
+        event.setFormat(chatTag + event.getFormat());
     }
 
 }

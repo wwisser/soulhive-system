@@ -1,26 +1,31 @@
 package de.soulhive.system.clan.commands;
 
 import de.soulhive.system.clan.ClanService;
+import de.soulhive.system.clan.commands.subcommands.CommandCreate;
 import de.soulhive.system.clan.commands.subcommands.CommandLeagues;
 import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
 import de.soulhive.system.command.util.ValidateCommand;
 import de.soulhive.system.setting.Settings;
-import lombok.AllArgsConstructor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
 
-@AllArgsConstructor
 public class CommandClan extends CommandExecutorWrapper {
 
-    private static final List<ClanCommand> SUB_COMMANDS = Arrays.asList(
-        new CommandLeagues()
-    );
-
     private ClanService clanService;
+    private List<ClanCommand> subCommands;
+
+    public CommandClan(ClanService clanService) {
+        this.clanService = clanService;
+
+        this.subCommands = Arrays.asList(
+            new CommandLeagues(),
+            new CommandCreate(clanService)
+        );
+    }
 
     @Override
     public void process(CommandSender sender, String label, String[] args) throws CommandException {
@@ -29,7 +34,7 @@ public class CommandClan extends CommandExecutorWrapper {
         if (args.length == 0) {
             this.sendHelp(player);
         } else {
-            for (ClanCommand subCommand : SUB_COMMANDS) {
+            for (ClanCommand subCommand : this.subCommands) {
                 if (subCommand.getArgument().equalsIgnoreCase(args[0]) && !subCommand.process(player, args)) {
                     this.sendHelp(player);
                 }

@@ -20,7 +20,7 @@ public class CommandLeagues implements ClanCommand {
 
             player.sendMessage(
                 "  §8- " + league.getChatColor() + league.getName()
-                    + "§8(" + league.getChatColor() + league.getLevel()[0] + " - "
+                    + " §8(" + league.getChatColor() + league.getLevel()[0] + " - "
                     + league.getLevel()[league.getLevel().length - 1] + " Kills§8)"
             );
         }
