@@ -10,4 +10,8 @@ public interface ToplistContext {
 
     Map<String, ? super Number> getData();
 
+    default String getSkullOwnerByKey(String key) {
+        return key;
+    }
+
 }

@@ -12,7 +12,8 @@ public enum StatsLabel {
     VOTES("Votes", "Votes", 4),
     PLAYTIME("Spielzeit", "Stunden", 5),
     JEWELS("Juwelen", "Juwelen", 6),
-    ISLAND_LEVEL("IS-Level", "Level", -1);
+    ISLAND_LEVEL("IS-Level", "Level", -1),
+    CLAN_KILLS("Clans", "Kills", -1);
 
     private String displayName;
     private String additive;

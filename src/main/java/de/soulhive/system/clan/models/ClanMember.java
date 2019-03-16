@@ -18,7 +18,7 @@ public class ClanMember {
     private String uuid;
     private int kills;
     private int deaths;
-    @Nullable private Clan clan;
+    @Nullable @Setter private Clan clan;
     @Nullable private Long joined;
     @Nullable private Boolean moderator;
 

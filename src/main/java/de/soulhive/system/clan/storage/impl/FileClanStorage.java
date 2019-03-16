@@ -2,8 +2,7 @@ package de.soulhive.system.clan.storage.impl;
 
 import de.soulhive.system.clan.models.Clan;
 import de.soulhive.system.clan.models.ClanMember;
-import de.soulhive.system.clan.serializer.ClanSerializer;
-import de.soulhive.system.clan.serializer.file.FileClanSerializer;
+import de.soulhive.system.clan.serializer.file.FileClanDeserializer;
 import de.soulhive.system.clan.storage.DatabaseClanStorage;
 import de.soulhive.system.setting.Settings;
 import de.soulhive.system.util.Config;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 public class FileClanStorage implements DatabaseClanStorage {
 
     private Config yamlFile = new Config(Settings.CONFIG_PATH, "clans.yml");
-    private FileClanSerializer fileClanSerializer = new FileClanSerializer();
+    private FileClanDeserializer fileClanSerializer = new FileClanDeserializer();
 
     @Override
     public List<Clan> getClans() {
@@ -41,9 +40,15 @@ public class FileClanStorage implements DatabaseClanStorage {
 
     @Override
     public ClanMember getClanMember(String uuid) {
-        ConfigurationSection section = this.yamlFile.getFileConfiguration().getConfigurationSection("users." + uuid);
+        if (!this.yamlFile.contains("users." + uuid)) {
+            return null;
+        }
 
-        return this.fileClanSerializer.deserializeClanMember(section, uuid);
+        ConfigurationSection section = this.yamlFile.getFileConfiguration().getConfigurationSection("users." + uuid);
+        ClanMember clanMember = this.fileClanSerializer.deserializeClanMember(section, uuid);
+
+        clanMember.setClan(this.getClan(uuid));
+        return clanMember;
     }
 
     @Override

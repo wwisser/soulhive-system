@@ -2,10 +2,12 @@ package de.soulhive.system.stats;
 
 import com.wasteofplastic.askyblock.ASkyBlockAPI;
 import de.soulhive.system.SoulHive;
+import de.soulhive.system.clan.ClanService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.service.ServiceManager;
 import de.soulhive.system.stats.commands.CommandStats;
 import de.soulhive.system.stats.context.ToplistContext;
+import de.soulhive.system.stats.context.impl.external.ClankillsToplistContext;
 import de.soulhive.system.stats.context.impl.external.IslandLevelToplistContext;
 import de.soulhive.system.stats.context.impl.internal.*;
 import de.soulhive.system.stats.listeners.EntityDamageByEntityListener;
@@ -39,9 +41,11 @@ public class StatsService extends Service {
         this.taskService.registerTasks(new PlaytimeUpdateTask(this.userService));
 
         UserRepository userRepository = this.userService.getUserRepository();
+        ClanService clanService = SoulHive.getServiceManager().getService(ClanService.class);
 
         ToplistContext[] toplistContexts = {
             new KillToplistContext(userRepository),
+            new ClankillsToplistContext(clanService.getDatabaseClanStorage()),
             //new DeathToplistContext(userRepository),
             new PlaytimeToplistContext(userRepository),
             new JewelToplistContext(userRepository),

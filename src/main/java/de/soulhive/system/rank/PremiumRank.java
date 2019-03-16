@@ -57,14 +57,14 @@ public enum PremiumRank {
     }
 
     public static int getCurrentCosts(final Player player, final PremiumRank premiumRank) {
-        if (player.hasPermission("soulhive.obsidian")) {
+        if (player.hasPermission(PremiumRank.values()[PremiumRank.values().length - 1].getPermission())) {
             return 0;
         }
 
         final PremiumRank rank = PremiumRank.getRank(player);
 
         if (rank == null) {
-            return premiumRank.costs;
+            return premiumRank.getCosts();
         }
 
         if (premiumRank.getCosts() <= rank.getCosts()) {

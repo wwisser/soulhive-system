@@ -50,7 +50,7 @@ public class ToplistUpdateTask extends BukkitRunnable implements ComplexTask {
         for (Map.Entry<String, ? super Number> entry : topList.entrySet()) {
             Skull skull = (Skull) currentHead.getBlock().getState();
 
-            skull.setOwner(entry.getKey());
+            skull.setOwner(toplistContext.getSkullOwnerByKey(entry.getKey()));
             skull.update();
 
             Location lowerLoc = currentHead.clone().add(0, -1, 0);

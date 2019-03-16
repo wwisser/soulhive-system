@@ -75,6 +75,7 @@ public class SoulHive extends JavaPlugin {
             new MotdService(),
             userService,
             new DelayService(),
+            new ClanService(),
             new StatsService(),
             new CommandService(this),
             new ListenerService(),
@@ -88,8 +89,7 @@ public class SoulHive extends JavaPlugin {
             new VoteService(),
             new KitService(),
             new SpecialItemMerchantService(),
-            new IpResolverService(),
-            new ClanService()
+            new IpResolverService()
         ).forEach(serviceManager::registerService);
 
         ReflectUtils.getPacketObjects("de.soulhive.system.service.micro", Service.class)

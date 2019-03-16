@@ -3,10 +3,10 @@ package de.soulhive.system.clan.serializer;
 import de.soulhive.system.clan.models.Clan;
 import de.soulhive.system.clan.models.ClanMember;
 
-public interface ClanSerializer<T> {
+public interface ClanDeserializer<T> {
 
-    T serializeClan(Clan clan);
+    Clan deserializeClan(T data);
 
-    T serializeClanMember(ClanMember clanMember);
+    ClanMember deserializeClanMember(T data, String uuid);
 
 }
