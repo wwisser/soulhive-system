@@ -32,7 +32,6 @@ import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.Arrays;
 
 public class SoulHive extends JavaPlugin {
