@@ -19,7 +19,7 @@ import java.util.Map;
 public class ToplistUpdateTask extends BukkitRunnable implements ComplexTask {
 
     private static final long DELAY = 20L * 10;
-    private static final long PERIOD = 20L * 60 * 5;
+    private static final long PERIOD = 20L * 60 * 2;
 
     private static final int POSITION_Z_START = -355;
     private static final int HEAD_AMOUNT = 5;
