@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @AllArgsConstructor
 public class CommandCreate implements ClanCommand {
@@ -44,6 +45,18 @@ public class CommandCreate implements ClanCommand {
 
         if (!this.isNameValid(name)) {
             player.sendMessage(Settings.PREFIX + "§cDer Clanname darf mindestens 3 und maximal 14 Zeichen lang sein.");
+            return true;
+        }
+
+        List<Clan> clans = this.clanService.getLocalClanStorage().getClans();
+
+        if (clans.stream().anyMatch(clan -> clan.getTag().equalsIgnoreCase(tag))) {
+            player.sendMessage(Settings.PREFIX + "§cDer Clantag '" + tag + "' existiert bereits.");
+            return true;
+        }
+
+        if (clans.stream().anyMatch(clan -> clan.getName().equalsIgnoreCase(name))) {
+            player.sendMessage(Settings.PREFIX + "§cDer Clanname '" + name + "' existiert bereits.");
             return true;
         }
 
