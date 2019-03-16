@@ -58,7 +58,7 @@ public class RankShopContainerTemplate extends ContainerTemplate {
                 .add(
                     permission
                         ? "§aBereits gekauft"
-                        : "§7Preis: §d" + rank.getCosts() + " Juwelen"
+                        : "§7Preis: §d" + PremiumRank.getCurrentCosts(player, rank) + " Juwelen"
                 )
                 .finish()
                 .build();
