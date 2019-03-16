@@ -55,8 +55,10 @@ public enum ClanLeague {
     @AllArgsConstructor
     @Getter
     public static class InfoMapper {
+
         private ClanLeague league;
         private int level;
+
     }
 
 }
