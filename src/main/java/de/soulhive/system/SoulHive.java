@@ -2,6 +2,7 @@ package de.soulhive.system;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import de.soulhive.system.clan.ClanService;
 import de.soulhive.system.combat.CombatService;
 import de.soulhive.system.command.CommandService;
 import de.soulhive.system.container.ContainerService;
@@ -87,7 +88,8 @@ public class SoulHive extends JavaPlugin {
             new VoteService(),
             new KitService(),
             new SpecialItemMerchantService(),
-            new IpResolverService()
+            new IpResolverService(),
+            new ClanService()
         ).forEach(serviceManager::registerService);
 
         ReflectUtils.getPacketObjects("de.soulhive.system.service.micro", Service.class)
