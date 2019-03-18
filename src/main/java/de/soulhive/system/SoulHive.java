@@ -64,7 +64,8 @@ public class SoulHive extends JavaPlugin {
             new PlayerVoidKillTask(),
             new FlyDisableTask(),
             new JumpboostSupplierTask(),
-            new YoloBootsUpdateTask()
+            new YoloBootsUpdateTask(),
+            new IslandLevelToplistUpdateTask()
         );
         Settings.NPCS.forEach(npcService::addNpc);
 
