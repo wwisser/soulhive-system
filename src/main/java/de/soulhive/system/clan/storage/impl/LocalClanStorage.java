@@ -13,6 +13,7 @@ import lombok.SneakyThrows;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Optional;
 
 public class LocalClanStorage implements ClanStorage {
 
@@ -45,6 +46,16 @@ public class LocalClanStorage implements ClanStorage {
     @Override
     @SneakyThrows
     public Clan getClan(String uuid) {
+        if (!this.cache.asMap().containsKey(uuid)) {
+            Optional<Clan> optionalClan = this.cache.asMap().values()
+                .stream()
+                .map(ClanMapper::getClan)
+                .filter(clan -> clan.getMembers().contains(uuid))
+                .findFirst();
+
+            return optionalClan.orElse(null);
+        }
+
         return this.cache.get(uuid).getClan();
     }
 
