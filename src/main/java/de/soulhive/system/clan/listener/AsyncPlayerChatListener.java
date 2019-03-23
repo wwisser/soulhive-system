@@ -6,12 +6,15 @@ import de.soulhive.system.clan.models.ClanLeague;
 import de.soulhive.system.clan.models.ClanMember;
 import de.soulhive.system.util.RomanNumerals;
 import lombok.AllArgsConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+
+import java.util.UUID;
 
 @AllArgsConstructor
 public class AsyncPlayerChatListener implements Listener {
@@ -39,6 +42,23 @@ public class AsyncPlayerChatListener implements Listener {
 
         ClanLeague league = info.getLeague();
         ChatColor chatColor = league.getChatColor();
+        String message = event.getMessage();
+
+        if (message.startsWith("#")) {
+            for (String memberUuid : clan.getMembers()) {
+                Player member = Bukkit.getPlayer(UUID.fromString(memberUuid));
+
+                if (member != null && member.isOnline()) {
+                    member.sendMessage(
+                        chatColor + ChatColor.BOLD.toString()
+                            + "Clanchat> " + message.replace("#", "")
+                            .replace("# ", "")
+                    );
+                }
+            }
+            event.setCancelled(true);
+            return;
+        }
 
         if (league == ClanLeague.NONE) {
             chatTag = chatColor + clan.getTag() + " §8* ";
