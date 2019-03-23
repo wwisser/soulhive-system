@@ -4,6 +4,7 @@ import de.soulhive.system.clan.commands.CommandClan;
 import de.soulhive.system.clan.listener.AsyncPlayerChatListener;
 import de.soulhive.system.clan.listener.EntityDamageByEntityListener;
 import de.soulhive.system.clan.listener.PlayerDeathListener;
+import de.soulhive.system.clan.listener.PlayerQuitListener;
 import de.soulhive.system.clan.models.Clan;
 import de.soulhive.system.clan.storage.ClanStorage;
 import de.soulhive.system.clan.storage.DatabaseClanStorage;
@@ -29,7 +30,8 @@ public class ClanService extends Service {
             new AsyncPlayerChatListener(this),
             new PlayerDeathListener(this),
             new EntityDamageByEntityListener(this),
-            new de.soulhive.system.clan.listener.protection.EntityDamageByEntityListener(this)
+            new de.soulhive.system.clan.listener.protection.EntityDamageByEntityListener(this),
+            new PlayerQuitListener(this)
         );
         super.registerCommand("clan", new CommandClan(this));
     }
