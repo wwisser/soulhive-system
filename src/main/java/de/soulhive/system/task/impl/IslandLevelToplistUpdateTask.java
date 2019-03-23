@@ -7,7 +7,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class IslandLevelToplistUpdateTask extends BukkitRunnable implements ComplexTask {
 
-    private static final long PERIOD = 20L * 60 * 3;
+    private static final long PERIOD = 20L * 60 * 10;
 
     @Override
     public void setup(JavaPlugin plugin) {
@@ -16,7 +16,9 @@ public class IslandLevelToplistUpdateTask extends BukkitRunnable implements Comp
 
     @Override
     public void run() {
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "asadmin topten");
+        if (Bukkit.getOnlinePlayers().size() > 0) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "asadmin topten");
+        }
     }
 
 }

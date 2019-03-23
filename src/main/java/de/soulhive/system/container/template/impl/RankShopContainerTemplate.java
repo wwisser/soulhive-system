@@ -31,7 +31,7 @@ public class RankShopContainerTemplate extends ContainerTemplate {
     protected void openContainer(Player player) {
         final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop §0> §0§lRänge")
             .addAction(26, ShopContainerTemplate.ITEM_BACK, this.shopContainerTemplate::openContainer)
-            .setStorageLevel(ContainerStorageLevel.STORED);
+            .setStorageLevel(ContainerStorageLevel.NEW);
 
         int count = 10;
         for (PremiumRank rank : PremiumRank.values()) {
@@ -40,10 +40,10 @@ public class RankShopContainerTemplate extends ContainerTemplate {
             ContainerAction action = permission
                 ? ContainerAction.NONE
                 : new PurchaseContainerAction(clicker -> {
-                PermissionUtils.setRank(player.getName(), rank.getGroupName());
+                PermissionUtils.setRank(clicker.getName(), rank.getGroupName());
                 Bukkit.broadcastMessage(
                     Settings.PREFIX
-                        + "§f" + player.getName()
+                        + "§f" + clicker.getName()
                         + " §7hat sich den Rang " + rank.getChatColor() + ChatColor.BOLD + rank.getName() + " §7gekauft.");
                 Bukkit.broadcastMessage(Settings.PREFIX + "Jetzt auch mit Juwelen einkaufen §8§l=> §d§l/shop");
             }, PremiumRank.getCurrentCosts(player, rank));
