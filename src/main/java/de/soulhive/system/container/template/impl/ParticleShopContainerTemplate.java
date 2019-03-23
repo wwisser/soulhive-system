@@ -51,7 +51,7 @@ public class ParticleShopContainerTemplate extends ContainerTemplate {
         final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop §0> §0§lPartikel");
 
         builder.addAction(26, ShopContainerTemplate.ITEM_BACK, this.shopContainerTemplate::openContainer)
-            .setStorageLevel(ContainerStorageLevel.STORED);
+            .setStorageLevel(ContainerStorageLevel.NEW);
 
         int count = 9;
         for (Particle type : Particle.values()) {

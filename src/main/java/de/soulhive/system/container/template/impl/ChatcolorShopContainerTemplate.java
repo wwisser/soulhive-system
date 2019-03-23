@@ -54,7 +54,7 @@ public class ChatcolorShopContainerTemplate extends ContainerTemplate {
     protected void openContainer(final Player player) {
         final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop §0> §0§lChatfarben")
             .addAction(26, ShopContainerTemplate.ITEM_BACK, this.shopContainerTemplate::openContainer)
-            .setStorageLevel(ContainerStorageLevel.STORED);
+            .setStorageLevel(ContainerStorageLevel.NEW);
 
         int count = 0;
         for (ChatcolorShopContainerTemplate.ShopChatcolor chatColor : ChatcolorShopContainerTemplate.ShopChatcolor.values()) {
