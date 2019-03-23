@@ -20,7 +20,7 @@ import java.util.Map;
 public class ClanService extends Service {
 
     private DatabaseClanStorage databaseClanStorage = new FileClanStorage();
-    private ClanStorage localClanStorage = new LocalClanStorage(this.databaseClanStorage);
+    private LocalClanStorage localClanStorage = new LocalClanStorage(this.databaseClanStorage);
     private Map<Player, Player> lastHits = new HashMap<>();
 
     @Override
@@ -36,7 +36,7 @@ public class ClanService extends Service {
 
     @Override
     public void disable() {
-        ((LocalClanStorage) this.localClanStorage).getCache().asMap().values().forEach(clanMapper -> {
+        this.localClanStorage.getCache().asMap().values().forEach(clanMapper -> {
             this.databaseClanStorage.saveClanMember(clanMapper.getClanMember());
             this.databaseClanStorage.saveClan(clanMapper.getClan());
         });

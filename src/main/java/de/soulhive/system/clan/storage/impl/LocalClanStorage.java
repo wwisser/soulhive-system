@@ -12,7 +12,9 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class LocalClanStorage implements ClanStorage {
@@ -36,6 +38,18 @@ public class LocalClanStorage implements ClanStorage {
 
     public void saveClan(Clan clan) {
         this.databaseClanStorage.saveClan(clan);
+    }
+
+    public void removeClan(final Clan clan) {
+        List<String> keysToRemove = new ArrayList<>();
+
+        for (Map.Entry<String, ClanMapper> entry : this.cache.asMap().entrySet()) {
+            if (entry.getValue().getClan().getTag().equals(clan.getTag())) {
+                keysToRemove.add(entry.getKey());
+            }
+        }
+
+        keysToRemove.forEach(this.cache.asMap()::remove);
     }
 
     @Override

@@ -2,6 +2,7 @@ package de.soulhive.system.clan.commands;
 
 import de.soulhive.system.clan.ClanService;
 import de.soulhive.system.clan.commands.subcommands.CommandCreate;
+import de.soulhive.system.clan.commands.subcommands.CommandDisband;
 import de.soulhive.system.clan.commands.subcommands.CommandLeagues;
 import de.soulhive.system.command.CommandExecutorWrapper;
 import de.soulhive.system.command.exception.CommandException;
@@ -15,15 +16,13 @@ import java.util.List;
 
 public class CommandClan extends CommandExecutorWrapper {
 
-    private ClanService clanService;
     private List<ClanCommand> subCommands;
 
     public CommandClan(ClanService clanService) {
-        this.clanService = clanService;
-
         this.subCommands = Arrays.asList(
             new CommandLeagues(),
-            new CommandCreate(clanService)
+            new CommandCreate(clanService),
+            new CommandDisband(clanService)
         );
     }
 
