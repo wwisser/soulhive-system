@@ -17,7 +17,7 @@ public class ShutdownHookThread extends Thread {
 
     @Override
     public void run() {
-        if (!this.plannedShutdownTask.isRegularShutdown()) {
+        if (!this.plannedShutdownTask.getRegularShutdown().get()) {
             SlackUtils.postMessage(
                 "Unregulärer Serverstopp: " + DATE_FORMAT.format(new Date()),
                 "exclamation",

@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Getter
 public class PlannedShutdownTask extends BukkitRunnable implements ComplexTask {
@@ -20,7 +21,7 @@ public class PlannedShutdownTask extends BukkitRunnable implements ComplexTask {
     private static final String TIME_WARNING = "04:55:00";
     private static final String TIME_SHUTDOWN = "05:00:00";
 
-    private boolean regularShutdown = false;
+    private AtomicBoolean regularShutdown = new AtomicBoolean(false);
     private boolean sentWarning = false;
 
     @Override
@@ -36,7 +37,7 @@ public class PlannedShutdownTask extends BukkitRunnable implements ComplexTask {
             case TIME_WARNING:
                 if (!this.sentWarning) {
                     Bukkit.broadcastMessage(Settings.PREFIX + "§cAutomatischer Serverneustart in 5 Minuten.");
-                    this.regularShutdown = true;
+                    this.regularShutdown.set(true);
                     this.sentWarning = true;
                 }
                 break;
