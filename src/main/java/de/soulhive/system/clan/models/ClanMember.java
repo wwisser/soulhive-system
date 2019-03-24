@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -31,7 +32,7 @@ public class ClanMember {
     }
 
     public boolean isOwner() {
-        return this.clan.getOwner().equals(uuid);
+        return Objects.requireNonNull(this.clan, "Clan is null").getOwner().equals(this.uuid);
     }
 
     public boolean isOnline() {
