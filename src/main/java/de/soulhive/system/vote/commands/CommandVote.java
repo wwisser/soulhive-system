@@ -13,7 +13,7 @@ public class CommandVote extends CommandExecutorWrapper {
         ValidateCommand.onlyPlayer(sender);
 
         sender.sendMessage(Settings.PREFIX + "Jetzt voten und Belohnung erhalten:");
-        sender.sendMessage(" §fhttps://www.minecraft-serverlist.net/vote/45991/" + sender.getName());
+        sender.sendMessage(" §fhttps://minecraft-server.eu/vote/index/20752/" + sender.getName());
         sender.sendMessage(" §cWichtig: §fDu musst dazu online sein!");
     }
 
