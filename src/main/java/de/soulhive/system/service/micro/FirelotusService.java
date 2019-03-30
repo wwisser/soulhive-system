@@ -46,7 +46,7 @@ public class FirelotusService extends Service {
         .name(BLOOM_NAME)
         .enchant(Enchantment.LUCK, 6)
         .build();
-    private static final int MAX_JEWEL_REWARD = 4;
+    private static final int MAX_JEWEL_REWARD = 25;
     private static final List<Location> BLOOM_DROP_LOCATIONS = ImmutableList.of(
         new Location(WORLD_MAIN, -63.5, 90, -335.5),
         new Location(WORLD_MAIN, -59.5, 90, -339.5)
@@ -121,7 +121,7 @@ public class FirelotusService extends Service {
 
             final ThreadLocalRandom random = ThreadLocalRandom.current();
 
-            if (random.nextInt(100) < 20) {
+            if (random.nextInt(100) < 25) {
                 FirelotusService.this.clearBloomDrops();
 
                 final Location location = BLOOM_DROP_LOCATIONS.get(
