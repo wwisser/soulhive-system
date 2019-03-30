@@ -16,6 +16,7 @@ public class PlayerInteractAtEntityListener implements Listener {
     public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event) {
         final Entity rightClicked = event.getRightClicked();
 
+        event.setCancelled(true);
         this.npcService.getNpcs()
             .stream()
             .filter(npc -> npc.getEntity().getUniqueID().equals(rightClicked.getUniqueId()))
