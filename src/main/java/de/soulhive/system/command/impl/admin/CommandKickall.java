@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
+import java.util.Arrays;
+
 public class CommandKickall extends CommandExecutorWrapper {
 
     @Override
@@ -15,7 +17,10 @@ public class CommandKickall extends CommandExecutorWrapper {
         ValidateCommand.permission(sender, Settings.PERMISSION_ADMIN);
         ValidateCommand.minArgs(1, args, "/kickall <message>");
 
-        final String reason = ChatColor.translateAlternateColorCodes('&', args[0]);
+        final String reason = ChatColor.translateAlternateColorCodes(
+            '&',
+            String.join(" ", Arrays.copyOfRange(args, 0, args.length - 1))
+        );
 
         Bukkit.getOnlinePlayers()
             .stream()
