@@ -21,6 +21,7 @@ public class CommandTeam extends CommandExecutorWrapper {
     private static final Map<String, String> GROUPS = ImmutableMap.of(
         "Admin", "§4§lAdmin",
         "Moderator", "§c§lModerator",
+        "Builder", "§e§lBuilder",
         "Supporter", "§9§lSupporter"
     );
 
