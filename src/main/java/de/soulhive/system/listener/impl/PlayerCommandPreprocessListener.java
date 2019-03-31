@@ -28,7 +28,7 @@ public class PlayerCommandPreprocessListener implements Listener {
         }
 
         if (!player.isOp()
-            && (rawCommand.startsWith("auctionhouse") || rawCommand.startsWith("ah"))
+            && (rawCommand.startsWith("auction") || rawCommand.startsWith("auktion") || rawCommand.startsWith("ah"))
             && userService.getUser(player).getPlaytime() < 60) {
             event.setCancelled(true);
             player.sendMessage(Settings.PREFIX + "§cDu darfst das Auktionshaus erst ab einer Stunde Spielzeit verwenden.");
