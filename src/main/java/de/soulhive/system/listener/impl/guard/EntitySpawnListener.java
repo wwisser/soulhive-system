@@ -19,6 +19,7 @@ public class EntitySpawnListener implements Listener {
         NpcService npcService = SoulHive.getServiceManager().getService(NpcService.class);
 
         if (event.getEntityType() != EntityType.PLAYER
+            && event.getEntityType() != EntityType.DROPPED_ITEM
             && location.getWorld().equals(Settings.WORLD_MAIN)
             && location.getBlockY() > Settings.SPAWN_HEIGHT
             & !npcService.isNpc(entity)) {
