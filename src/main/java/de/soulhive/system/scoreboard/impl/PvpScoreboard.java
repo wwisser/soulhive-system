@@ -7,12 +7,8 @@ import de.soulhive.system.user.User;
 
 public class PvpScoreboard extends DynamicScoreboard {
 
-    private static final ScoreboardType SCOREBOARD_TYPE = ScoreboardType.PVP;
-
-
     public PvpScoreboard() {
         super(" " + Settings.NAME + " ");
-
 
         super.addBlankLine(7);
         super.addStaticLine(" §7Kills", 6);
@@ -32,6 +28,6 @@ public class PvpScoreboard extends DynamicScoreboard {
 
     @Override
     public ScoreboardType getType() {
-        return SCOREBOARD_TYPE;
+        return ScoreboardType.PVP;
     }
 }

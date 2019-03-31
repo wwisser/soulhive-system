@@ -53,7 +53,7 @@ public class ScoreboardShopContainerTemplate extends ContainerTemplate {
         builder.addAction(26, ShopContainerTemplate.ITEM_BACK, this.shopContainerTemplate::openContainer)
             .setStorageLevel(ContainerStorageLevel.NEW);
 
-        int count = 12;
+        int count = 10;
         for (ScoreboardType type : ScoreboardType.values()) {
             final boolean hasPermission = player.hasPermission(type.getPermission());
 
@@ -67,12 +67,14 @@ public class ScoreboardShopContainerTemplate extends ContainerTemplate {
                 .build();
 
             builder.addAction(
-                count++,
+                count,
                 item,
                 hasPermission
                     ? clicker -> clicker.playSound(clicker.getLocation(), Sound.CREEPER_HISS, 1, 1)
                     : this.purchaseActions.get(type)
             );
+
+            count += 2;
         }
 
         final Container container = builder.build();

@@ -3,6 +3,7 @@ package de.soulhive.system.scoreboard.task;
 import de.soulhive.system.scoreboard.DynamicScoreboard;
 import de.soulhive.system.scoreboard.ScoreboardService;
 import de.soulhive.system.scoreboard.impl.AdminScoreboard;
+import de.soulhive.system.scoreboard.impl.IslandScoreboard;
 import de.soulhive.system.scoreboard.impl.PvpScoreboard;
 import de.soulhive.system.scoreboard.impl.UserScoreboard;
 import de.soulhive.system.task.ComplexTask;
@@ -48,6 +49,9 @@ public class ScoreboardUpdateTask extends BukkitRunnable implements ComplexTask 
                     case ADMIN:
                         ((AdminScoreboard) dynScoreboard).update(player);
                         break;
+                    case ISLAND:
+                        ((IslandScoreboard) dynScoreboard).update(player);
+                        break;
                 }
             } else {
                 player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
@@ -63,6 +67,9 @@ public class ScoreboardUpdateTask extends BukkitRunnable implements ComplexTask 
                         break;
                     case ADMIN:
                         dynScoreboard = new AdminScoreboard();
+                        break;
+                    case ISLAND:
+                        dynScoreboard = new IslandScoreboard();
                         break;
                 }
 

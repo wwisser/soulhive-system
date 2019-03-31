@@ -7,8 +7,9 @@ import org.bukkit.Material;
 public enum ScoreboardType {
 
     USER("§2User", Material.FEATHER, 0, "§8- §7Spieler", "§8- §7Kills", "§8- §7Juwelen"),
-    ADMIN("§cAdmin", Material.TNT, 1000, "§8- §7Spieler", "§8- §7TPS (Ticks/second)", "§8- §7Ping"),
-    PVP("§6PvP", Material.STONE_SWORD, 1500, "§8- §7Kills", "§8- §7Deaths", "§8- §7KD/r");
+    ADMIN("§cAdmin", Material.TNT, 300, "§8- §7Spieler", "§8- §7TPS (Ticks/second)", "§8- §7Ping"),
+    PVP("§6PvP", Material.STONE_SWORD, 500, "§8- §7Kills", "§8- §7Deaths", "§8- §7KD/r"),
+    ISLAND("§bIsland", Material.GRASS, 600, "§8- §7Name", "§8- §7Level", "§8- §7Mitglieder");
 
     private String name;
     private Material material;

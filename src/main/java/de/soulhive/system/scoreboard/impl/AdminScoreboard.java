@@ -12,8 +12,6 @@ import org.bukkit.entity.Player;
 
 public class AdminScoreboard extends DynamicScoreboard {
 
-    private static final ScoreboardType SCOREBOARD_TYPE = ScoreboardType.ADMIN;
-
     public AdminScoreboard() {
         super(" " + Settings.NAME + " ");
 
@@ -48,7 +46,7 @@ public class AdminScoreboard extends DynamicScoreboard {
 
     @Override
     public ScoreboardType getType() {
-        return SCOREBOARD_TYPE;
+        return ScoreboardType.ADMIN;
     }
 
 }
