@@ -80,6 +80,11 @@ public class FileClanStorage implements DatabaseClanStorage {
     @Override
     public void deleteClan(Clan clan) {
         this.yamlFile.set("clans." + clan.getTag(), null);
+
+        for (String member : clan.getMembers()) {
+            this.yamlFile.set("users." + member, null);
+        }
+
         this.yamlFile.saveFile();
     }
 
