@@ -22,7 +22,6 @@ public class PlayerInteractListener implements Listener {
         Material.DROPPER,
         Material.DISPENSER,
         Material.ITEM_FRAME,
-        Material.MONSTER_EGG,
         Material.BED_BLOCK
     );
     private static final Map<Action, List<Material>> CANCELLED_ACTIONS = new HashMap<Action, List<Material>>() {{
@@ -36,6 +35,12 @@ public class PlayerInteractListener implements Listener {
         final Action interactAction = event.getAction();
 
         if (event.getClickedBlock() != null && !Settings.SKYBLOCK_WORLDS.contains(player.getWorld())) {
+            if (!player.isOp()
+                && player.getItemInHand() != null
+                && Arrays.asList(Material.MONSTER_EGG, Material.EGG).contains(player.getItemInHand().getType())) {
+                event.setCancelled(true);
+            }
+
             CANCELLED_ACTIONS.forEach((action, materials) -> {
                 if (interactAction == action
                     && materials.contains(event.getClickedBlock().getType())
