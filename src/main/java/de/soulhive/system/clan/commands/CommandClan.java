@@ -35,7 +35,7 @@ public class CommandClan extends CommandExecutorWrapper {
         } else {
             for (ClanCommand subCommand : this.subCommands) {
                 if (subCommand.getArgument().equalsIgnoreCase(args[0]) && subCommand.process(player, args)) {
-                    break;
+                    return;
                 }
             }
 

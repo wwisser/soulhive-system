@@ -24,7 +24,7 @@ public class CommandDisband implements ClanCommand {
 
         if (clan == null) {
             player.sendMessage(Settings.PREFIX + "§cDu bist in keinem Clan.");
-        } else if (clan.getOwner().equals(uuid)) {
+        } else if (!clan.getOwner().equals(uuid)) {
             player.sendMessage(Settings.PREFIX + "§cDer Clan " + clan.getName() + " gehört dir nicht.");
         } else {
             for (String member : clan.getMembers()) {
