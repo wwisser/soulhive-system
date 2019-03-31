@@ -15,6 +15,9 @@ public class User {
     private int kills;
     private int deaths;
     private int votes;
+    /**
+     * Holds playtime in minutes.
+     */
     private int playtime;
     private int jewels;
 

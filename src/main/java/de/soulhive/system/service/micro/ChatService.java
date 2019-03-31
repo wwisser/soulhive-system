@@ -5,6 +5,7 @@ import de.soulhive.system.delay.DelayConfiguration;
 import de.soulhive.system.delay.DelayService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.setting.Settings;
+import de.soulhive.system.user.UserService;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,12 +28,14 @@ public class ChatService extends Service implements Listener {
     private Map<Player, Deque<String>> sentMessages = new HashMap<>();
 
     private DelayService delayService;
+    private UserService userService;
     private Chat vaultChat;
 
     @Override
     public void initialize() {
         super.registerListener(this);
         this.delayService = SoulHive.getServiceManager().getService(DelayService.class);
+        this.userService = SoulHive.getServiceManager().getService(UserService.class);
         this.vaultChat = Bukkit.getServer().getServicesManager().getRegistration(Chat.class).getProvider();
     }
 
@@ -48,7 +51,13 @@ public class ChatService extends Service implements Listener {
 
         event.setFormat(formattedMessage);
 
-        if (player.hasPermission("soulhive.chat.bypass")) {
+        if (player.hasPermission(Settings.PERMISSION_TEAM)) {
+            return;
+        }
+
+        if (this.userService.getUser(player).getPlaytime() < 60) {
+            event.setCancelled(true);
+            player.sendMessage(Settings.PREFIX + "§cDu darfst erst ab einer Stunde Spielzeit schreiben.");
             return;
         }
 

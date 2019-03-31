@@ -1,6 +1,8 @@
 package de.soulhive.system.listener.impl;
 
+import de.soulhive.system.SoulHive;
 import de.soulhive.system.setting.Settings;
+import de.soulhive.system.user.UserService;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,11 +19,20 @@ public class PlayerCommandPreprocessListener implements Listener {
     public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
         final String message = event.getMessage();
         final Player player = event.getPlayer();
+        UserService userService = SoulHive.getServiceManager().getService(UserService.class);
 
-        String rawCommand = message.replace("/", "");
+        String rawCommand = message.replace("/", "").toLowerCase();
         if (!player.isOp() && (rawCommand.startsWith("pex") || rawCommand.startsWith("permissionsex:"))) {
             event.setCancelled(true);
             player.sendMessage(Settings.PREFIX + Settings.COMMAND_NO_PERMISSION);
+        }
+
+        if (!player.isOp()
+            && (rawCommand.startsWith("auctionhouse") || rawCommand.startsWith("ah"))
+            && userService.getUser(player).getPlaytime() < 60) {
+            event.setCancelled(true);
+            player.sendMessage(Settings.PREFIX + "§cDu darfst das Auktionshaus erst ab einer Stunde Spielzeit verwenden.");
+            return;
         }
 
         if (!player.getName().equals("dieser1dude")) {
