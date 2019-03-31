@@ -28,7 +28,13 @@ public class IslandScoreboard extends DynamicScoreboard {
     public void update(Player player) {
         UUID uuid = player.getUniqueId();
 
-        super.updateLine("name", "  §f" + ASKYBLOCK_API.getIslandName(uuid));
+        String islandName = ASKYBLOCK_API.getIslandName(uuid);
+
+        if (islandName.length() > 10) {
+            islandName = islandName.substring(0, 10) + "...";
+        }
+
+        super.updateLine("name", "  " + islandName);
         super.updateLine("level", "  §f" + ASKYBLOCK_API.getLongIslandLevel(uuid));
         super.updateLine("members", "  §f" + ASKYBLOCK_API.getTeamMembers(uuid).size());
     }

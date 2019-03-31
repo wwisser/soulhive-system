@@ -40,7 +40,7 @@ public class CommandScoreboard extends CommandExecutorWrapper {
             .setStorageLevel(ContainerStorageLevel.NEW)
             .setDestroyOnClose(true);
 
-        int count = 3;
+        int count = 2;
         for (ScoreboardType type : values) {
             if (this.scoreboardService.hasSelected(player, type)) {
                 ItemStack itemStack = new ItemBuilder(type.getMaterial())

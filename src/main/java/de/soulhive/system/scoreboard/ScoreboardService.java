@@ -59,6 +59,9 @@ public class ScoreboardService extends Service {
             case ADMIN:
                 this.scoreboards.put(player, new AdminScoreboard());
                 break;
+            case ISLAND:
+                this.scoreboards.put(player, new AdminScoreboard());
+                break;
         }
 
         this.scoreboards.get(player).show(player);
