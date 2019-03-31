@@ -40,9 +40,9 @@ public class CommandStats extends CommandExecutorWrapper {
         player.sendMessage(" §7Juwelen: §f" + user.getJewels());
         player.sendMessage(" §7Spielzeit: §f" + (user.getPlaytime() / 60) + "h");
         player.sendMessage(" §7Votes: §f" + user.getVotes());
+        player.sendMessage(" §7Registriert seit: §f" + DATE_FORMAT.format(new Date(user.getFirstSeen())));
 
         if (player.isOp()) {
-            player.sendMessage(" §7Registriert seit: §f" + DATE_FORMAT.format(new Date(user.getFirstSeen())));
 
             final Player targetPlayer = Bukkit.getPlayer(user.getName());
             String lastSeen;

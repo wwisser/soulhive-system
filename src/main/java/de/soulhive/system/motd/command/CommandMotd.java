@@ -21,7 +21,13 @@ public class CommandMotd extends CommandExecutorWrapper {
     @Override
     public void process(CommandSender commandSender, String label, String[] args) throws CommandException {
         ValidateCommand.permission(commandSender, "soulhive.motd");
-        ValidateCommand.minArgs(1, args, USAGE);
+
+        if (args.length < 1) {
+            commandSender.sendMessage(Settings.PREFIX + USAGE);
+            commandSender.sendMessage("");
+            this.showMotd(commandSender);
+            return;
+        }
 
         String argument = args[0].toLowerCase();
 
@@ -42,8 +48,12 @@ public class CommandMotd extends CommandExecutorWrapper {
 
         commandSender.sendMessage(Settings.PREFIX + "Du hast die §fMOTD §7erfolgreich aktualisiert");
         commandSender.sendMessage("");
-        commandSender.sendMessage("§7" + this.motdService.fetchHeader());
-        commandSender.sendMessage("§7" + this.motdService.fetchFooter());
+        this.showMotd(commandSender);
+    }
+
+    private void showMotd(CommandSender sender) {
+        sender.sendMessage("§7" + this.motdService.fetchHeader());
+        sender.sendMessage("§7" + this.motdService.fetchFooter());
     }
 
     private String joinText(String[] args) {

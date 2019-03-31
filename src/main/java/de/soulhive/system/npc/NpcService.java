@@ -3,6 +3,7 @@ package de.soulhive.system.npc;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import de.soulhive.system.npc.listener.PlayerInteractAtEntityListener;
+import de.soulhive.system.npc.listener.PlayerInteractEntityListener;
 import de.soulhive.system.service.FeatureService;
 import de.soulhive.system.service.Service;
 import de.soulhive.system.util.ReflectUtils;
@@ -33,13 +34,22 @@ public class NpcService extends Service {
 
     @Override
     public void initialize() {
-        super.registerListeners(new PlayerInteractAtEntityListener(this));
+        super.registerListeners(
+            new PlayerInteractAtEntityListener(this),
+            new PlayerInteractEntityListener(this)
+        );
     }
 
     @Override
     public void disable() {
         this.npcs.forEach(npc -> npc.getEntity().die());
         this.holograms.forEach(Hologram::delete);
+    }
+
+    public boolean isNpc(final org.bukkit.entity.Entity entity) {
+        return this.getNpcs()
+            .stream()
+            .anyMatch(npc -> npc.getEntity().getUniqueID().equals(entity.getUniqueId()));
     }
 
     public void addNpc(final Npc npc) {
