@@ -23,7 +23,7 @@ public class CommandDisband implements ClanCommand {
         Clan clan = this.clanService.getLocalClanStorage().getClan(uuid);
 
         if (clan == null) {
-            player.sendMessage(Settings.PREFIX + "§cDu bist in keinem Clan");
+            player.sendMessage(Settings.PREFIX + "§cDu bist in keinem Clan.");
         } else if (clan.getOwner().equals(uuid)) {
             player.sendMessage(Settings.PREFIX + "§cDer Clan " + clan.getName() + " gehört dir nicht.");
         } else {

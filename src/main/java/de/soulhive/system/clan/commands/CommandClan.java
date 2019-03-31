@@ -34,10 +34,12 @@ public class CommandClan extends CommandExecutorWrapper {
             this.sendHelp(player);
         } else {
             for (ClanCommand subCommand : this.subCommands) {
-                if (subCommand.getArgument().equalsIgnoreCase(args[0]) && !subCommand.process(player, args)) {
-                    this.sendHelp(player);
+                if (subCommand.getArgument().equalsIgnoreCase(args[0]) && subCommand.process(player, args)) {
+                    break;
                 }
             }
+
+            this.sendHelp(player);
         }
     }
 

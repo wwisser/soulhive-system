@@ -60,7 +60,7 @@ public class LocalClanStorage implements ClanStorage {
     @Override
     @SneakyThrows
     public Clan getClan(String uuid) {
-        if (!this.cache.asMap().containsKey(uuid)) {
+        if (this.cache.asMap().containsKey(uuid)) {
             Optional<Clan> optionalClan = this.cache.asMap().values()
                 .stream()
                 .map(ClanMapper::getClan)

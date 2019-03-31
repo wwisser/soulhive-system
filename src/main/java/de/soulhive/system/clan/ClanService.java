@@ -6,12 +6,12 @@ import de.soulhive.system.clan.listener.EntityDamageByEntityListener;
 import de.soulhive.system.clan.listener.PlayerDeathListener;
 import de.soulhive.system.clan.listener.PlayerQuitListener;
 import de.soulhive.system.clan.models.Clan;
-import de.soulhive.system.clan.storage.ClanStorage;
 import de.soulhive.system.clan.storage.DatabaseClanStorage;
 import de.soulhive.system.clan.storage.impl.FileClanStorage;
 import de.soulhive.system.clan.storage.impl.LocalClanStorage;
 import de.soulhive.system.service.Service;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -34,6 +34,8 @@ public class ClanService extends Service {
             new PlayerQuitListener(this)
         );
         super.registerCommand("clan", new CommandClan(this));
+
+        Bukkit.getOnlinePlayers().forEach(player -> this.localClanStorage.getClan(player.getUniqueId().toString()));
     }
 
     @Override

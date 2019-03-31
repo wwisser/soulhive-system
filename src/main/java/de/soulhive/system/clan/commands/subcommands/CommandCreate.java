@@ -72,7 +72,7 @@ public class CommandCreate implements ClanCommand {
         );
         ClanMember clanMember = new ClanMember(uuid, 0, 0, clan, created, false);
 
-        ((LocalClanStorage) this.clanService.getLocalClanStorage()).addClanSet(clan, clanMember);
+        this.clanService.getLocalClanStorage().addClanSet(clan, clanMember);
 
         player.sendMessage(Settings.PREFIX + "Clan '§a" + name + "§7' §8[§f" + tag + "§8] §7erfolgreich erstellt!");
         return true;

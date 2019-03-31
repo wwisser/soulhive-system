@@ -25,9 +25,6 @@ public class CommandStats implements ClanCommand {
             this.sendClanStats(player, clan);
             return true;
         }
-
-
-
         return true;
     }
 
@@ -37,7 +34,7 @@ public class CommandStats implements ClanCommand {
     }
 
     private void sendClanStats(Player player, Clan clan) {
-        player.sen
+        //player.sen
     }
 
 }
